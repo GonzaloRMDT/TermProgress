@@ -5,7 +5,7 @@ namespace TermProgress.Library.Configurations
     /// <summary>
     /// Represents a term configuration.
     /// </summary>
-    public class TermConfiguration
+    public class TermConfiguration : ITermConfiguration
     {
         /// <summary>
         /// Term starting date and time.

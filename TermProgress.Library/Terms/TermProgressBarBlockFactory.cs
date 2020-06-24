@@ -23,9 +23,9 @@ namespace TermProgress.Library.Terms
             _termConfiguration = termConfiguration.Value;
         }
 
-        public TermProgressBarBlock CreateProgressBarBlock(double comparisonProgress, double termProgress)
+        public TermProgressBarBlock CreateProgressBarBlock(double comparisonDays, double elapsedDays)
         {
-            return comparisonProgress <= termProgress ? CreateCompletedProgressBarBlock() : CreateUncompletedProgressBarBlock();
+            return comparisonDays <= elapsedDays ? CreateCompletedProgressBarBlock() : CreateUncompletedProgressBarBlock();
         }
 
         private TermProgressBarBlock CreateCompletedProgressBarBlock()
@@ -41,7 +41,7 @@ namespace TermProgress.Library.Terms
         {
             return new TermProgressBarBlock
             {
-                Type = TermProgressBarBlockType.Completed,
+                Type = TermProgressBarBlockType.Uncompleted,
                 Symbol = _termConfiguration.ProgressBarUncompletedSymbol
             };
         }

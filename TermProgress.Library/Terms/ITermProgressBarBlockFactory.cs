@@ -5,9 +5,9 @@
         /// <summary>
         /// Creates progress bar block according to given data.
         /// </summary>
-        /// <param name="comparisonProgress">Comparison progress value.</param>
-        /// <param name="termProgress">Term progress value.</param>
+        /// <param name="comparisonDays">Comparison days.</param>
+        /// <param name="elapsedDays">Term elapsed days.</param>
         /// <returns>Progress bar block.</returns>
-        TermProgressBarBlock CreateProgressBarBlock(double comparisonProgress, double termProgress);
+        TermProgressBarBlock CreateProgressBarBlock(double comparisonDays, double elapsedDays);
     }
 }

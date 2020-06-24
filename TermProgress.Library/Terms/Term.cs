@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Options;
 using TermProgress.Library.Configurations;
+using TermProgress.Library.Helpers;
 
 namespace TermProgress.Library.Terms
 {
@@ -17,6 +18,11 @@ namespace TermProgress.Library.Terms
         /// </summary>
         private readonly TermConfiguration _termConfiguration;
 
+        /// <summary>
+        /// System clock instance.
+        /// </summary>
+        private readonly ISystemClock _systemClock;
+
         #endregion
 
         #region << Public methods >>
@@ -25,13 +31,13 @@ namespace TermProgress.Library.Terms
 
         public DateTime EndingDate { get; private set; }
 
-        public int ElapsedDays => (int) Math.Ceiling((DateTime.Now - StartingDate).TotalDays);
+        public int ElapsedDays => (int)Math.Ceiling((_systemClock.Now - StartingDate).TotalDays);
 
-        public int RemainingDays => (int) Math.Floor((EndingDate - DateTime.Now).TotalDays);
+        public int RemainingDays => (int)Math.Floor((EndingDate - _systemClock.Now).TotalDays);
 
-        public int TotalDays => (int) Math.Ceiling((EndingDate - StartingDate).TotalDays);
+        public int TotalDays => (int)Math.Ceiling((EndingDate - StartingDate).TotalDays);
 
-        public double Progress => (double) ElapsedDays / TotalDays;
+        public double Progress => (double)ElapsedDays / TotalDays;
 
         #endregion
 
@@ -41,9 +47,11 @@ namespace TermProgress.Library.Terms
         /// Class constructor.
         /// </summary>
         /// <param name="termConfiguration">Term configuration.</param>
-        public Term(IOptions<TermConfiguration> termConfiguration)
+        /// <param name="systemClock">System clock instance.</param>
+        public Term(IOptions<TermConfiguration> termConfiguration, ISystemClock systemClock)
         {
             _termConfiguration = termConfiguration.Value;
+            _systemClock = systemClock;
             StartingDate = _termConfiguration.StartingDateTime;
             EndingDate = StartingDate.AddYears(_termConfiguration.DurationInYears);
         }
