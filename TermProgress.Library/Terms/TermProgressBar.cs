@@ -45,14 +45,14 @@ namespace TermProgress.Library.Terms
         public string Compose()
         {
             StringBuilder progressBar = new StringBuilder(_termConfiguration.ProgressBarSymbolsTotal);
-            double progressBarBlockUnitValue = 100d / _termConfiguration.ProgressBarSymbolsTotal;
-            double comparisonProgress = 0;
+            double progressBarBlockUnitDays = (double)_term.TotalDays / _termConfiguration.ProgressBarSymbolsTotal;
+            double accumulatedDays = 0;
 
-            while (comparisonProgress <= 100)
+            while (accumulatedDays < _term.TotalDays)
             {
-                TermProgressBarBlock progressBarBlock = _termProgressBarBlockFactory.CreateProgressBarBlock(comparisonProgress, _term.Progress);
+                accumulatedDays += progressBarBlockUnitDays;
+                TermProgressBarBlock progressBarBlock = _termProgressBarBlockFactory.CreateProgressBarBlock(accumulatedDays, _term.ElapsedDays);
                 progressBar.Append(progressBarBlock.Symbol);
-                comparisonProgress += progressBarBlockUnitValue;
             }
 
             return progressBar.ToString();

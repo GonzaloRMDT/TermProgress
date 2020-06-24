@@ -15,6 +15,7 @@ using TermProgress.Library.Clients;
 using TermProgress.Library.Configurations;
 using TermProgress.Library.Terms;
 using Microsoft.AspNetCore.Localization;
+using TermProgress.Library.Helpers;
 
 namespace TermProgress.WebAPI
 {
@@ -33,6 +34,7 @@ namespace TermProgress.WebAPI
             services.AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientConfiguration).Assembly);
             services.AddControllers();
             services.AddSingleton<IClient, TwitterClient>();
+            services.AddSingleton<ISystemClock, SystemClock>();
             services.AddSingleton<ITerm, Term>();
             services.AddSingleton<ITermMessage, TermMessage>();
             services.AddSingleton<ITermProgressBar, TermProgressBar>();
