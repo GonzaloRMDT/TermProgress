@@ -45,13 +45,13 @@ namespace TermProgress.Library.Terms
         public string Compose()
         {
             StringBuilder progressBar = new StringBuilder(_termConfiguration.ProgressBarSymbolsTotal);
-            double progressBarBlockUnitDays = (double)_term.TotalDays / _termConfiguration.ProgressBarSymbolsTotal;
+            double progressBarBlockDays = (double)_term.TotalDays / _termConfiguration.ProgressBarSymbolsTotal;
             double accumulatedDays = 0;
 
-            while (accumulatedDays < _term.TotalDays)
+            for (int i = 0; i < _termConfiguration.ProgressBarSymbolsTotal; i++)
             {
-                accumulatedDays += progressBarBlockUnitDays;
-                TermProgressBarBlock progressBarBlock = _termProgressBarBlockFactory.CreateProgressBarBlock(accumulatedDays, _term.ElapsedDays);
+                accumulatedDays += progressBarBlockDays;
+                TermProgressBarBlock progressBarBlock = _termProgressBarBlockFactory.CreateProgressBarBlock(Math.Floor(accumulatedDays), _term.ElapsedDays);
                 progressBar.Append(progressBarBlock.Symbol);
             }
 
