@@ -14,28 +14,28 @@ namespace TermProgress.Library.Terms
         #region << Private fields >>
 
         /// <summary>
-        /// Term configuration.
-        /// </summary>
-        private readonly TermConfiguration _termConfiguration;
-
-        /// <summary>
         /// System clock instance.
         /// </summary>
         private readonly ISystemClock _systemClock;
+
+        /// <summary>
+        /// Term configuration.
+        /// </summary>
+        private readonly TermConfiguration _termConfiguration;
 
         #endregion
 
         #region << Public methods >>
 
-        public DateTime StartingDate { get; private set; }
+        public DateTime StartingDate { get; }
 
-        public DateTime EndingDate { get; private set; }
+        public DateTime EndingDate { get; }
 
-        public int ElapsedDays => (int)Math.Ceiling((_systemClock.Now - StartingDate).TotalDays);
+        public int ElapsedDays => (_systemClock.Now.Date - StartingDate).Days;
 
-        public int RemainingDays => (int)Math.Floor((EndingDate - _systemClock.Now).TotalDays);
+        public int RemainingDays => (EndingDate - _systemClock.Now.Date).Days;
 
-        public int TotalDays => (int)Math.Ceiling((EndingDate - StartingDate).TotalDays);
+        public int TotalDays => (EndingDate - StartingDate).Days;
 
         public double Progress => (double)ElapsedDays / TotalDays;
 
@@ -46,14 +46,14 @@ namespace TermProgress.Library.Terms
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="termConfiguration">Term configuration.</param>
         /// <param name="systemClock">System clock instance.</param>
-        public Term(IOptions<TermConfiguration> termConfiguration, ISystemClock systemClock)
+        /// <param name="termConfiguration">Term configuration.</param>
+        public Term(ISystemClock systemClock, IOptions<TermConfiguration> termConfiguration)
         {
-            _termConfiguration = termConfiguration.Value;
             _systemClock = systemClock;
-            StartingDate = _termConfiguration.StartingDateTime;
-            EndingDate = StartingDate.AddYears(_termConfiguration.DurationInYears);
+            _termConfiguration = termConfiguration.Value;
+            StartingDate = _termConfiguration.StartingDateTime.Date;
+            EndingDate = StartingDate.AddYears(_termConfiguration.DurationInYears).Date;
         }
 
         #endregion
