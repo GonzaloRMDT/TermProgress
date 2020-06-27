@@ -23,9 +23,9 @@ namespace TermProgress.Library.Terms
             _termConfiguration = termConfiguration.Value;
         }
 
-        public TermProgressBarBlock CreateProgressBarBlock(double comparisonDays, double elapsedDays)
+        public TermProgressBarBlock CreateProgressBarBlock(double progressBarBlockDays, double elapsedDays)
         {
-            return comparisonDays <= elapsedDays ? CreateCompletedProgressBarBlock() : CreateUncompletedProgressBarBlock();
+            return progressBarBlockDays <= elapsedDays ? CreateCompletedProgressBarBlock() : CreateUncompletedProgressBarBlock();
         }
 
         private TermProgressBarBlock CreateCompletedProgressBarBlock()
