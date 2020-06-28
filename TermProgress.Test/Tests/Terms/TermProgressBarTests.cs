@@ -66,9 +66,9 @@ namespace TermProgress.Tests.Tests.Terms
             return new TermConfiguration
             {
                 DurationInYears = 4,
-                ProgressBarCompletedSymbol = '▓',
-                ProgressBarUncompletedSymbol = '░',
-                ProgressBarSymbolsTotal = 15,
+                ProgressBarCompletedBlockSymbol = '▓',
+                ProgressBarUncompletedBlockSymbol = '░',
+                ProgressBarBlocksTotal = 15,
                 StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0)
             };
         }
