@@ -33,7 +33,7 @@ namespace TermProgress.Library.Terms
             return new TermProgressBarBlock
             {
                 Type = TermProgressBarBlockType.Completed,
-                Symbol = _termConfiguration.ProgressBarCompletedSymbol
+                Symbol = _termConfiguration.ProgressBarCompletedBlockSymbol
             };
         }
 
@@ -42,7 +42,7 @@ namespace TermProgress.Library.Terms
             return new TermProgressBarBlock
             {
                 Type = TermProgressBarBlockType.Uncompleted,
-                Symbol = _termConfiguration.ProgressBarUncompletedSymbol
+                Symbol = _termConfiguration.ProgressBarUncompletedBlockSymbol
             };
         }
     }

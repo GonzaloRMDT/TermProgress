@@ -5,31 +5,17 @@ namespace TermProgress.Library.Configurations
     /// <summary>
     /// Represents a term configuration.
     /// </summary>
+    /// <inheritdoc />
     public class TermConfiguration : ITermConfiguration
     {
-        /// <summary>
-        /// Term starting date and time.
-        /// </summary>
         public DateTime StartingDateTime { get; set; }
 
-        /// <summary>
-        /// Term duration measured in years.
-        /// </summary>
         public int DurationInYears { get; set; }
 
-        /// <summary>
-        /// Term progress bar completed symbol.
-        /// </summary>
-        public char ProgressBarCompletedSymbol { get; set; }
+        public char ProgressBarCompletedBlockSymbol { get; set; }
 
-        /// <summary>
-        /// Term progress bar uncompleted symbol.
-        /// </summary>
-        public char ProgressBarUncompletedSymbol { get; set; }
+        public char ProgressBarUncompletedBlockSymbol { get; set; }
 
-        /// <summary>
-        /// Term progress bar symbol total.
-        /// </summary>
-        public int ProgressBarSymbolsTotal { get; set; }
+        public int ProgressBarBlocksTotal { get; set; }
     }
 }

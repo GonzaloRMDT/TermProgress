@@ -70,8 +70,8 @@ namespace TermProgress.Tests.Tests.Terms
         {
             return new TermConfiguration
             {
-                ProgressBarCompletedSymbol = '▓',
-                ProgressBarUncompletedSymbol = '░'
+                ProgressBarCompletedBlockSymbol = '▓',
+                ProgressBarUncompletedBlockSymbol = '░'
             };
         }
     }

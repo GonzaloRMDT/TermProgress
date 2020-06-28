@@ -4,14 +4,29 @@ namespace TermProgress.Library.Configurations
 {
     public interface ITermConfiguration
     {
+        /// <summary>
+        /// Term starting date and time.
+        /// </summary>
         DateTime StartingDateTime { get; set; }
+
+        /// <summary>
+        /// Term duration measured in years.
+        /// </summary>
         int DurationInYears { get; set; }
 
-        // TODO: Rename to ProgressBarCompletionSymbol
-        char ProgressBarCompletedSymbol { get; set; }
+        /// <summary>
+        /// Term progress bar completed block symbol.
+        /// </summary>
+        char ProgressBarCompletedBlockSymbol { get; set; }
 
-        // TODO: Rename to ProgressBarUncompletionSymbol
-        char ProgressBarUncompletedSymbol { get; set; }
-        int ProgressBarSymbolsTotal { get; set; }
+        /// <summary>
+        /// Term progress bar uncompleted block symbol.
+        /// </summary>
+        char ProgressBarUncompletedBlockSymbol { get; set; }
+
+        /// <summary>
+        /// Term progress bar blocks total.
+        /// </summary>
+        int ProgressBarBlocksTotal { get; set; }
     }
 }
