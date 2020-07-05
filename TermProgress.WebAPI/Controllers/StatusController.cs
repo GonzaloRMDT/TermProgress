@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TermProgress.WebAPI.Controllers
@@ -10,7 +11,9 @@ namespace TermProgress.WebAPI.Controllers
     /// Represents the status controller.
     /// </summary>
     [Route("api/v1/[controller]")]
-    public class StatusController : Controller
+    [ApiController]
+    [AllowAnonymous]
+    public class StatusController : ControllerBase
     {
         /// GET: api/v1/status
         ///
