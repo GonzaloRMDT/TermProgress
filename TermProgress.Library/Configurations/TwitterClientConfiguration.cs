@@ -8,42 +8,37 @@ namespace TermProgress.Library.Configurations
     public class TwitterClientConfiguration
     {
         /// <summary>
-        /// Name of client class to set.
-        /// </summary>
-        public string ClientClassName { get; set; }
-
-        /// <summary>
-        /// Rate limit window, measured in seconds.
+        /// Gets or sets the rate limit window, measured in seconds.
         /// </summary>
         public string RateLimitWindowInSeconds { get; set; }
 
         /// <summary>
-        /// Maximum number of requests per rate limit window.
+        /// Gets or sets the maximum number of requests per rate limit window.
         /// </summary>
         public string MaxRequestsPerRateLimitWindow { get; set; }
 
         /// <summary>
-        /// Maximum number of characters allowed for a single status.
+        /// Gets or sets the maximum number of characters allowed for a single status.
         /// </summary>
         public string StatusCharacterLimit { get; set; }
 
         /// <summary>
-        /// Client access token.
+        /// Gets or sets the client access token.
         /// </summary>
         public string AccessToken { get; set; }
 
         /// <summary>
-        /// Client access token secret.
+        /// Gets or sets the client access token secret.
         /// </summary>
         public string AccessTokenSecret { get; set; }
 
         /// <summary>
-        /// Client consumer key.
+        /// Gets or sets the client consumer key.
         /// </summary>
         public string ConsumerKey { get; set; }
 
         /// <summary>
-        /// Client consumer key.
+        /// Gets or sets the client consumer key.
         /// </summary>
         public string ConsumerSecret { get; set; }
     }
