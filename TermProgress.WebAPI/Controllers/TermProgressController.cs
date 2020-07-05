@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Terms;
@@ -12,6 +13,8 @@ namespace TermProgress.WebAPI.Controllers
     /// Represents a term progress controller.
     /// </summary>
     [Route("api/v1/[controller]")]
+    [ApiController]
+    [Authorize]
     public class TermProgressController : ControllerBase
     {
         /// <summary>
