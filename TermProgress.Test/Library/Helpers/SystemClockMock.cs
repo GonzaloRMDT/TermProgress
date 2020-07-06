@@ -2,7 +2,7 @@
 using Moq;
 using TermProgress.Library.Helpers;
 
-namespace TermProgress.Tests.Mocks
+namespace TermProgress.Tests.Library.Helpers
 {
     /// <summary>
     /// Represents a system clock mock.
