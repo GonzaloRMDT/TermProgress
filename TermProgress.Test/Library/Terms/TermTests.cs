@@ -3,10 +3,10 @@ using Microsoft.Extensions.Options;
 using Moq;
 using TermProgress.Library.Configurations;
 using TermProgress.Library.Terms;
-using TermProgress.Tests.Mocks;
+using TermProgress.Tests.Library.Helpers;
 using Xunit;
 
-namespace TermProgress.Tests.Tests.Terms
+namespace TermProgress.Tests.Library.Terms
 {
     /// <summary>
     /// Term tests.
