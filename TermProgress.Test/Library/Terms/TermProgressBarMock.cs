@@ -2,7 +2,7 @@
 using Moq;
 using TermProgress.Library.Terms;
 
-namespace TermProgress.Tests.Mocks
+namespace TermProgress.Tests.Library.Terms
 {
     /// <summary>
     /// Represents a term progress bar mock.
