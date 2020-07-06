@@ -5,7 +5,7 @@ using TermProgress.Library.Configurations;
 using TermProgress.Library.Terms;
 using Xunit;
 
-namespace TermProgress.Tests.Tests.Terms
+namespace TermProgress.Tests.Library.Terms
 {
     /// <summary>
     /// Represents a term progress bar block factor class tests.

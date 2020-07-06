@@ -19,9 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tests\" />
-    <Folder Include="Mocks\" />
-    <Folder Include="Tests\Terms\" />
+    <Folder Include="Library\" />
+    <Folder Include="Library\Terms\" />
+    <Folder Include="Library\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj" />
