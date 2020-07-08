@@ -12,7 +12,7 @@ namespace TermProgress.Worker
         public static async void Run([TimerTrigger("0 0 0 * * *")]TimerInfo myTimer, ILogger log)
         {
             HttpClient httpClient = new HttpClient();
-            string url = "***REMOVED***";
+            string url = Environment.GetEnvironmentVariable("TwitterStatusCreationEndpointUrl");
             await httpClient.PostAsync(url, null);
             log.LogInformation($"Sent POST request to {url}.");
             httpClient.Dispose();
