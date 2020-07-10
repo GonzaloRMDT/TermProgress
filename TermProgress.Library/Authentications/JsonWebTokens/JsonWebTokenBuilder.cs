@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 
-namespace TermProgress.Library.Authentication.JsonWebToken
+namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
     /// Represents a JSON Web Token builder.

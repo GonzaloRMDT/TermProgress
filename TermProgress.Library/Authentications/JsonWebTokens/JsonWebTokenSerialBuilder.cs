@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace TermProgress.Library.Authentication.JsonWebToken
+namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
     /// Represents a JSON web token serial builder.

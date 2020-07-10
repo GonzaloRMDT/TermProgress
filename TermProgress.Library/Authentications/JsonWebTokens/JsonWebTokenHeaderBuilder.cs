@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace TermProgress.Library.Authentication.JsonWebToken
+namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
     /// Represents a JSON Web Token header builder.

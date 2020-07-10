@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using TermProgress.Library.Configurations;
 
-namespace TermProgress.Library.Authentication.JsonWebToken.MappingProfiles
+namespace TermProgress.Library.Authentications.JsonWebTokens.MappingProfiles
 {
     /// <summary>
     /// Represents a <c>TokenValidationParameters</c> mapping profile.

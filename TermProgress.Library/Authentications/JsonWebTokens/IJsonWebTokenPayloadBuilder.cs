@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace TermProgress.Library.Authentication.JsonWebToken
+namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
     /// <c>IJsonWebTokenPayloadBuilder</c> interface.

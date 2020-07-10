@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TermProgress.Library.Configurations;
 
-namespace TermProgress.Library.Authentication.JsonWebToken.Extensions
+namespace TermProgress.Library.Authentications.JsonWebTokens.Extensions
 {
     /// <summary>
     /// Represents the JSON Web Token extensions.

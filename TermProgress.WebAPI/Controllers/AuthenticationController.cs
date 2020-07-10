@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TermProgress.Library.Authentication;
-using TermProgress.Library.Authentication.JsonWebToken;
+using TermProgress.Library.Authentications;
+using TermProgress.Library.Authentications.JsonWebTokens;
 using TermProgress.Library.Configurations;
 
 namespace TermProgress.WebAPI.Controllers

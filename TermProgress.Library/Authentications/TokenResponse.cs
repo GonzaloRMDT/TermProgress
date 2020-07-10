@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermProgress.Library.Authentication
+namespace TermProgress.Library.Authentications
 {
     /// <summary>
     /// Authentication token response.
