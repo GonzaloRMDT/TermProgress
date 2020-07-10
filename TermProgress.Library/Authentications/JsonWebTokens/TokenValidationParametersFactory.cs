@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TermProgress.Library.Configurations;
 
-namespace TermProgress.Library.Authentication.JsonWebToken
+namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
     /// Represente a <c>TokenValidationParameters</c> factory.

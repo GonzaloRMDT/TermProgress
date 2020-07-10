@@ -17,11 +17,11 @@ using TermProgress.Library.Terms;
 using Microsoft.AspNetCore.Localization;
 using TermProgress.Library.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using TermProgress.Library.Authentication.JsonWebToken;
+using TermProgress.Library.Authentications.JsonWebTokens;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TermProgress.Library.Authentication.JsonWebToken.Extensions;
+using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 
 namespace TermProgress.WebAPI
 {
