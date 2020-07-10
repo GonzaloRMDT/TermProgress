@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Options;
 using TermProgress.Library.Configurations;
-using TermProgress.Library.Helpers;
+using TermProgress.Library.Providers;
 
 namespace TermProgress.Library.Terms
 {
@@ -16,7 +16,7 @@ namespace TermProgress.Library.Terms
         /// <summary>
         /// System clock instance.
         /// </summary>
-        private readonly ISystemClock _systemClock;
+        private readonly IDateTimeProvider _systemClock;
 
         /// <summary>
         /// Term configuration.
@@ -48,7 +48,7 @@ namespace TermProgress.Library.Terms
         /// </summary>
         /// <param name="systemClock">System clock instance.</param>
         /// <param name="termConfiguration">Term configuration.</param>
-        public Term(ISystemClock systemClock, IOptions<TermConfiguration> termConfiguration)
+        public Term(IDateTimeProvider systemClock, IOptions<TermConfiguration> termConfiguration)
         {
             _systemClock = systemClock;
             _termConfiguration = termConfiguration.Value;

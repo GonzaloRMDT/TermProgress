@@ -1,13 +1,13 @@
 ﻿using System;
 using Moq;
-using TermProgress.Library.Helpers;
+using TermProgress.Library.Providers;
 
 namespace TermProgress.Tests.Library.Helpers
 {
     /// <summary>
     /// Represents a system clock mock.
     /// </summary>
-    public class SystemClockMock : Mock<ISystemClock>
+    public class SystemClockMock : Mock<IDateTimeProvider>
     {
         public SystemClockMock MockNow(DateTime dateTime)
         {

@@ -15,7 +15,7 @@ using TermProgress.Library.Clients;
 using TermProgress.Library.Configurations;
 using TermProgress.Library.Terms;
 using Microsoft.AspNetCore.Localization;
-using TermProgress.Library.Helpers;
+using TermProgress.Library.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TermProgress.Library.Authentications.JsonWebTokens;
 using Microsoft.Extensions.Options;
@@ -42,7 +42,7 @@ namespace TermProgress.WebAPI
                 .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientConfiguration).Assembly)
                 .AddJsonWebToken(Configuration.GetSection(nameof(JsonWebTokenConfiguration)))
                 .AddSingleton<IClient, TwitterClient>()
-                .AddSingleton<ISystemClock, SystemClock>()
+                .AddSingleton<IDateTimeProvider, DateTimeProvider>()
                 .AddSingleton<ITerm, Term>()
                 .AddSingleton<ITermMessage, TermMessage>()
                 .AddSingleton<ITermProgressBar, TermProgressBar>()

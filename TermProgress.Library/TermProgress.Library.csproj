@@ -7,7 +7,7 @@
   <ItemGroup>
     <Folder Include="Configurations\" />
     <Folder Include="Clients\" />
-    <Folder Include="Helpers\" />
+    <Folder Include="Providers\" />
     <Folder Include="Authentications\" />
     <Folder Include="Authentications\JsonWebTokens\" />
     <Folder Include="Authentications\JsonWebTokens\MappingProfiles\" />

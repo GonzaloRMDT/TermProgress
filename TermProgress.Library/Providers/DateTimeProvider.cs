@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace TermProgress.Library.Helpers
+namespace TermProgress.Library.Providers
 {
     /// <summary>
-    /// Represents the system clock.
+    /// Represents a DateTime provider.
     /// </summary>
-    public class SystemClock : ISystemClock
+    public class DateTimeProvider : IDateTimeProvider
     {
         /// <summary>
         /// System date and time.
