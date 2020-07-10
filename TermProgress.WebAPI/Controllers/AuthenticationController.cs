@@ -71,7 +71,7 @@ namespace TermProgress.WebAPI.Controllers
                     .AddClaim(new Claim(ClaimTypes.Role, "Admin"))
                     .Build();
 
-                return Ok(new { Token = jsonWebToken });
+                return Ok(new TokenResponse { Token = jsonWebToken });
             }
 
             return Unauthorized();
