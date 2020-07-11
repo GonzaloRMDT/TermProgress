@@ -4,7 +4,8 @@
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.3" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.8" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="obj\Release\netcoreapp3.1\PubTmp\Out\TermProgressWorker\function.json" />
@@ -24,5 +25,9 @@
     <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Clients\" />
+    <Folder Include="Configurations\" />
   </ItemGroup>
 </Project>
