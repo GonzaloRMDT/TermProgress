@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using TermProgress.Library.Authentications;
 
-namespace TermProgress.Worker.Clients
+namespace TermProgress.Functions.Clients
 {
     /// <summary>
     /// <c>ITermProgressWebApiClient</c> interface.

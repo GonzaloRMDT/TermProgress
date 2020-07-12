@@ -1,11 +1,11 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TermProgress.Worker.Clients;
-using TermProgress.Worker.Configurations;
+using TermProgress.Functions.Clients;
+using TermProgress.Functions.Configurations;
 
-[assembly: FunctionsStartup(typeof(TermProgress.Worker.Startup))]
-namespace TermProgress.Worker
+[assembly: FunctionsStartup(typeof(TermProgress.Functions.Startup))]
+namespace TermProgress.Functions
 {
     public class Startup : FunctionsStartup
     {

@@ -1,17 +1,16 @@
 using System;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
-using TermProgress.Worker.Clients;
+using TermProgress.Functions.Clients;
 
-namespace TermProgress.Worker
+namespace TermProgress.Functions
 {
-    public class TermProgressWorker
+    /// <summary>
+    /// Represents a Twitter status creation timer function.
+    /// </summary>
+    public class TwitterStatusCreationTimerFunction
     {
         /// <summary>
         /// Term progress web API client instance.
@@ -22,18 +21,18 @@ namespace TermProgress.Worker
         /// Class constructor.
         /// </summary>
         /// <param name="termProgressWebApiClient">Term progress web API client instance.</param>
-        public TermProgressWorker(ITermProgressWebApiClient termProgressWebApiClient)
+        public TwitterStatusCreationTimerFunction(ITermProgressWebApiClient termProgressWebApiClient)
         {
             _termProgressWebApiClient = termProgressWebApiClient;
         }
 
         /// <summary>
-        /// Runs worker asynchronously.
+        /// Runs function asynchronously.
         /// </summary>
         /// <param name="myTimer">Timer instance.</param>
         /// <param name="logger">Logger instance.</param>
         /// <remarks>Asynchronous method.</remarks>
-        [FunctionName("TermProgressWorker")]
+        [FunctionName("TwitterStatusCreationTimerFunction")]
         public async Task Run([TimerTrigger("0 0 0 * * *")] TimerInfo myTimer, ILogger logger)
         {
             // Create status
