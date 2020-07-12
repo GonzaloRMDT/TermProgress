@@ -20,9 +20,9 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock();
+            var dateTimeProvider = new DateTimeProviderMock();
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.StartingDate;
@@ -39,9 +39,9 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClokMock = new SystemClockMock();
+            var dateTimeProvider = new DateTimeProviderMock();
 
-            var term = new Term(systemClokMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.EndingDate;
@@ -58,10 +58,10 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock()
+            var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.ElapsedDays;
@@ -78,10 +78,10 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock()
+            var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.ElapsedDays;
@@ -98,10 +98,10 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock()
+            var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.RemainingDays;
@@ -118,10 +118,10 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock()
+            var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.RemainingDays;
@@ -138,9 +138,9 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock();
+            var dateTimeProvider = new DateTimeProviderMock();
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.TotalDays;
@@ -157,10 +157,10 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock()
+            var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.Progress;
@@ -177,10 +177,10 @@ namespace TermProgress.Tests.Library.Terms
             var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
-            var systemClockMock = new SystemClockMock()
+            var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
 
-            var term = new Term(systemClockMock.Object, termConfigurationMock.Object);
+            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
 
             // Act
             var result = term.Progress;

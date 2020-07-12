@@ -14,9 +14,9 @@ namespace TermProgress.Library.Terms
         #region << Private fields >>
 
         /// <summary>
-        /// System clock instance.
+        /// Date and time provider.
         /// </summary>
-        private readonly IDateTimeProvider _systemClock;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         /// <summary>
         /// Term configuration.
@@ -31,9 +31,9 @@ namespace TermProgress.Library.Terms
 
         public DateTime EndingDate { get; }
 
-        public int ElapsedDays => (_systemClock.Now.Date - StartingDate).Days;
+        public int ElapsedDays => (_dateTimeProvider.Now.Date - StartingDate).Days;
 
-        public int RemainingDays => (EndingDate - _systemClock.Now.Date).Days;
+        public int RemainingDays => (EndingDate - _dateTimeProvider.Now.Date).Days;
 
         public int TotalDays => (EndingDate - StartingDate).Days;
 
@@ -46,11 +46,11 @@ namespace TermProgress.Library.Terms
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="systemClock">System clock instance.</param>
+        /// <param name="dateTimeProvider">Date and time provider.</param>
         /// <param name="termConfiguration">Term configuration.</param>
-        public Term(IDateTimeProvider systemClock, IOptions<TermConfiguration> termConfiguration)
+        public Term(IDateTimeProvider dateTimeProvider, IOptions<TermConfiguration> termConfiguration)
         {
-            _systemClock = systemClock;
+            _dateTimeProvider = dateTimeProvider;
             _termConfiguration = termConfiguration.Value;
             StartingDate = _termConfiguration.StartingDateTime.Date;
             EndingDate = StartingDate.AddYears(_termConfiguration.DurationInYears).Date;

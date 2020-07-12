@@ -5,11 +5,11 @@ using TermProgress.Library.Providers;
 namespace TermProgress.Tests.Library.Helpers
 {
     /// <summary>
-    /// Represents a system clock mock.
+    /// Represents a DateTime provider.
     /// </summary>
-    public class SystemClockMock : Mock<IDateTimeProvider>
+    public class DateTimeProviderMock : Mock<IDateTimeProvider>
     {
-        public SystemClockMock MockNow(DateTime dateTime)
+        public DateTimeProviderMock MockNow(DateTime dateTime)
         {
             Setup(x => x.Now).Returns(dateTime);
             return this;

@@ -21,7 +21,7 @@
   <ItemGroup>
     <Folder Include="Library\" />
     <Folder Include="Library\Terms\" />
-    <Folder Include="Library\Helpers\" />
+    <Folder Include="Library\Providers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj" />
