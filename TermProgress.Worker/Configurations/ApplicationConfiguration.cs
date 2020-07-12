@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermProgress.Worker.Configurations
+namespace TermProgress.Functions.Configurations
 {
     /// <summary>
     /// Represents the application configuration.

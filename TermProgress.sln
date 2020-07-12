@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.Library", "Ter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.WebAPI", "TermProgress.WebAPI\TermProgress.WebAPI.csproj", "{639ED688-D5CC-46B4-9C02-7DFC58CA576D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.Worker", "TermProgress.Worker\TermProgress.Worker.csproj", "{A1778173-4BFA-4CE7-B15C-129D3349C426}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.Functions", "TermProgress.Worker\TermProgress.Functions.csproj", "{A1778173-4BFA-4CE7-B15C-129D3349C426}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.Tests", "TermProgress.Tests\TermProgress.Tests.csproj", "{B69B22D6-549E-4A5D-92CD-FCF3BD5199D5}"
 EndProject

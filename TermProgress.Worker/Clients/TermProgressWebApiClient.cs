@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using TermProgress.Library.Authentications;
-using TermProgress.Worker.Configurations;
+using TermProgress.Functions.Configurations;
 
-namespace TermProgress.Worker.Clients
+namespace TermProgress.Functions.Clients
 {
     /// <summary>
     /// Represents a term progress web API client.
