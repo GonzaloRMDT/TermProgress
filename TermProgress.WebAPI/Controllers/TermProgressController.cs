@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TermProgress.Library.Clients;
-using TermProgress.Library.Terms;
+using TermProgress.Library.Services;
 
 namespace TermProgress.WebAPI.Controllers
 {
@@ -18,24 +19,24 @@ namespace TermProgress.WebAPI.Controllers
     public class TermProgressController : ControllerBase
     {
         /// <summary>
-        /// Client instance.
+        /// Logger instance.
         /// </summary>
-        private readonly IClient _client;
+        private readonly ILogger<TermProgressController> _logger;
 
         /// <summary>
-        /// Term message.
+        /// Status creation service.
         /// </summary>
-        private readonly ITermMessage _termMessage;
+        private readonly IStatusCreationService _statusCreationService;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="client">Client instance.</param>
-        /// <param name="termMessage">Term message instance.</param>
-        public TermProgressController(IClient client, ITermMessage termMessage)
+        /// <param name="logger">Logger instance.</param>
+        /// <param name="statusCreationService">Status creation service.</param>
+        public TermProgressController(ILogger<TermProgressController> logger, IStatusCreationService statusCreationService)
         {
-            _client = client;
-            _termMessage = termMessage;
+            _logger = logger;
+            _statusCreationService = statusCreationService;
         }
 
         /// POST api/v1/TermProgress/{client}/[action]
@@ -43,11 +44,12 @@ namespace TermProgress.WebAPI.Controllers
         /// <summary>
         /// Creates status.
         /// </summary>
+        /// <param name="clientType">Client type.</param>
         [HttpPost("{client}/[action]")]
-        public async void CreateStatus()
+        public async void CreateStatus(ClientType clientType)
         {
-            string termMessage = _termMessage.Compose();
-            await _client.CreateStatusAsync(termMessage);
+            _logger.LogInformation("User requested term status creation on Twitter.");
+            await _statusCreationService.CreateStatus(clientType);
         }
     }
 }

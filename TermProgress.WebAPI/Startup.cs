@@ -3,25 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Configurations;
-using TermProgress.Library.Terms;
-using Microsoft.AspNetCore.Localization;
 using TermProgress.Library.Providers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using TermProgress.Library.Authentications.JsonWebTokens;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
+using TermProgress.Library.Services;
+using TermProgress.Library.Terms;
 
 namespace TermProgress.WebAPI
 {
@@ -41,8 +37,11 @@ namespace TermProgress.WebAPI
             services
                 .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientConfiguration).Assembly)
                 .AddJsonWebToken(Configuration.GetSection(nameof(JsonWebTokenConfiguration)))
+                .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddSingleton<IClient, TwitterClient>()
+                .AddSingleton<IClientFactory, ClientFactory>()
                 .AddSingleton<IDateTimeProvider, DateTimeProvider>()
+                .AddSingleton<IStatusCreationService, StatusCreationService>()
                 .AddSingleton<ITerm, Term>()
                 .AddSingleton<ITermMessage, TermMessage>()
                 .AddSingleton<ITermProgressBar, TermProgressBar>()

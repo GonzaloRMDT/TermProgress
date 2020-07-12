@@ -4,11 +4,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 using TermProgress.Library.Authentications;
-using TermProgress.Library.Authentications.JsonWebTokens;
-using TermProgress.Library.Configurations;
+using TermProgress.Library.Services;
 
 namespace TermProgress.WebAPI.Controllers
 {
@@ -18,31 +16,24 @@ namespace TermProgress.WebAPI.Controllers
     public class AuthenticationController : ControllerBase
     {
         /// <summary>
-        /// Application configuration.
+        /// Logger instance.
         /// </summary>
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly ILogger<AuthenticationController> _logger;
 
         /// <summary>
-        /// JSON Web Token configuration.
+        /// Authentication service instance.
         /// </summary>
-        private readonly JsonWebTokenConfiguration _jsonWebTokenConfiguration;
-
-        /// <summary>
-        /// JSON Web Token builder.
-        /// </summary>
-        private readonly IJsonWebTokenBuilder _jsonWebTokenBuilder;
+        private readonly IAuthenticationService _authenticationService;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        public AuthenticationController(
-            IOptions<ApplicationConfiguration> applicationConfiguration,
-            IOptions<JsonWebTokenConfiguration> jsonWebTokenConfiguration,
-            IJsonWebTokenBuilder jsonWebTokenBuilder)
+        /// <param name="logger">Logger instance.</param>
+        /// <param name="authenticationService">Authentication service instance.</param>
+        public AuthenticationController(ILogger<AuthenticationController> logger, IAuthenticationService authenticationService)
         {
-            _applicationConfiguration = applicationConfiguration.Value;
-            _jsonWebTokenConfiguration = jsonWebTokenConfiguration.Value;
-            _jsonWebTokenBuilder = jsonWebTokenBuilder;
+            _logger = logger;
+            _authenticationService = authenticationService;
         }
 
         /// POST api/v1/authentication
@@ -55,26 +46,16 @@ namespace TermProgress.WebAPI.Controllers
         [HttpPost]
         public IActionResult Authenticate(UserCredentials userCredentials)
         {
-            if (_applicationConfiguration.AdminUsername == userCredentials.Username
-                && _applicationConfiguration.AdminPassword == userCredentials.Password)
-            {
-                string jsonWebToken = _jsonWebTokenBuilder
-                    .SetEncoding(Encoding.UTF8)
-                    .SetSecretKey(_jsonWebTokenConfiguration.SecretKey)
-                    .SetAlgorithm(SecurityAlgorithms.HmacSha256)
-                    .SetIssuer(_jsonWebTokenConfiguration.Issuer)
-                    .SetAudience(_jsonWebTokenConfiguration.Audience)
-                    .SetValidSince(DateTime.Now)
-                    .SetExpiration(DateTime.Now.Add(_jsonWebTokenConfiguration.TokenLifetime))
-                    .AddClaim(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()))
-                    .AddClaim(new Claim("name", userCredentials.Username))
-                    .AddClaim(new Claim(ClaimTypes.Role, "Admin"))
-                    .Build();
+            _logger.LogInformation("User requested authentication.");
 
-                return Ok(new TokenResponse { Token = jsonWebToken });
+            string authentication = _authenticationService.Authenticate(userCredentials);
+
+            if (string.IsNullOrWhiteSpace(authentication) == true)
+            {
+                return Unauthorized();
             }
 
-            return Unauthorized();
+            return Ok(new TokenResponse { Token = authentication });
         }
     }
 }
