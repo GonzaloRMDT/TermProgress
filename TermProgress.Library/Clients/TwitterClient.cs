@@ -14,6 +14,7 @@ namespace TermProgress.Library.Clients
     public class TwitterClient : SocialNetworkClient<TwitterClientConfiguration>, IClient
     {
         #region << Private fields >>
+
         /// <summary>
         /// Client credentials.
         /// </summary>
