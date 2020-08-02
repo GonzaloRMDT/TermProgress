@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>8633960b-9ffe-41c8-a0ff-c190b406c2fc</UserSecretsId>
     <ReleaseVersion>1.1.0</ReleaseVersion>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj">
