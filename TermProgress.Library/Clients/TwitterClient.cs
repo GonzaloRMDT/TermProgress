@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Options;
 using TermProgress.Library.Configurations;
 using Tweetinvi;
@@ -27,8 +28,9 @@ namespace TermProgress.Library.Clients
         /// <summary>
         /// Class constructor.
         /// </summary>
+        /// <param name="mapper">Mapper instance.</param>
         /// <param name="twitterClientConfiguration">Twitter client configuration.</param>
-        public TwitterClient(IOptions<TwitterClientConfiguration> twitterClientConfiguration) : base(twitterClientConfiguration)
+        public TwitterClient(IMapper mapper, IOptions<TwitterClientConfiguration> twitterClientConfiguration) : base(mapper, twitterClientConfiguration)
         {
             SetCredentials();
         }
@@ -37,9 +39,10 @@ namespace TermProgress.Library.Clients
 
         #region << Public methods >>
 
-        public async Task<ITweet> CreateStatusAsync(string message)
+        public async Task<SocialNetworkStatus> CreateStatusAsync(string message)
         {
-            return await Sync.ExecuteTaskAsync(() => Auth.ExecuteOperationWithCredentials(_credentials, () => Tweet.PublishTweet(message)));
+            var tweet = await Sync.ExecuteTaskAsync(() => Auth.ExecuteOperationWithCredentials(_credentials, () => Tweet.PublishTweet(message)));
+            return mapper.Map<SocialNetworkStatus>(tweet);
         }
 
         #endregion

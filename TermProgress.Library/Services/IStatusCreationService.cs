@@ -13,6 +13,7 @@ namespace TermProgress.Library.Services
         /// </summary>
         /// <remarks>Asynchronous method.</remarks>
         /// <param name="clientType">Client type.</param>
-        Task CreateStatus(ClientType clientType);
+        /// <returns>Task with social network status</returns>
+        Task<SocialNetworkStatus> CreateStatusAsync(ClientType clientType);
     }
 }

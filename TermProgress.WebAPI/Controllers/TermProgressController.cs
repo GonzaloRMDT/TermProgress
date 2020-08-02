@@ -42,14 +42,14 @@ namespace TermProgress.WebAPI.Controllers
         /// POST api/v1/TermProgress/{client}/[action]
         /// 
         /// <summary>
-        /// Creates status.
+        /// Creates status asynchronously.
         /// </summary>
         /// <param name="clientType">Client type.</param>
         [HttpPost("{client}/[action]")]
-        public async void CreateStatus(ClientType clientType)
+        public async Task<SocialNetworkStatus> CreateStatusAsync(ClientType clientType)
         {
             _logger.LogInformation("User requested term status creation on Twitter.");
-            await _statusCreationService.CreateStatus(clientType);
+            return await _statusCreationService.CreateStatusAsync(clientType);
         }
     }
 }

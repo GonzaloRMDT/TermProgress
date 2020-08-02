@@ -32,11 +32,11 @@ namespace TermProgress.Library.Services
             _termMessage = termMessage;
         }
 
-        public async Task CreateStatus(ClientType clientType)
+        public async Task<SocialNetworkStatus> CreateStatusAsync(ClientType clientType)
         {
             IClient client = _clientFactory.Create(clientType);
             string termMessage = _termMessage.Compose();
-            await client.CreateStatusAsync(termMessage);
+            return await client.CreateStatusAsync(termMessage);
         }
     }
 }
