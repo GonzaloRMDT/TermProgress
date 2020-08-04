@@ -8,9 +8,9 @@ namespace TermProgress.Library.Configurations
     public class ApplicationConfiguration
     {
         /// <summary>
-        /// Gets or sets the application culture.
+        /// Gets or sets the admin password.
         /// </summary>
-        public string Culture { get; set; }
+        public string AdminPassword { get; set; }
 
         /// <summary>
         /// Gets or sets the admin user name.
@@ -18,8 +18,13 @@ namespace TermProgress.Library.Configurations
         public string AdminUsername { get; set; }
 
         /// <summary>
-        /// Gets or sets the admin password.
+        /// Gets or sets the application culture.
         /// </summary>
-        public string AdminPassword { get; set; }
+        public string Culture { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application version.
+        /// </summary>
+        public string Version { get; set; }
     }
 }
