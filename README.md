@@ -14,15 +14,15 @@ It's designed as a web API that listens to incoming status creation requests, an
 1. Get a Twitter dev account on [https://developer.twitter.com/](https://developer.twitter.com/).
    
 2. Set the following variables on your Term Progress API production environment:
-   1. `APPLICATIONCONFIGURATION__ADMINUSERNAME`: your API admin username.
-   2. `APPLICATIONCONFIGURATION__ADMINPASSWORD`: your API admin password. 
-   3. `TWITTERCLIENTCONFIGURATION__ACCESSTOKEN`: your Twitter access token.
-   4. `TWITTERCLIENTCONFIGURATION__ACCESSTOKENSECRET`: your Twitter access token secret.
-   5. `TWITTERCLIENTCONFIGURATION__CONSUMERKEY`: your Twitter consumer key.
-   6. `TWITTERCLIENTCONFIGURATION__CONSUMERSECRET`: your Twitter consumer secret.
-   7. `JSONWEBTOKENCONFIGURATION__AUDIENCE`: a JSON Web Token authentication audience identity.
-   8. `JSONWEBTOKENCONFIGURATION__ISSUER`: JSON Web Token authentication issuer identity.
-   9. `JSONWEBTOKENCONFIGURATION__SECRETKEY`: JSON Web Token authentication secret key.
+   1. `ApplicationConfiguration:AdminUsername`: your API admin username.
+   2. `ApplicationConfiguration:AdminPassword`: your API admin password. 
+   3. `TwitterClientConfiguration:AccessToken`: your Twitter access token.
+   4. `TwitterClientConfiguration:AccessTokenSecret`: your Twitter access token secret.
+   5. `TwitterClientConfiguration:ConsumerKey`: your Twitter consumer key.
+   6. `TwitterClientConfiguration:ConsumerSecret`: your Twitter consumer secret.
+   7. `JsonWebTokenConfiguration:Audience`: a JSON Web Token authentication audience identity.
+   8. `JsonWebTokenConfiguration:Issuer`: a JSON Web Token authentication issuer identity.
+   9. `JsonWebTokenConfiguration:SecretKey`: a JSON Web Token authentication secret key.
 
 3.  On `TermProgress.WebAPI/appsettings.json`, set the following key values:
     1.  `Culture`: Set the desired culture that will be used on tweet generation. By default, it is `es-AR`.
@@ -30,12 +30,12 @@ It's designed as a web API that listens to incoming status creation requests, an
     3.  `DurationInYears`: set the number of years that the term should last.
    
 4. Set the following variables on your Term Progress worker production environment:
-   1. `APPLICATION_ADMIN_USERNAME`: admin username; must be the same as the one you set on your Term Progress API `APPLICATIONCONFIGURATION_ADMINUSERNAME` environment variable.
-   2. `APPLICATION_ADMIN_PASSWORD`: admin password; must be the same as the one you set on your Term Progress API `APPLICATIONCONFIGURATION__ADMINPASSWORD` environment variable.
-   3. `APPLICATION_AUTHENTICATION_ENDPOINT_URL`: your API authentication endpoint URL. By default, it is `yourdomain.com/api/v1/authentication`.
-   4. `TWITTER_STATUS_CREATION_ENDPOINT_URL`: your API Twitter status creation endpoint URL. By default, it is `yourdomain.com/api/v1/termprogress/twitter/createstatus`.
+   1. `ApplicationConfiguration:ApplicationAdminUsername`: admin username; must be the same as the one you set on your Term Progress API `ApplicationConfiguration:AdminUsername` environment variable.
+   2. `ApplicationConfiguration:ApplicationAdminPassword`: admin password; must be the same as the one you set on your Term Progress API `ApplicationConfiguration:AdminPassword` environment variable.
+   3. `ApplicationConfiguration:ApplicationAuthenticationEndpointUrl`: your API authentication endpoint URL. By default, it is `yourdomain.com/api/v1/authentication`.
+   4. `ApplicationConfiguration:TwitterStatusCreationEndpointUrl`: your API Twitter status creation endpoint URL. By default, it is `yourdomain.com/api/v1/termprogress/twitter/createstatus`.
 
-You should set your worker function as a timer triggered every midnight.
+**You should set your worker function as a timer triggered every midnight.**
 
 ## Software license
 This software is licensed under the [GNU General Public License v3.0](./LICENSE.md).
