@@ -37,6 +37,6 @@ Global
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
 		description = Term Progress is a Twitter bot written in C#/.NET Core and inspired by @year_progress that periodically creates tweets with information about public officials' terms advance status. It was created originally for @mandatopresiAR, to track the argentine presidential term, but it can be extended to any public official tenure.
-		version = 1.2.0
+		version = 1.3.0
 	EndGlobalSection
 EndGlobal

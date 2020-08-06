@@ -21,10 +21,10 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/v1/termprogress/twitter/createstatus",
+      "applicationUrl": "https://localhost:55159;http://localhost:54443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:55159;http://localhost:54443"
+      }
     }
   }
 }
