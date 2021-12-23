@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace TermProgress.Library.Configurations
+﻿namespace TermProgress.Library.Options
 {
     /// <summary>
-    /// Represents a Twitter client configuration.
+    /// Represents the Twitter client options.
     /// </summary>
-    public class TwitterClientConfiguration
+    public class TwitterClientOptions
     {
         /// <summary>
         /// Gets or sets the client access token.

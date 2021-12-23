@@ -1,64 +1,53 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using TermProgress.Library.Authentications;
 using TermProgress.Library.Authentications.JsonWebTokens;
-using TermProgress.Library.Configurations;
+using TermProgress.Library.Options;
 
 namespace TermProgress.Library.Services
 {
     /// <summary>
-    /// Authentication service.
+    /// Represents an authentication service.
     /// </summary>
     /// <inheritdoc />
     public class AuthenticationService : IAuthenticationService
     {
-        /// <summary>
-        /// Application configuration.
-        /// </summary>
-        private readonly ApplicationConfiguration _applicationConfiguration;
-
-        /// <summary>
-        /// JSON Web Token configuration.
-        /// </summary>
-        private readonly JsonWebTokenConfiguration _jsonWebTokenConfiguration;
-
-        /// <summary>
-        /// JSON Web Token builder.
-        /// </summary>
-        private readonly IJsonWebTokenBuilder _jsonWebTokenBuilder;
+        private readonly IOptions<ApplicationOptions> applicationOptions;
+        private readonly IOptions<TokenOptions> tokenOptions;
+        private readonly IJsonWebTokenBuilder tokenBuilder;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="applicationConfiguration">Application configuration.</param>
-        /// <param name="jsonWebTokenConfiguration">JSON Web Token configuration.</param>
-        /// <param name="jsonWebTokenBuilder">JSON Web Token builder</param>
+        /// <param name="applicationOptions">A <see cref="IOptions{T}"/> with a generic type argument of <see cref="ApplicationOptions"/>.</param>
+        /// <param name="tokenOptions">A <see cref="IOptions{T}"/> with a generic type argument of <see cref="TokenOptions"/>.</param>
+        /// <param name="tokenBuilder">A <see cref="IJsonWebTokenBuilder"/> implementation.</param>
         public AuthenticationService(
-            IOptions<ApplicationConfiguration> applicationConfiguration,
-            IOptions<JsonWebTokenConfiguration> jsonWebTokenConfiguration,
-            IJsonWebTokenBuilder jsonWebTokenBuilder)
+            IOptions<ApplicationOptions> applicationOptions,
+            IOptions<TokenOptions> tokenOptions,
+            IJsonWebTokenBuilder tokenBuilder)
         {
-            _applicationConfiguration = applicationConfiguration.Value;
-            _jsonWebTokenConfiguration = jsonWebTokenConfiguration.Value;
-            _jsonWebTokenBuilder = jsonWebTokenBuilder;
+            this.applicationOptions = applicationOptions;
+            this.tokenOptions = tokenOptions;
+            this.tokenBuilder = tokenBuilder;
         }
 
         public string Authenticate(UserCredentials userCredentials)
         {
             if (IsAuthenticatedUser(userCredentials))
             {
-                string jsonWebToken = _jsonWebTokenBuilder
+                string jsonWebToken = tokenBuilder
                     .SetEncoding(Encoding.UTF8)
-                    .SetSecretKey(_jsonWebTokenConfiguration.SecretKey)
+                    .SetSecretKey(tokenOptions.Value.SecretKey)
                     .SetAlgorithm(SecurityAlgorithms.HmacSha256)
-                    .SetIssuer(_jsonWebTokenConfiguration.Issuer)
-                    .SetAudience(_jsonWebTokenConfiguration.Audience)
+                    .SetIssuer(tokenOptions.Value.Issuer)
+                    .SetAudience(tokenOptions.Value.Audience)
                     .SetValidSince(DateTime.Now)
-                    .SetExpiration(DateTime.Now.Add(_jsonWebTokenConfiguration.TokenLifetime))
+                    .SetExpiration(DateTime.Now.Add(tokenOptions.Value.TokenLifetime))
                     .AddClaim(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()))
                     .AddClaim(new Claim("name", userCredentials.Username))
                     .AddClaim(new Claim(ClaimTypes.Role, "Admin"))
@@ -72,8 +61,8 @@ namespace TermProgress.Library.Services
 
         public bool IsAuthenticatedUser(UserCredentials userCredentials)
         {
-            bool isValidUsername = _applicationConfiguration.AdminUsername == userCredentials.Username;
-            bool isValidPassword = _applicationConfiguration.AdminPassword == userCredentials.Password;
+            bool isValidUsername = applicationOptions.Value.AdminUsername == userCredentials.Username;
+            bool isValidPassword = applicationOptions.Value.AdminPassword == userCredentials.Password;
             bool isAuthenticUser = isValidUsername && isValidPassword;
             return isAuthenticUser;
         }

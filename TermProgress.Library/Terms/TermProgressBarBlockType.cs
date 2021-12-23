@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace TermProgress.Library.Terms
+﻿namespace TermProgress.Library.Terms
 {
     /// <summary>
-    /// <c>TermProgressBarBlockType</c> enumeration.
+    /// A term progress bar block type enumeration.
     /// </summary>
     public enum TermProgressBarBlockType
     {

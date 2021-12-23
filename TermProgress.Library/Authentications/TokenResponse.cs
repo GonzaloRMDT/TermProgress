@@ -1,12 +1,13 @@
-﻿using System;
-
-namespace TermProgress.Library.Authentications
+﻿namespace TermProgress.Library.Authentications
 {
     /// <summary>
-    /// Authentication token response.
+    /// Represents a token response.
     /// </summary>
     public class TokenResponse
     {
+        /// <summary>
+        /// Gets or sets the token.
+        /// </summary>
         public string Token { get; set; }
     }
 }

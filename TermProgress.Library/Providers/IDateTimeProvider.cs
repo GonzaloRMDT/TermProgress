@@ -7,6 +7,10 @@ namespace TermProgress.Library.Providers
     /// </summary>
     public interface IDateTimeProvider
     {
+        /// <summary>
+        /// Gets the current system <see cref="DateTime"/>.
+        /// </summary>
+        /// A <see cref="DateTime"/> value.
         DateTime Now { get; }
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
-using TermProgress.Library.Configurations;
+using System.Text;
+using TermProgress.Library.Options;
 
 namespace TermProgress.Library.Authentications.JsonWebTokens.MappingProfiles
 {
     /// <summary>
-    /// Represents a <c>TokenValidationParameters</c> mapping profile.
+    /// Represents a token validation parameters mapping profile.
     /// </summary>
     public class TokenValidationParametersProfile : Profile
     {
@@ -16,7 +15,7 @@ namespace TermProgress.Library.Authentications.JsonWebTokens.MappingProfiles
         /// </summary>
         public TokenValidationParametersProfile()
         {
-            CreateMap<JsonWebTokenConfiguration, TokenValidationParameters>()
+            CreateMap<TokenOptions, TokenValidationParameters>()
                 .ForMember(dest => dest.IssuerSigningKey, opt => opt.MapFrom(src => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(src.SecretKey))))
                 .ForMember(dest => dest.ValidAudience, opt => opt.MapFrom(src => src.Audience))
                 .ForMember(dest => dest.ValidIssuer, opt => opt.MapFrom(src => src.Issuer));

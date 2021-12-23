@@ -1,5 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 
 namespace TermProgress.Library.Authentications.JsonWebTokens
 {
@@ -15,8 +14,8 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="headerBuilder">JSON Web Token header builder instance.</param>
-        /// <param name="payloadBuilder">JSON Web Token payload builder instance.</param>
+        /// <param name="headerBuilder">A <see cref="IJsonWebTokenHeaderBuilder"/> implementation.</param>
+        /// <param name="payloadBuilder">A <see cref="IJsonWebTokenPayloadBuilder"/> implementation.</param>
         public JsonWebTokenSerialBuilder(IJsonWebTokenHeaderBuilder headerBuilder, IJsonWebTokenPayloadBuilder payloadBuilder)
         {
             Header = headerBuilder;

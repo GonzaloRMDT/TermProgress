@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace TermProgress.Library.Authentications.JsonWebTokens
+﻿namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
-    /// <c>IJsonWebTokenSerialBuilder</c> interface.
+    /// Defines the common structure for JSON web token serial builders.
     /// </summary>
     public interface IJsonWebTokenSerialBuilder : IBuilder<string>
     {
         /// <summary>
-        /// Gets the JSON Web Token header builder instance.
+        /// Gets a <see cref="IJsonWebTokenHeaderBuilder"/> implementation.
         /// </summary>
         IJsonWebTokenHeaderBuilder Header { get; }
 
         /// <summary>
-        /// Gets the JSON Web Token payload builder instance.
+        /// Gets a <see cref="IJsonWebTokenPayloadBuilder"/> implementation.
         /// </summary>
         IJsonWebTokenPayloadBuilder Payload { get; }
     }

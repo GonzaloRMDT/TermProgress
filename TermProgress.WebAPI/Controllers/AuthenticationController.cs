@@ -1,8 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TermProgress.Library.Authentications;
@@ -15,40 +11,32 @@ namespace TermProgress.WebAPI.Controllers
     [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
-        /// <summary>
-        /// Logger instance.
-        /// </summary>
-        private readonly ILogger<AuthenticationController> _logger;
-
-        /// <summary>
-        /// Authentication service instance.
-        /// </summary>
-        private readonly IAuthenticationService _authenticationService;
+        private readonly ILogger<AuthenticationController> logger;
+        private readonly IAuthenticationService authenticationService;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="logger">Logger instance.</param>
-        /// <param name="authenticationService">Authentication service instance.</param>
+        /// <param name="logger">A <see cref="ILogger{T}"/> implementation with a generic type argument of <see cref="AuthenticationController"/>.</param>
+        /// <param name="authenticationService">A <see cref="IAuthenticationService"/> implementation.</param>
         public AuthenticationController(ILogger<AuthenticationController> logger, IAuthenticationService authenticationService)
         {
-            _logger = logger;
-            _authenticationService = authenticationService;
+            this.logger = logger;
+            this.authenticationService = authenticationService;
         }
 
         /// POST api/v1/authentication
-        /// 
         /// <summary>
         /// Authenticates user.
         /// </summary>
-        /// <param name="userCredentials">User credentials.</param>
+        /// <param name="userCredentials">A <see cref="UserCredentials"/> instance.</param>
         /// <returns>JSON Web Token for authenticated user; else, unauthorized response.</returns>
         [HttpPost]
         public IActionResult Authenticate(UserCredentials userCredentials)
         {
-            _logger.LogInformation("User requested authentication.");
+            logger.LogInformation("User requested authentication.");
 
-            string authentication = _authenticationService.Authenticate(userCredentials);
+            string authentication = authenticationService.Authenticate(userCredentials);
 
             if (string.IsNullOrWhiteSpace(authentication) == true)
             {

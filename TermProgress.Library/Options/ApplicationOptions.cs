@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace TermProgress.Library.Configurations
+﻿namespace TermProgress.Library.Options
 {
     /// <summary>
-    /// Represents an application configuration.
+    /// Represents the application options.
     /// </summary>
-    public class ApplicationConfiguration
+    public class ApplicationOptions
     {
         /// <summary>
         /// Gets or sets the admin password.

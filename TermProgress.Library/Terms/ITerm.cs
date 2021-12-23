@@ -2,35 +2,38 @@
 
 namespace TermProgress.Library.Terms
 {
+    /// <summary>
+    /// Defines the common structure for terms.
+    /// </summary>
     public interface ITerm
     {
         /// <summary>
-        /// Term starting date.
+        /// Gets the term starting <see cref="DateTime"/>.
         /// </summary>
         DateTime StartingDate { get; }
 
         /// <summary>
-        /// Term ending date.
+        /// Gets the term ending <see cref="DateTime"/>.
         /// </summary>
         DateTime EndingDate { get; }
 
         /// <summary>
-        /// Term total days.
+        /// Gets the term total days.
         /// </summary>
         int TotalDays { get; }
 
         /// <summary>
-        /// Term elapsed days.
+        /// Gets the term elapsed days.
         /// </summary>
         int ElapsedDays { get; }
 
         /// <summary>
-        /// Term remaining days.
+        /// Gets the term remaining days.
         /// </summary>
         int RemainingDays { get; }
 
         /// <summary>
-        /// Term progress.
+        /// Gets the term progress.
         /// </summary>
         double Progress { get; }
     }

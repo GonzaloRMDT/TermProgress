@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TermProgress.Library.Clients
+﻿namespace TermProgress.Library.Clients
 {
     /// <summary>
     /// Enumeration of client types.

@@ -1,7 +1,7 @@
 ﻿namespace TermProgress.Library.Terms
 {
     /// <summary>
-    /// <c>ITermMessage</c> interface.
+    /// Defines the common structure for term messages.
     /// </summary>
     public interface ITermMessage
     {

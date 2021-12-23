@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Extensions.Options;
-using TermProgress.Library.Configurations;
+using System.Threading.Tasks;
+using TermProgress.Library.Options;
 using Tweetinvi;
 using Tweetinvi.Models;
 
@@ -12,55 +11,36 @@ namespace TermProgress.Library.Clients
     /// Represents a Twitter client.
     /// </summary>
     /// <inheritdoc />
-    public class TwitterClient : SocialNetworkClient<TwitterClientConfiguration>, IClient
+    public class TwitterClient : SocialNetworkClient<TwitterClientOptions>, IClient
     {
-        #region << Private fields >>
-
-        /// <summary>
-        /// Client credentials.
-        /// </summary>
-        private ITwitterCredentials _credentials;
-
-        #endregion
-
-        #region << Constructors >>
+        private ITwitterCredentials credentials;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="mapper">Mapper instance.</param>
-        /// <param name="twitterClientConfiguration">Twitter client configuration.</param>
-        public TwitterClient(IMapper mapper, IOptions<TwitterClientConfiguration> twitterClientConfiguration) : base(mapper, twitterClientConfiguration)
+        /// <param name="mapper">A <see cref="IMapper"/> implementation.</param>
+        /// <param name="twitterClientOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TwitterClientOptions"/>.</param>
+        public TwitterClient(IMapper mapper, IOptions<TwitterClientOptions> twitterClientOptions) : base(mapper, twitterClientOptions)
         {
             SetCredentials();
         }
 
-        #endregion
-
-        #region << Public methods >>
-
         public async Task<SocialNetworkStatus> CreateStatusAsync(string message)
         {
-            var tweet = await Sync.ExecuteTaskAsync(() => Auth.ExecuteOperationWithCredentials(_credentials, () => Tweet.PublishTweet(message)));
+            var tweet = await Sync.ExecuteTaskAsync(() => Auth.ExecuteOperationWithCredentials(credentials, () => Tweet.PublishTweet(message)));
             return mapper.Map<SocialNetworkStatus>(tweet);
         }
-
-        #endregion
-
-        #region << Private methods >>
 
         /// <summary>
         /// Sets user credentials.
         /// </summary>
         private void SetCredentials()
         {
-            _credentials = Auth.SetUserCredentials(
+            credentials = Auth.SetUserCredentials(
                 clientConfiguration.ConsumerKey,
                 clientConfiguration.ConsumerSecret,
                 clientConfiguration.AccessToken,
                 clientConfiguration.AccessTokenSecret);
         }
-
-        #endregion
     }
 }

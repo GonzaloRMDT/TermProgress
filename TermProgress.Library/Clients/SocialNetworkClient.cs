@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Extensions.Options;
 
 namespace TermProgress.Library.Clients
@@ -10,21 +9,14 @@ namespace TermProgress.Library.Clients
     /// <inheritdoc />
     public abstract class SocialNetworkClient<TConfiguration> where TConfiguration : class, new()
     {
-        /// <summary>
-        /// Mapper instance.
-        /// </summary>
         protected readonly IMapper mapper;
-
-        /// <summary>
-        /// Client configuration.
-        /// </summary>
         protected readonly TConfiguration clientConfiguration;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="mapper">Mapper instance.</param>
-        /// <param name="clientConfiguration">Client configuration option.</param>
+        /// <param name="mapper">A <see cref="IMapper"/> implementation..</param>
+        /// <param name="clientConfiguration">A <see cref="IOptions{T}"/> with a generic type argument of <see cref="TConfiguration"/>.</param>
         public SocialNetworkClient(IMapper mapper, IOptions<TConfiguration> clientConfiguration)
         {
             this.mapper = mapper;

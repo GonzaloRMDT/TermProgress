@@ -1,5 +1,5 @@
-﻿using System;
-using Moq;
+﻿using Moq;
+using System;
 using TermProgress.Library.Terms;
 
 namespace TermProgress.Tests.Library.Terms

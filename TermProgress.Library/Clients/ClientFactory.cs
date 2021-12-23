@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace TermProgress.Library.Clients
@@ -10,23 +9,21 @@ namespace TermProgress.Library.Clients
     /// <inheritdoc />
     public class ClientFactory : IClientFactory
     {
-        /// <summary>
-        /// Clients enumeration.
-        /// </summary>
-        IEnumerable<IClient> _clients;
+        private readonly IEnumerable<IClient> clients;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
+        /// <param name="clients">An <see cref="IEnumerable{T}"/> of <typeparamref name="IClient"/>.</param>
         public ClientFactory(IEnumerable<IClient> clients)
         {
-            _clients = clients;
+            this.clients = clients;
         }
 
         public IClient Create(ClientType clientType)
         {
             var clientName = clientType.ToString() + "Client";
-            return _clients.First(client => client.GetType().Name == clientName);
+            return clients.First(client => client.GetType().Name == clientName);
         }
     }
 }

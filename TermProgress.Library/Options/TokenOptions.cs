@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace TermProgress.Library.Configurations
+namespace TermProgress.Library.Options
 {
     /// <summary>
-    /// Represents the JSON Web Token configuration.
+    /// Represents the token options.
     /// </summary>
-    public class JsonWebTokenConfiguration
+    public class TokenOptions
     {
         /// <summary>
         /// Gets or sets the intended audience of the JSON web token.
@@ -41,7 +41,6 @@ namespace TermProgress.Library.Configurations
         /// Gets or sets whether isser signing key should be validated.
         /// </summary>
         public bool ValidateIssuerSigningKey { get; set; }
-
 
         /// <summary>
         /// Gets or sets whether token lifetime should be validated.

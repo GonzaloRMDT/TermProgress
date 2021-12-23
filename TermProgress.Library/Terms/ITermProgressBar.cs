@@ -1,7 +1,7 @@
 ﻿namespace TermProgress.Library.Terms
 {
     /// <summary>
-    /// <c>ITermProgressBar</c> interface.
+    /// Defines the common structure for term progress bars.
     /// </summary>
     public interface ITermProgressBar
     {

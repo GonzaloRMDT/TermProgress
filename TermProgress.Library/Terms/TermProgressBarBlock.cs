@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace TermProgress.Library.Terms
+﻿namespace TermProgress.Library.Terms
 {
     /// <summary>
-    /// Represents 
+    /// Represents a term progress bar block.
     /// </summary>
     public class TermProgressBarBlock
     {
         /// <summary>
-        /// Term progress bar block type.
+        /// Gets or sets the term progress bar block type.
         /// </summary>
         public TermProgressBarBlockType Type { get; set; }
 
         /// <summary>
-        /// Term progress bar block symbol.
+        /// Gets or sets the term progress bar block symbol.
         /// </summary>
         public char Symbol { get; set; }
     }

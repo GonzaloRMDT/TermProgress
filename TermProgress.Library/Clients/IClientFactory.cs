@@ -1,7 +1,7 @@
 ﻿namespace TermProgress.Library.Clients
 {
     /// <summary>
-    /// <c>IClientFactory</c> interface.
+    /// Defines the common structure for client factories.
     /// </summary>
     public interface IClientFactory
     {
@@ -9,7 +9,7 @@
         /// Creates client instance.
         /// </summary>
         /// <param name="clientType">Type of client to create.</param>
-        /// <returns>Client instance.</returns>
+        /// <returns>A <see cref="IClient"/> implementation.</returns>
         IClient Create(ClientType clientType);
     }
 }

@@ -1,38 +1,29 @@
-﻿using System;
-
-namespace TermProgress.Library.Terms
+﻿namespace TermProgress.Library.Terms
 {
     /// <summary>
     /// Represents a term message.
     /// </summary>
     public class TermMessage : ITermMessage
     {
-        /// <summary>
-        /// Term instance.
-        /// </summary>
-        /// <inheritdoc />
-        private readonly ITerm _term;
-
-        /// <summary>
-        /// Term progress bar instance.
-        /// </summary>
-        private readonly ITermProgressBar _termProgressBar;
+        private readonly ITerm term;
+        private readonly ITermProgressBar termProgressBar;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="term">Term instance.</param>
+        /// <param name="term">A <see cref="ITerm"/> implementation.</param>
+        /// <param name="termProgressBar">A <see cref="ITermProgressBar"/> implementation.</param>
         public TermMessage(ITerm term, ITermProgressBar termProgressBar)
         {
-            _term = term;
-            _termProgressBar = termProgressBar;
+            this.term = term;
+            this.termProgressBar = termProgressBar;
         }
 
         public string Compose()
         {
-            string progressBar = _termProgressBar.Compose();
-            string progressPercentage = string.Format("{0:P2}", _term.Progress);
-            return $"{progressBar} {progressPercentage}\n\n{_term.ElapsedDays}/{_term.RemainingDays}/{_term.TotalDays}";
+            string progressBar = termProgressBar.Compose();
+            string progressPercentage = string.Format("{0:P2}", term.Progress);
+            return $"{progressBar} {progressPercentage}\n\n{term.ElapsedDays}/{term.RemainingDays}/{term.TotalDays}";
         }
     }
 }

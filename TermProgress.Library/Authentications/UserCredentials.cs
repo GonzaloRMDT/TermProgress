@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TermProgress.Library.Authentications
+﻿namespace TermProgress.Library.Authentications
 {
     /// <summary>
     /// Represents the user credentials.
@@ -13,7 +11,7 @@ namespace TermProgress.Library.Authentications
         public string Username { get; set; }
 
         /// <summary>
-        /// Gets or sets the user password.
+        /// Gets or sets the password.
         /// </summary>
         public string Password { get; set; }
     }

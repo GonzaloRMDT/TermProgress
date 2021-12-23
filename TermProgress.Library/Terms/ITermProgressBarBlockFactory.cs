@@ -1,5 +1,8 @@
 ﻿namespace TermProgress.Library.Terms
 {
+    /// <summary>
+    /// Defines the common structure for term progress bar block factories.
+    /// </summary>
     public interface ITermProgressBarBlockFactory
     {
         /// <summary>
@@ -7,7 +10,7 @@
         /// </summary>
         /// <param name="comparisonDays">Comparison days.</param>
         /// <param name="elapsedDays">Term elapsed days.</param>
-        /// <returns>Progress bar block.</returns>
+        /// <returns>A <see cref="TermProgressBarBlock"/> instance.</returns>
         TermProgressBarBlock CreateProgressBarBlock(double comparisonDays, double elapsedDays);
     }
 }

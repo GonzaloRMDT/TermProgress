@@ -3,14 +3,14 @@
 namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
-    /// <c>ITokenValidationParametersFactory</c> interface.
+    /// Defines the common structure for token validation parameters factories.
     /// </summary>
     public interface ITokenValidationParametersFactory
     {
         /// <summary>
-        /// Creates <c>TokenValidationParameters</c> instance.
+        /// Creates the token validation parameters.
         /// </summary>
-        /// <returns><c>TokenValidationParameters</c> instance.</returns>
+        /// <returns>A <see cref="TokenValidationParameters"/> instance.</returns>
         TokenValidationParameters Create();
     }
 }
