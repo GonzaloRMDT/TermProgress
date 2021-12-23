@@ -27,7 +27,7 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
 
         public TokenValidationParameters Create()
         {
-            return mapper.Map<TokenValidationParameters>(tokenOptions);
+            return mapper.Map<TokenValidationParameters>(tokenOptions.Value);
         }
     }
 }

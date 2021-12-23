@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Options;
 using TermProgress.Library.Providers;
 using TermProgress.Library.Services;
 using TermProgress.Library.Terms;
+using TermProgress.WebAPI.Controllers;
+using TermProgress.WebAPI.Exceptions;
 
 namespace TermProgress.WebAPI
 {
@@ -28,6 +31,9 @@ namespace TermProgress.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services
+                .AddMvc()
+                .AddApplicationPart(Assembly.GetAssembly(typeof(ExceptionsController)));
             services
                 .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
                 .AddJsonWebToken(Configuration.GetSection(nameof(TokenOptions)))
@@ -64,6 +70,15 @@ namespace TermProgress.WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            if (env.IsDevelopment())
+            {
+                app.UseExceptionHandling("/api/v1/exceptions/local-development-exception");
+            }
+            else if (env.IsStaging() || env.IsProduction())
+            {
+                app.UseExceptionHandling("/api/v1/exceptions/exception");
             }
 
             app.UseRequestLocalization();
