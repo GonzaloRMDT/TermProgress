@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/v1/weatherforecast",
+      "launchUrl": "api/v1/status",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "TermProgress.WebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/v1/termprogress/twitter/createstatus",
+      "launchUrl": "api/v1/status",
       "applicationUrl": "https://localhost:55159;http://localhost:54443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
