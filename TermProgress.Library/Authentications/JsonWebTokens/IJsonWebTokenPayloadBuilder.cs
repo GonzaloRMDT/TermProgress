@@ -12,7 +12,7 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
         /// <summary>
         /// Adds single claim.
         /// </summary>
-        /// <param name="claim">Claim instance.</param>
+        /// <param name="claim">A <see cref="Claim"/> instance.</param>
         void AddClaim(Claim claim);
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
         /// <summary>
         /// Sets claims.
         /// </summary>
-        /// <param name="claims">Claims collection.</param>
+        /// <param name="claims">An <see cref="Array"/> of <see cref="Claim"/>.</param>
         void SetClaims(Claim[] claims);
 
         /// <summary>
         /// Sets token validity ending date and time.
         /// </summary>
-        /// <param name="expiration">Token validity ending date and time.</param>
+        /// <param name="expiration">Token validity ending <see cref="DateTime"/>.</param>
         void SetExpiration(DateTime expiration);
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
         /// <summary>
         /// Sets token validity starting date and time.
         /// </summary>
-        /// <param name="validSince">Token validity starting date and time.</param>
+        /// <param name="validSince">Token validity starting <see cref="DateTime"/>.</param>
         void SetValidSince(DateTime validSince);
     }
 }

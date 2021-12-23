@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 using TermProgress.Library.Clients;
-using TermProgress.Library.Configurations;
+using TermProgress.Library.Options;
 using TermProgress.Library.Providers;
 using TermProgress.Library.Services;
 using TermProgress.Library.Terms;
@@ -35,8 +29,8 @@ namespace TermProgress.WebAPI
         {
             services.AddControllers();
             services
-                .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientConfiguration).Assembly)
-                .AddJsonWebToken(Configuration.GetSection(nameof(JsonWebTokenConfiguration)))
+                .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
+                .AddJsonWebToken(Configuration.GetSection(nameof(TokenOptions)))
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddSingleton<IClient, TwitterClient>()
                 .AddSingleton<IClientFactory, ClientFactory>()
@@ -46,14 +40,14 @@ namespace TermProgress.WebAPI
                 .AddSingleton<ITermMessage, TermMessage>()
                 .AddSingleton<ITermProgressBar, TermProgressBar>()
                 .AddSingleton<ITermProgressBarBlockFactory, TermProgressBarBlockFactory>()
-                .Configure<ApplicationConfiguration>(Configuration.GetSection(nameof(ApplicationConfiguration)))
-                .Configure<TermConfiguration>(Configuration.GetSection(nameof(TermConfiguration)))
-                .Configure<TwitterClientConfiguration>(Configuration.GetSection(nameof(TwitterClientConfiguration)))
+                .Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)))
+                .Configure<TermOptions>(Configuration.GetSection(nameof(TermOptions)))
+                .Configure<TwitterClientOptions>(Configuration.GetSection(nameof(TwitterClientOptions)))
                 .Configure<RequestLocalizationOptions>(options =>
                 {
                     var culture = Configuration
-                        .GetSection(nameof(ApplicationConfiguration))
-                        .Get<ApplicationConfiguration>()
+                        .GetSection(nameof(ApplicationOptions))
+                        .Get<ApplicationOptions>()
                         .Culture;
 
                     options.DefaultRequestCulture = new RequestCulture(culture);

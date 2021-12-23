@@ -11,77 +11,50 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
     /// <inheritdoc />
     public class JsonWebTokenPayloadBuilder : IJsonWebTokenPayloadBuilder
     {
-        #region << Fields >>
-
-        /// <summary>
-        /// Issuer identity.
-        /// </summary>
-        private string _issuer;
-
-        /// <summary>
-        /// Audience identity.
-        /// </summary>
-        private string _audience;
-
-        /// <summary>
-        /// Token validation starting date and time.
-        /// </summary>
-        private DateTime _validSince;
-
-        /// <summary>
-        /// Token validation ending date and time.
-        /// </summary>
-        private DateTime _expiration;
-
-        /// <summary>
-        /// Claims collection.
-        /// </summary>
-        private List<Claim> _claims = new List<Claim>();
-
-        #endregion
-
-        #region << Public methods >>
+        private string issuer;
+        private string audience;
+        private DateTime validSince;
+        private DateTime expiration;
+        private List<Claim> claims = new List<Claim>();
 
         public JwtPayload Build()
         {
             return new JwtPayload(
-                issuer: _issuer,
-                audience: _audience,
-                claims: _claims,
-                notBefore: _validSince,
-                expires: _expiration);
+                issuer: issuer,
+                audience: audience,
+                claims: claims,
+                notBefore: validSince,
+                expires: expiration);
         }
 
         public void AddClaim(Claim claim)
         {
-            _claims.Add(claim);
+            claims.Add(claim);
         }
 
         public void SetAudience(string audience)
         {
-            _audience = audience;
+            this.audience = audience;
         }
 
         public void SetClaims(Claim[] claims)
         {
-            _claims = new List<Claim>(claims);
+            this.claims = new List<Claim>(claims);
         }
 
         public void SetExpiration(DateTime expiration)
         {
-            _expiration = expiration;
+            this.expiration = expiration;
         }
 
         public void SetIssuer(string issuer)
         {
-            _issuer = issuer;
+            this.issuer = issuer;
         }
 
         public void SetValidSince(DateTime validSince)
         {
-            _validSince = validSince;
+            this.validSince = validSince;
         }
-
-        #endregion
     }
 }

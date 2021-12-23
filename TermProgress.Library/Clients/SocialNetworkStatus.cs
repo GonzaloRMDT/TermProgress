@@ -8,17 +8,17 @@ namespace TermProgress.Library.Clients
     public class SocialNetworkStatus
     {
         /// <summary>
-        /// Status creation date and time.
+        /// Gets or sets the status creation <see cref="DateTime"/>.
         /// </summary>
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
-        /// Status text.
+        /// Gets or sets the status message.
         /// </summary>
         public string Message { get; set; }
 
         /// <summary>
-        /// Status URL.
+        /// Gets or sets the status URL.
         /// </summary>
         public string Url { get; set; }
     }

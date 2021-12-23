@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Moq;
-using TermProgress.Library.Configurations;
+using System;
+using TermProgress.Library.Options;
 using TermProgress.Library.Terms;
 using Xunit;
 
@@ -16,7 +16,7 @@ namespace TermProgress.Tests.Library.Terms
         public void Compose_MidnightAfterFirstTermDay_ReturnsProgressBarWithOnlyUncompleteBlocks()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
             var termMock = new TermMock()
@@ -26,7 +26,7 @@ namespace TermProgress.Tests.Library.Terms
             var termProgressBarBlockFactoryMock = new TermProgressBarBlockFactoryMock()
                 .MockCreateProgressBarBlock(CreateCompletedTermProgressBarBlock(), CreateUncompletedTermProgressBarBlock());
 
-            var termProgressBar = new TermProgressBar(termConfigurationMock.Object, termMock.Object, termProgressBarBlockFactoryMock.Object);
+            var termProgressBar = new TermProgressBar(termMock.Object, termProgressBarBlockFactoryMock.Object);
 
             //// Act
             var result = termProgressBar.Compose();
@@ -40,7 +40,7 @@ namespace TermProgress.Tests.Library.Terms
         public void Compose_MidnightAfterLastTermDay_ReturnsProgressBarWithOnlyCompleteBlocks()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
             termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
 
             var termMock = new TermMock()
@@ -50,7 +50,7 @@ namespace TermProgress.Tests.Library.Terms
             var termProgressBarBlockFactoryMock = new TermProgressBarBlockFactoryMock()
                 .MockCreateProgressBarBlock(CreateCompletedTermProgressBarBlock(), CreateUncompletedTermProgressBarBlock());
 
-            var termProgressBar = new TermProgressBar(termConfigurationMock.Object, termMock.Object, termProgressBarBlockFactoryMock.Object);
+            var termProgressBar = new TermProgressBar(termMock.Object, termProgressBarBlockFactoryMock.Object);
 
             // Act
             var result = termProgressBar.Compose();
@@ -60,15 +60,12 @@ namespace TermProgress.Tests.Library.Terms
             Assert.Equal("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", result);
         }
 
-        private TermConfiguration CreateTermConfiguration()
+        private TermOptions CreateTermConfiguration()
         {
-            return new TermConfiguration
+            return new TermOptions
             {
-                DurationInYears = 4,
-                ProgressBarCompletedBlockSymbol = '▓',
-                ProgressBarUncompletedBlockSymbol = '░',
-                ProgressBarBlocksTotal = 15,
-                StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0)
+                StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0),
+                EndingDateTime = new DateTime(2023, 12, 10, 0, 0, 0)
             };
         }
 

@@ -1,41 +1,33 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TermProgress.Library.Configurations;
+using TermProgress.Library.Options;
 
 namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
-    /// Represente a <c>TokenValidationParameters</c> factory.
+    /// Represents a token validation parameters factory.
     /// </summary>
     /// <inheritdoc />
     public class TokenValidationParametersFactory : ITokenValidationParametersFactory
     {
-        /// <summary>
-        /// Mapper instance.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
-        /// Json Web Token configuration.
-        /// </summary>
-        private readonly JsonWebTokenConfiguration _jsonWebTokenConfiguration;
+        private readonly IMapper mapper;
+        private readonly IOptions<TokenOptions> tokenOptions;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="mapper">Mapper instance.</param>
-        /// <param name="jsonWebTokenConfiguration">Json Web Token configuration.</param>
-        public TokenValidationParametersFactory(IMapper mapper, IOptions<JsonWebTokenConfiguration> jsonWebTokenConfiguration)
+        /// <param name="mapper">A mapper implementation.</param>
+        /// <param name="tokenOptions">An <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TokenOptions"/></param>
+        public TokenValidationParametersFactory(IMapper mapper, IOptions<TokenOptions> tokenOptions)
         {
-            _mapper = mapper;
-            _jsonWebTokenConfiguration = jsonWebTokenConfiguration.Value;
+            this.mapper = mapper;
+            this.tokenOptions = tokenOptions;
         }
 
         public TokenValidationParameters Create()
         {
-            return _mapper.Map<TokenValidationParameters>(_jsonWebTokenConfiguration);
+            return mapper.Map<TokenValidationParameters>(tokenOptions);
         }
     }
 }

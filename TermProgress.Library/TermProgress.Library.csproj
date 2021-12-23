@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations\" />
     <Folder Include="Clients\" />
     <Folder Include="Providers\" />
     <Folder Include="Authentications\" />

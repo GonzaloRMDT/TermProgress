@@ -1,27 +1,13 @@
-﻿using System;
-using Microsoft.Extensions.Options;
-using TermProgress.Library.Configurations;
-
-namespace TermProgress.Library.Terms
+﻿namespace TermProgress.Library.Terms
 {
     /// <summary>
-    /// Represents a term progress bar block factor.
+    /// Represents a term progress bar block factory.
     /// </summary>
     /// <inheritdoc />
     public class TermProgressBarBlockFactory : ITermProgressBarBlockFactory
     {
-        /// <summary>
-        /// Term configuration.
-        /// </summary>
-        private readonly TermConfiguration _termConfiguration;
-
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
-        public TermProgressBarBlockFactory(IOptions<TermConfiguration> termConfiguration)
-        {
-            _termConfiguration = termConfiguration.Value;
-        }
+        private const char COMPLETED_BLOCK = '▓';
+        private const char UNCOMPLETED_BLOCK = '░';
 
         public TermProgressBarBlock CreateProgressBarBlock(double progressBarBlockDays, double elapsedDays)
         {
@@ -33,7 +19,7 @@ namespace TermProgress.Library.Terms
             return new TermProgressBarBlock
             {
                 Type = TermProgressBarBlockType.Completed,
-                Symbol = _termConfiguration.ProgressBarCompletedBlockSymbol
+                Symbol = COMPLETED_BLOCK
             };
         }
 
@@ -42,7 +28,7 @@ namespace TermProgress.Library.Terms
             return new TermProgressBarBlock
             {
                 Type = TermProgressBarBlockType.Uncompleted,
-                Symbol = _termConfiguration.ProgressBarUncompletedBlockSymbol
+                Symbol = UNCOMPLETED_BLOCK
             };
         }
     }

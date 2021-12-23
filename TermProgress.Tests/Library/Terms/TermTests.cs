@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Moq;
-using TermProgress.Library.Configurations;
+using System;
+using TermProgress.Library.Options;
 using TermProgress.Library.Terms;
 using TermProgress.Tests.Library.Helpers;
 using Xunit;
@@ -17,8 +17,8 @@ namespace TermProgress.Tests.Library.Terms
         public void StartingDate_CalculatedValue_ReturnsTermStartingDate()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock();
 
@@ -36,8 +36,8 @@ namespace TermProgress.Tests.Library.Terms
         public void EndingDate_CalculatedValue_ReturnsTermEndingDate()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock();
 
@@ -55,8 +55,8 @@ namespace TermProgress.Tests.Library.Terms
         public void ElapsedDays_MidnightAfterFirstTermDay_ReturnsOneElapsedDay()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
@@ -75,8 +75,8 @@ namespace TermProgress.Tests.Library.Terms
         public void ElapsedDays_MidnightAfterLastTermDay_ReturnsSameElapsedDaysAsPeriodTotalDays()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
@@ -95,8 +95,8 @@ namespace TermProgress.Tests.Library.Terms
         public void RemainingDays_MidnightAfterFirstTermDay_ReturnsTotalDaysMinusOne()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
@@ -115,8 +115,8 @@ namespace TermProgress.Tests.Library.Terms
         public void RemainingDays_MidnightAfterLastTermDay_ReturnsZeroRemainingDays()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
@@ -135,8 +135,8 @@ namespace TermProgress.Tests.Library.Terms
         public void TotalDays_CalculatedValue_ReturnsTermTotalDays()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock();
 
@@ -154,8 +154,8 @@ namespace TermProgress.Tests.Library.Terms
         public void Progress_MidnightAfterFirstTermDay_ReturnsOneDayProgress()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
@@ -174,8 +174,8 @@ namespace TermProgress.Tests.Library.Terms
         public void Progress_MidnightAfterLastTermDay_ReturnsCompletedProgress()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermConfiguration>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(CreateTermConfiguration());
+            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
+            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
 
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
@@ -190,12 +190,12 @@ namespace TermProgress.Tests.Library.Terms
             Assert.Equal(1, result);
         }
 
-        private TermConfiguration CreateTermConfiguration()
+        private TermOptions GetTermOptions()
         {
-            return new TermConfiguration
+            return new TermOptions
             {
-                DurationInYears = 4,
-                StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0)
+                StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0),
+                EndingDateTime = new DateTime(2023, 12, 10, 0, 0, 0)
             };
         }
     }

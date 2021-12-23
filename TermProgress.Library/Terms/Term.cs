@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Options;
-using TermProgress.Library.Configurations;
+﻿using Microsoft.Extensions.Options;
+using System;
+using TermProgress.Library.Options;
 using TermProgress.Library.Providers;
 
 namespace TermProgress.Library.Terms
@@ -11,51 +11,28 @@ namespace TermProgress.Library.Terms
     /// <inheritdoc />
     public class Term : ITerm
     {
-        #region << Private fields >>
-
-        /// <summary>
-        /// Date and time provider.
-        /// </summary>
-        private readonly IDateTimeProvider _dateTimeProvider;
-
-        /// <summary>
-        /// Term configuration.
-        /// </summary>
-        private readonly TermConfiguration _termConfiguration;
-
-        #endregion
-
-        #region << Public methods >>
+        private readonly IDateTimeProvider dateTimeProvider;
+        private readonly IOptions<TermOptions> termOptions;
 
         public DateTime StartingDate { get; }
-
         public DateTime EndingDate { get; }
-
-        public int ElapsedDays => (_dateTimeProvider.Now.Date - StartingDate).Days;
-
-        public int RemainingDays => (EndingDate - _dateTimeProvider.Now.Date).Days;
-
+        public int ElapsedDays => (dateTimeProvider.Now.Date - StartingDate).Days;
+        public int RemainingDays => (EndingDate - dateTimeProvider.Now.Date).Days;
         public int TotalDays => (EndingDate - StartingDate).Days;
-
         public double Progress => (double)ElapsedDays / TotalDays;
-
-        #endregion
-
-        #region << Constructor >>
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="dateTimeProvider">Date and time provider.</param>
-        /// <param name="termConfiguration">Term configuration.</param>
-        public Term(IDateTimeProvider dateTimeProvider, IOptions<TermConfiguration> termConfiguration)
+        /// <param name="dateTimeProvider">A <see cref="IDateTimeProvider"/> implementation.</param>
+        /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
+        /// TODO: Check docstring.
+        public Term(IDateTimeProvider dateTimeProvider, IOptions<TermOptions> termOptions)
         {
-            _dateTimeProvider = dateTimeProvider;
-            _termConfiguration = termConfiguration.Value;
-            StartingDate = _termConfiguration.StartingDateTime.Date;
-            EndingDate = StartingDate.AddYears(_termConfiguration.DurationInYears).Date;
+            this.dateTimeProvider = dateTimeProvider;
+            this.termOptions = termOptions;
+            StartingDate = this.termOptions.Value.StartingDateTime.Date;
+            EndingDate = this.termOptions.Value.EndingDateTime.Date;
         }
-
-        #endregion
     }
 }

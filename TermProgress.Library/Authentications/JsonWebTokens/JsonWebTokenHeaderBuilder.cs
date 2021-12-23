@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
 
 namespace TermProgress.Library.Authentications.JsonWebTokens
 {
@@ -11,50 +10,31 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
     /// <inheritdoc />
     public class JsonWebTokenHeaderBuilder : IJsonWebTokenHeaderBuilder
     {
-        #region << Fields >>
-
-        /// <summary>
-        /// Encoding.
-        /// </summary>
-        private Encoding _encoding;
-
-        /// <summary>
-        /// Secret key.
-        /// </summary>
-        private string _secretKey;
-
-        /// <summary>
-        /// Algorithm name.
-        /// </summary>
-        private string _algorithm;
-
-        #endregion
-
-        #region << Public methods >>
+        private Encoding encoding;
+        private string secretKey;
+        private string algorithm;
 
         public JwtHeader Build()
         {
-            var symmetricSecurityKey = new SymmetricSecurityKey(_encoding.GetBytes(_secretKey));
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, _algorithm);
+            var symmetricSecurityKey = new SymmetricSecurityKey(encoding.GetBytes(secretKey));
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, algorithm);
             var header = new JwtHeader(signingCredentials);
             return header;
         }
 
         public void SetEncoding(Encoding encoding)
         {
-            _encoding = encoding;
+            this.encoding = encoding;
         }
 
         public void SetSecretKey(string secretKey)
         {
-            _secretKey = secretKey;
+            this.secretKey = secretKey;
         }
 
         public void SetAlgorithm(string algorithm)
         {
-            _algorithm = algorithm;
+            this.algorithm = algorithm;
         }
-
-        #endregion
     }
 }

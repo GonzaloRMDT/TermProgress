@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Text;
-using Microsoft.Extensions.Options;
-using TermProgress.Library.Configurations;
 
 namespace TermProgress.Library.Terms
 {
@@ -10,32 +8,19 @@ namespace TermProgress.Library.Terms
     /// </summary>
     public class TermProgressBar : ITermProgressBar
     {
-        /// <summary>
-        /// Term configuration.
-        /// </summary>
-        private readonly TermConfiguration _termConfiguration;
-
-        /// <summary>
-        /// Term instance.
-        /// </summary>
-        private readonly ITerm _term;
-
-        /// <summary>
-        /// Term progress bar block factor.
-        /// </summary>
-        private readonly ITermProgressBarBlockFactory _termProgressBarBlockFactory;
+        private const int blocksTotal = 15;
+        private readonly ITerm term;
+        private readonly ITermProgressBarBlockFactory termProgressBarBlockFactory;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="termConfiguration">Term configuration.</param>
-        /// <param name="term">Term instance.</param>
-        /// <param name="termProgressBarBlockFactory">Term progress bar block factory.</param>
-        public TermProgressBar(IOptions<TermConfiguration> termConfiguration, ITerm term, ITermProgressBarBlockFactory termProgressBarBlockFactory)
+        /// <param name="term">A <see cref="ITerm"/> implementation.</param>
+        /// <param name="termProgressBarBlockFactory">A <see cref="ITermProgressBarBlockFactory"/> implementation.</param>
+        public TermProgressBar(ITerm term, ITermProgressBarBlockFactory termProgressBarBlockFactory)
         {
-            _termConfiguration = termConfiguration.Value;
-            _term = term;
-            _termProgressBarBlockFactory = termProgressBarBlockFactory;
+            this.term = term;
+            this.termProgressBarBlockFactory = termProgressBarBlockFactory;
         }
 
         /// <summary>
@@ -44,14 +29,14 @@ namespace TermProgress.Library.Terms
         /// <returns>Progress bar.</returns>
         public string Compose()
         {
-            StringBuilder progressBar = new StringBuilder(_termConfiguration.ProgressBarBlocksTotal);
-            double progressBarBlockDays = (double)_term.TotalDays / _termConfiguration.ProgressBarBlocksTotal;
+            StringBuilder progressBar = new StringBuilder(blocksTotal);
+            double progressBarBlockDays = (double)term.TotalDays / blocksTotal;
             double accumulatedDays = 0;
 
-            for (int i = 0; i < _termConfiguration.ProgressBarBlocksTotal; i++)
+            for (int i = 0; i < blocksTotal; i++)
             {
                 accumulatedDays += progressBarBlockDays;
-                TermProgressBarBlock progressBarBlock = _termProgressBarBlockFactory.CreateProgressBarBlock(Math.Floor(accumulatedDays), _term.ElapsedDays);
+                TermProgressBarBlock progressBarBlock = termProgressBarBlockFactory.CreateProgressBarBlock(Math.Floor(accumulatedDays), term.ElapsedDays);
                 progressBar.Append(progressBarBlock.Symbol);
             }
 

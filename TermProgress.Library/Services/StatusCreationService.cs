@@ -1,41 +1,33 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Terms;
 
 namespace TermProgress.Library.Services
 {
     /// <summary>
-    /// Status creation service.
+    /// Represents a status creation service.
     /// </summary>
     /// <inheritdoc />
     public class StatusCreationService : IStatusCreationService
     {
-        /// <summary>
-        /// Client factory instance.
-        /// </summary>
-        private readonly IClientFactory _clientFactory;
-
-        /// <summary>
-        /// Term message instance.
-        /// </summary>
-        private readonly ITermMessage _termMessage;
+        private readonly IClientFactory clientFactory;
+        private readonly ITermMessage termMessage;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="clientFactory">Client factory instance.</param>
-        /// <param name="termMessage">Term message instance.</param>
+        /// <param name="clientFactory">A <see cref="IClientFactory"/> implementation.</param>
+        /// <param name="termMessage">A <see cref="ITermMessage"/> implementation.</param>
         public StatusCreationService(IClientFactory clientFactory, ITermMessage termMessage)
         {
-            _clientFactory = clientFactory;
-            _termMessage = termMessage;
+            this.clientFactory = clientFactory;
+            this.termMessage = termMessage;
         }
 
         public async Task<SocialNetworkStatus> CreateStatusAsync(ClientType clientType)
         {
-            IClient client = _clientFactory.Create(clientType);
-            string termMessage = _termMessage.Compose();
+            IClient client = clientFactory.Create(clientType);
+            string termMessage = this.termMessage.Compose();
             return await client.CreateStatusAsync(termMessage);
         }
     }

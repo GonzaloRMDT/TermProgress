@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TermProgress.Library.Configurations;
+using TermProgress.Library.Options;
 
 namespace TermProgress.Library.Authentications.JsonWebTokens.Extensions
 {
@@ -12,14 +11,14 @@ namespace TermProgress.Library.Authentications.JsonWebTokens.Extensions
     public static class JsonWebTokenExtensions
     {
         /// <summary>
-        /// Adds Json Web Token configuration and services.
+        /// Adds Json Web Token options and services.
         /// </summary>
-        /// <param name="services"><c>IServiceCollection</c> instance.</param>
-        /// <param name="config"><c>IConfiguration</c> instance.</param>
-        /// <returns><c>IServiceCollection</c> instance.</returns>
-        public static IServiceCollection AddJsonWebToken(this IServiceCollection services, IConfiguration config)
+        /// <param name="services">A <see cref="IServiceCollection"/> implementation.</param>
+        /// <param name="configuration">A <see cref="IConfiguration"/> implementation.</param>
+        /// <returns>A <see cref="IServiceCollection"/> implementation.</returns>
+        public static IServiceCollection AddJsonWebToken(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<JsonWebTokenConfiguration>(config);
+            services.Configure<TokenOptions>(configuration);
             services.AddScoped<IJsonWebTokenBuilder, JsonWebTokenBuilder>();
             services.AddScoped<IJsonWebTokenHeaderBuilder, JsonWebTokenHeaderBuilder>();
             services.AddScoped<IJsonWebTokenPayloadBuilder, JsonWebTokenPayloadBuilder>();

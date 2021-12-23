@@ -1,11 +1,10 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Tweetinvi.Models;
 
 namespace TermProgress.Library.Clients.MappingProfiles
 {
     /// <summary>
-    /// Social network status mapping profile.
+    /// Represents the social network status mapping profile.
     /// </summary>
     public class SocialNetworkStatusProfile : Profile
     {

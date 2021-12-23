@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using TermProgress.Library.Configurations;
 
 namespace TermProgress.WebAPI.Controllers
 {
@@ -18,28 +12,18 @@ namespace TermProgress.WebAPI.Controllers
     [AllowAnonymous]
     public class StatusController : ControllerBase
     {
-        /// <summary>
-        /// Application configuration.
-        /// </summary>
-        private readonly ApplicationConfiguration _applicationConfiguration;
-
-        /// <summary>
-        /// Logger instance.
-        /// </summary>
-        private readonly ILogger<StatusController> _logger;
+        private readonly ILogger<StatusController> logger;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="logger">Logger instance.</param>
-        public StatusController(IOptions<ApplicationConfiguration> applicationConfiguration, ILogger<StatusController> logger)
+        /// <param name="logger">A <see cref="ILogger{T}"/> implementation with a generic type argument of <see cref="StatusController"/>.</param>
+        public StatusController(ILogger<StatusController> logger)
         {
-            _applicationConfiguration = applicationConfiguration.Value;
-            _logger = logger;
+            this.logger = logger;
         }
 
         /// GET: api/v1/status
-        ///
         /// <summary>
         /// Gets the API status.
         /// </summary>
@@ -47,12 +31,12 @@ namespace TermProgress.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            _logger.LogInformation("User requested status.");
+            logger.LogInformation("User requested status.");
 
             var apiStatus = new
             {
-                Status = "online",
-                Version = _applicationConfiguration.Version
+                Status = "online", // TODO: add from common library
+                //Version = applicationOptions.Version
             };
 
             return Ok(apiStatus);

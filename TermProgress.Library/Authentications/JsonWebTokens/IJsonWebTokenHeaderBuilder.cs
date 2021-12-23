@@ -4,7 +4,7 @@ using System.Text;
 namespace TermProgress.Library.Authentications.JsonWebTokens
 {
     /// <summary>
-    /// <c>IJsonWebTokenHeaderBuilder</c> interface.
+    /// Defines the common structure for JSON web token header builders.
     /// </summary>
     public interface IJsonWebTokenHeaderBuilder : IBuilder<JwtHeader>
     {
@@ -17,7 +17,7 @@ namespace TermProgress.Library.Authentications.JsonWebTokens
         /// <summary>
         /// Sets encoding.
         /// </summary>
-        /// <param name="encoding">Encoding instance.</param>
+        /// <param name="encoding">An <see cref="Encoding"/> instance.</param>
         void SetEncoding(Encoding encoding);
 
         /// <summary>
