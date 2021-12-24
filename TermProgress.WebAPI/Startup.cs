@@ -15,6 +15,7 @@ using TermProgress.Library.Services;
 using TermProgress.Library.Terms;
 using TermProgress.WebAPI.Controllers;
 using TermProgress.WebAPI.Exceptions;
+using TermProgress.WebAPI.HttpErrors;
 
 namespace TermProgress.WebAPI
 {
@@ -36,6 +37,7 @@ namespace TermProgress.WebAPI
                 .AddApplicationPart(Assembly.GetAssembly(typeof(ExceptionsController)));
             services
                 .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
+                .AddHttpErrorHandling()
                 .AddJsonWebToken(Configuration.GetSection(nameof(TokenOptions)))
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddSingleton<IClient, TwitterClient>()
@@ -82,6 +84,8 @@ namespace TermProgress.WebAPI
             }
 
             app.UseRequestLocalization();
+
+            app.UseHttpErrorHandling("/api/v1/http-errors/{0}");
 
             app.UseHttpsRedirection();
 
