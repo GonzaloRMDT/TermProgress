@@ -26,7 +26,6 @@ namespace TermProgress.Library.Terms
         /// </summary>
         /// <param name="dateTimeProvider">A <see cref="IDateTimeProvider"/> implementation.</param>
         /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
-        /// TODO: Check docstring.
         public Term(IDateTimeProvider dateTimeProvider, IOptions<TermOptions> termOptions)
         {
             this.dateTimeProvider = dateTimeProvider;

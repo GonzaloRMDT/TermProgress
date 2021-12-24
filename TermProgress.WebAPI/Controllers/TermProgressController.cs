@@ -16,30 +16,29 @@ namespace TermProgress.WebAPI.Controllers
     public class TermProgressController : ControllerBase
     {
         private readonly ILogger<TermProgressController> logger;
-        private readonly IStatusCreationService statusCreationService;
+        private readonly IPublishingService publishingService;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
         /// <param name="logger">A <see cref="ILogger{T}"/> implementation with a generic type argument of <see cref="TermProgressController"/>.</param>
-        /// <param name="statusCreationService">A <see cref="IStatusCreationService"/> implementation.</param>
-        public TermProgressController(ILogger<TermProgressController> logger, IStatusCreationService statusCreationService)
+        /// <param name="publishingService">A <see cref="IPublishingService"/> implementation.</param>
+        public TermProgressController(ILogger<TermProgressController> logger, IPublishingService publishingService)
         {
             this.logger = logger;
-            this.statusCreationService = statusCreationService;
+            this.publishingService = publishingService;
         }
 
-        /// POST api/v1/TermProgress/{client}/[action]
         /// <summary>
-        /// Creates status asynchronously.
+        /// Publishes term progress on given social network asynchronously.
         /// </summary>
-        /// <param name="clientType">A <see cref="ClientType"/> value.</param>
-        /// <returns>A <see cref="Task{T}"/> with a generic type argument of <see cref="SocialNetworkStatus"/>.</returns>
-        [HttpPost("{client}/[action]")]
-        public async Task<SocialNetworkStatus> CreateStatusAsync(ClientType clientType)
+        /// <param name="network">Name of social network to publish on.</param>
+        /// <returns>A <see cref="Task{TResult}"/> instance with a generic type argument of <see cref="IMessage"/>.</returns>
+        [HttpPost("{network}")]
+        public async Task<IMessage> PublishAsync(string network)
         {
-            logger.LogInformation("User requested term status creation on Twitter.");
-            return await statusCreationService.CreateStatusAsync(clientType);
+            logger.LogInformation("User requested term status creation.");
+            return await publishingService.PublishAsync(network);
         }
     }
 }
