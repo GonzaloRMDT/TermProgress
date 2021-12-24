@@ -33,10 +33,8 @@ namespace TermProgress.WebAPI
         {
             services.AddControllers();
             services
-                .AddMvc()
-                .AddApplicationPart(Assembly.GetAssembly(typeof(ExceptionsController)));
-            services
                 .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
+                .AddExceptionHandling()
                 .AddHttpErrorHandling()
                 .AddJsonWebToken(Configuration.GetSection(nameof(TokenOptions)))
                 .AddScoped<IAuthenticationService, AuthenticationService>()

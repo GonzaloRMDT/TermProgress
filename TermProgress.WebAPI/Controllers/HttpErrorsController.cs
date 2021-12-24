@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace TermProgress.WebAPI.Controllers
 {
     /// <summary>
-    /// Represents an HTTP errors controllers.
+    /// Represents an HTTP errors controller.
     /// </summary>
     [Route("api/{version}/[controller]")]
     [Route("api/{version}/errors")]
@@ -16,6 +16,11 @@ namespace TermProgress.WebAPI.Controllers
     [ApiController]
     public class HttpErrorsController : ControllerBase
     {
+        /// <summary>
+        /// Handles HTTP errors.
+        /// </summary>
+        /// <param name="statusCode">Status code (v.g., 404).</param>
+        /// <returns>An <see cref="IActionResult"/> implementation.</returns>
         [Route("{statusCode}")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Error(int statusCode)
