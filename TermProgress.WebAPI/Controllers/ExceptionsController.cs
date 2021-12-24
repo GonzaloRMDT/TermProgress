@@ -15,6 +15,12 @@ namespace TermProgress.WebAPI.Controllers
     [ApiController]
     public class ExceptionsController : ControllerBase
     {
+        /// <summary>
+        /// Handles exception in production environment.
+        /// </summary>
+        /// <param name="webHostEnvironment">A <see cref="IHostingEnvironment"/> implementation.</param>
+        /// <returns>An <see cref="IActionResult"/> implementation.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when called in development environment.</exception>
         [Route("exception")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Exception([FromServices] IHostingEnvironment webHostEnvironment)
@@ -37,6 +43,12 @@ namespace TermProgress.WebAPI.Controllers
             return StatusCode(problemDetails.Status.Value, problemDetails);
         }
 
+        /// <summary>
+        /// Handles exception in local development environment.
+        /// </summary>
+        /// <param name="webHostEnvironment">A <see cref="IHostingEnvironment"/> implementation.</param>
+        /// <returns>An <see cref="IActionResult"/> implementation.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when called in non-development environments.</exception>
         [Route("local-development-exception")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult ExcepctionLocalDevelopment([FromServices] IHostingEnvironment webHostEnvironment)
