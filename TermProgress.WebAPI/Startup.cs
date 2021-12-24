@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Options;
-using TermProgress.Library.Providers;
 using TermProgress.Library.Services;
 using TermProgress.Library.Terms;
 using TermProgress.WebAPI.Exceptions;
@@ -37,12 +36,8 @@ namespace TermProgress.WebAPI
                 .AddJsonWebToken(Configuration.GetSection(nameof(TokenOptions)))
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddScoped<IPublishingService, PublishingService>()
-                .AddSingleton<IClient<IMessage>, TwitterClient>()
-                .AddSingleton<IDateTimeProvider, DateTimeProvider>()
-                .AddSingleton<ITerm, Term>()
-                .AddSingleton<ITermMessage, TermMessage>()
-                .AddSingleton<ITermProgressBar, TermProgressBar>()
-                .AddSingleton<ITermProgressBarBlockFactory, TermProgressBarBlockFactory>()
+                .AddScoped<IClient<IMessage>, TwitterClient>()
+                .AddScoped<ITerm, Term>()
                 .Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)))
                 .Configure<TermOptions>(Configuration.GetSection(nameof(TermOptions)))
                 .Configure<TwitterClientOptions>(Configuration.GetSection(nameof(TwitterClientOptions)))

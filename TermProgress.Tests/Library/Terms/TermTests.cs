@@ -22,7 +22,7 @@ namespace TermProgress.Tests.Library.Terms
 
             var dateTimeProvider = new DateTimeProviderMock();
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.StartingDate;
@@ -41,7 +41,7 @@ namespace TermProgress.Tests.Library.Terms
 
             var dateTimeProvider = new DateTimeProviderMock();
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.EndingDate;
@@ -61,7 +61,7 @@ namespace TermProgress.Tests.Library.Terms
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.ElapsedDays;
@@ -81,7 +81,7 @@ namespace TermProgress.Tests.Library.Terms
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.ElapsedDays;
@@ -101,7 +101,7 @@ namespace TermProgress.Tests.Library.Terms
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.RemainingDays;
@@ -121,7 +121,7 @@ namespace TermProgress.Tests.Library.Terms
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.RemainingDays;
@@ -140,7 +140,7 @@ namespace TermProgress.Tests.Library.Terms
 
             var dateTimeProvider = new DateTimeProviderMock();
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.TotalDays;
@@ -160,7 +160,7 @@ namespace TermProgress.Tests.Library.Terms
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2019, 12, 11));
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.Progress;
@@ -180,7 +180,7 @@ namespace TermProgress.Tests.Library.Terms
             var dateTimeProvider = new DateTimeProviderMock()
                 .MockNow(new DateTime(2023, 12, 10));
 
-            var term = new Term(dateTimeProvider.Object, termConfigurationMock.Object);
+            var term = new Term(termConfigurationMock.Object);
 
             // Act
             var result = term.Progress;

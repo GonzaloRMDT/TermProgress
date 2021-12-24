@@ -12,7 +12,7 @@ namespace TermProgress.Library.Services
     public class PublishingService : IPublishingService
     {
         private readonly IEnumerable<IClient<IMessage>> clients;
-        private readonly ITermMessage termMessage;
+        private readonly ITerm term;
 
         /// <summary>
         /// Class constructor.
@@ -21,16 +21,17 @@ namespace TermProgress.Library.Services
         /// A <see cref="IEnumerable{T}"/> of <see cref="IClient{TMessage}"/> implementation
         /// with a generic type argument of <see cref="IMessage"/>.
         /// </param>
-        /// <param name="termMessage">A <see cref="ITermMessage"/> implementation.</param>
-        public PublishingService(IEnumerable<IClient<IMessage>> clients, ITermMessage termMessage)
+        /// <param name="term">A <see cref="ITerm"/> implementation.</param>
+        public PublishingService(IEnumerable<IClient<IMessage>> clients, ITerm term)
         {
             this.clients = clients;
-            this.termMessage = termMessage;
+            this.term = term;
         }
 
         public async Task<IMessage> PublishAsync(string network)
         {
-            string text = termMessage.Compose();
+            string text = term.ToString();
+
             IClient<IMessage> client = clients
                 .Where(client =>
                 {
@@ -39,6 +40,7 @@ namespace TermProgress.Library.Services
                 .Single();
 
             client.SetClient();
+
             return await client.CreateMessageAsync(text);
         }
     }
