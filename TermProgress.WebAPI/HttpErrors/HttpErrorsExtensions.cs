@@ -13,8 +13,8 @@ namespace TermProgress.WebAPI.HttpErrors
         /// <summary>
         /// Adds HTTP error handling services.
         /// </summary>
-        /// <param name="services">A service collection instance.</param>
-        /// <returns>A service collection instance.</returns>
+        /// <param name="services">A <see cref="IServiceCollection"/> implementation.</param>
+        /// <returns>A <see cref="IServiceCollection"/> implementation.</returns>
         public static IServiceCollection AddHttpErrorHandling(this IServiceCollection services)
         {
             services
@@ -31,9 +31,9 @@ namespace TermProgress.WebAPI.HttpErrors
         /// Handles HTTP errors by reexecuting the pipeline to given error handling path when request
         /// produces a 400 to 599 status code.
         /// </remarks>
-        /// <param name="app">Application builder instance.</param>
+        /// <param name="app">An <see cref="IApplicationBuilder"/> implementation.</param>
         /// <param name="httpErrorHandlingPath">HTTP error handling path.</param>
-        /// <returns>Application builder instance.</returns>
+        /// <returns>An <see cref="IApplicationBuilder"/> implementation.</returns>
         public static IApplicationBuilder UseHttpErrorHandling(this IApplicationBuilder app, string httpErrorHandlingPath)
         {
             return app.UseStatusCodePagesWithReExecute(httpErrorHandlingPath);
