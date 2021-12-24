@@ -19,7 +19,7 @@ namespace TermProgress.WebAPI.Controllers
         /// <summary>
         /// Handles HTTP errors.
         /// </summary>
-        /// <param name="statusCode">Status code (v.g., 404).</param>
+        /// <param name="statusCode">The HTTP error status code (v.g., 404).</param>
         /// <returns>An <see cref="IActionResult"/> implementation.</returns>
         [Route("{statusCode}")]
         [ApiExplorerSettings(IgnoreApi = true)]
