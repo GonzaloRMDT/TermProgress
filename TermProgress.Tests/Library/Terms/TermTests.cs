@@ -1,202 +1,155 @@
 ﻿using Microsoft.Extensions.Options;
-using Moq;
 using System;
 using TermProgress.Library.Options;
 using TermProgress.Library.Terms;
-using TermProgress.Tests.Library.Helpers;
 using Xunit;
 
 namespace TermProgress.Tests.Library.Terms
 {
-    /// <summary>
-    /// Term tests.
-    /// </summary>
     public class TermTests
     {
         [Fact]
-        public void StartingDate_CalculatedValue_ReturnsTermStartingDate()
+        public void Elapsed_days_at_midnight_after_inauguration_is_1()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock();
-
-            var term = new Term(termConfigurationMock.Object);
-
-            // Act
-            var result = term.StartingDate;
-
-            // Assert
-            Assert.IsType<DateTime>(result);
-            Assert.Equal(new DateTime(2019, 12, 10), result);
-        }
-
-        [Fact]
-        public void EndingDate_CalculatedValue_ReturnsTermEndingDate()
-        {
-            // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock();
-
-            var term = new Term(termConfigurationMock.Object);
-
-            // Act
-            var result = term.EndingDate;
-
-            // Assert
-            Assert.IsType<DateTime>(result);
-            Assert.Equal(new DateTime(2023, 12, 10), result);
-        }
-
-        [Fact]
-        public void ElapsedDays_MidnightAfterFirstTermDay_ReturnsOneElapsedDay()
-        {
-            // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock()
-                .MockNow(new DateTime(2019, 12, 11));
-
-            var term = new Term(termConfigurationMock.Object);
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
 
             // Act
             var result = term.ElapsedDays;
 
             // Assert
-            Assert.IsType<int>(result);
             Assert.Equal(1, result);
         }
 
         [Fact]
-        public void ElapsedDays_MidnightAfterLastTermDay_ReturnsSameElapsedDaysAsPeriodTotalDays()
+        public void Elapsed_days_at_midnight_before_inauguration_is_equal_to_total_days()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock()
-                .MockNow(new DateTime(2023, 12, 10));
-
-            var term = new Term(termConfigurationMock.Object);
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
 
             // Act
             var result = term.ElapsedDays;
 
             // Assert
-            Assert.IsType<int>(result);
             Assert.Equal(1461, result);
         }
 
         [Fact]
-        public void RemainingDays_MidnightAfterFirstTermDay_ReturnsTotalDaysMinusOne()
+        public void Progress_at_midnight_after_inauguration_is_0_0006844626967830253()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
 
-            var dateTimeProvider = new DateTimeProviderMock()
-                .MockNow(new DateTime(2019, 12, 11));
+            // Act
+            var result = term.Progress;
 
-            var term = new Term(termConfigurationMock.Object);
+            // Assert
+            Assert.Equal(0.0006844626967830253, result);
+        }
+
+        [Fact]
+        public void Progress_at_midnight_before_inauguration_is_1()
+        {
+            // Act
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
+
+            // Arrange
+            var result = term.Progress;
+
+            // Assert
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void Progress_bar_at_midnight_before_inauguration_is_full()
+        {
+            // Act
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
+
+            // Arrange
+            var result = term.GetProgressBar();
+
+            // Assert
+            Assert.Equal("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", result);
+        }
+
+        [Fact]
+        public void Progress_bar_at_midnight_after_inauguration_is_empty()
+        {
+            // Act
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
+
+            // Arrange
+            var result = term.GetProgressBar();
+
+            // Assert
+            Assert.Equal("░░░░░░░░░░░░░░░", result);
+        }
+
+        [Fact]
+        public void Remaining_days_at_midnight_after_inauguration_is_equal_to_total_days_minus_one()
+        {
+            // Arrange
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
 
             // Act
             var result = term.RemainingDays;
 
             // Assert
-            Assert.IsType<int>(result);
             Assert.Equal(1460, result);
         }
 
         [Fact]
-        public void RemainingDays_MidnightAfterLastTermDay_ReturnsZeroRemainingDays()
+        public void Remaining_days_at_midnight_before_inauguration_is_zero()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock()
-                .MockNow(new DateTime(2023, 12, 10));
-
-            var term = new Term(termConfigurationMock.Object);
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
+            Term term = new Term(dateTime, termOptions);
 
             // Act
             var result = term.RemainingDays;
 
             // Assert
-            Assert.IsType<int>(result);
             Assert.Equal(0, result);
         }
 
         [Fact]
-        public void TotalDays_CalculatedValue_ReturnsTermTotalDays()
+        public void Total_days_is_1461()
         {
             // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock();
-
-            var term = new Term(termConfigurationMock.Object);
+            IOptions<TermOptions> termOptions = GetTermOptions();
+            IDateTimeWrapper dateTime = new DateTimeMock(DateTime.Now);
+            Term term = new Term(dateTime, termOptions);
 
             // Act
             var result = term.TotalDays;
 
             // Assert
-            Assert.IsType<int>(result);
             Assert.Equal(1461, result);
         }
 
-        [Fact]
-        public void Progress_MidnightAfterFirstTermDay_ReturnsOneDayProgress()
+        private IOptions<TermOptions> GetTermOptions()
         {
-            // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock()
-                .MockNow(new DateTime(2019, 12, 11));
-
-            var term = new Term(termConfigurationMock.Object);
-
-            // Act
-            var result = term.Progress;
-
-            // Assert
-            Assert.IsType<double>(result);
-            Assert.Equal(0.0006844626967830253, result);
-        }
-
-        [Fact]
-        public void Progress_MidnightAfterLastTermDay_ReturnsCompletedProgress()
-        {
-            // Arrange
-            var termConfigurationMock = new Mock<IOptions<TermOptions>>();
-            termConfigurationMock.Setup(x => x.Value).Returns(GetTermOptions());
-
-            var dateTimeProvider = new DateTimeProviderMock()
-                .MockNow(new DateTime(2023, 12, 10));
-
-            var term = new Term(termConfigurationMock.Object);
-
-            // Act
-            var result = term.Progress;
-
-            // Assert
-            Assert.IsType<double>(result);
-            Assert.Equal(1, result);
-        }
-
-        private TermOptions GetTermOptions()
-        {
-            return new TermOptions
+            return Options.Create(new TermOptions()
             {
                 StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0),
                 EndingDateTime = new DateTime(2023, 12, 10, 0, 0, 0)
-            };
+            });
         }
     }
 }

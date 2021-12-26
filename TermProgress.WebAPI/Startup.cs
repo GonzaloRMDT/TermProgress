@@ -38,6 +38,7 @@ namespace TermProgress.WebAPI
                 .AddScoped<IPublishingService, PublishingService>()
                 .AddScoped<IClient<IMessage>, TwitterClient>()
                 .AddScoped<ITerm, Term>()
+                .AddSingleton<IDateTimeWrapper, DateTimeWrapper>()
                 .Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)))
                 .Configure<TermOptions>(Configuration.GetSection(nameof(TermOptions)))
                 .Configure<TwitterClientOptions>(Configuration.GetSection(nameof(TwitterClientOptions)))

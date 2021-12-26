@@ -10,21 +10,24 @@ namespace TermProgress.Library.Terms
     /// </summary>
     public class Term : ITerm
     {
-        public int ElapsedDays => (DateTime.Now.Date - StartingDate).Days;
+        public int ElapsedDays => (dateTimeWrapper.Now.Date - StartingDate).Days;
         public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
         public double Progress => (double)ElapsedDays / TotalDays;
-        public int RemainingDays => (EndingDate - DateTime.Now.Date).Days;
+        public int RemainingDays => (EndingDate - dateTimeWrapper.Now.Date).Days;
         public DateTime StartingDate => termOptions.Value.StartingDateTime.Date;
         public int TotalDays => (EndingDate - StartingDate).Days;
-        
+
+        private readonly IDateTimeWrapper dateTimeWrapper;
         private readonly IOptions<TermOptions> termOptions;
         
         /// <summary>
         /// Class constructor.
         /// </summary>
+        /// <param name="dateTimeWrapper">A <see cref="IDateTimeWrapper"/> implementation.</param>
         /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
-        public Term(IOptions<TermOptions> termOptions)
+        public Term(IDateTimeWrapper dateTimeWrapper, IOptions<TermOptions> termOptions)
         {
+            this.dateTimeWrapper = dateTimeWrapper;
             this.termOptions = termOptions;
         }
 
@@ -37,15 +40,19 @@ namespace TermProgress.Library.Terms
             return $"{progressBar} {progressPercentage}\n\n{daysCount}";
         }
 
-        private string GetProgressBar()
+        /// <summary>
+        /// Gets the progress bar <see cref="string"/>.
+        /// </summary>
+        /// <returns>The progress bar <see cref="string"/>.</returns>
+        public string GetProgressBar()
         {
-            int blocksTotal = 15;
-            double daysPerBlock = (double) TotalDays / blocksTotal;
-            StringBuilder progressBar = new StringBuilder(blocksTotal);
+            const int BlocksTotal = 15;
+            double daysPerBlock = (double) TotalDays / BlocksTotal;
+            StringBuilder progressBar = new StringBuilder(BlocksTotal);
 
-            for (int block = 1; block <= blocksTotal; block++)
+            for (int block = 1; block <= BlocksTotal; block++)
             {
-                if ((block * daysPerBlock) < ElapsedDays)
+                if ((block * daysPerBlock) <= ElapsedDays)
                 {
                     progressBar.Append('▓');
                 }
@@ -58,12 +65,20 @@ namespace TermProgress.Library.Terms
             return progressBar.ToString();
         }
 
-        private string GetProgressPercentage()
+        /// <summary>
+        /// Gets the progress bar percentage <see cref="string"/>.
+        /// </summary>
+        /// <returns>The progress bar percentage <see cref="string"/>.</returns>
+        public string GetProgressPercentage()
         {
             return string.Format("{0:P2}", Progress);
         }
 
-        private string GetDaysCount()
+        /// <summary>
+        /// Gets the days count <see cref="string"/>.
+        /// </summary>
+        /// <returns>The days count <see cref="string"/>.</returns>
+        public string GetDaysCount()
         {
             return $"{ElapsedDays}/{RemainingDays}/{TotalDays}";
         }
