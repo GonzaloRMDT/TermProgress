@@ -1,37 +1,86 @@
 ﻿using Microsoft.Extensions.Options;
 using System;
+using System.Text;
 using TermProgress.Library.Options;
-using TermProgress.Library.Providers;
 
 namespace TermProgress.Library.Terms
 {
     /// <summary>
     /// Represents a term.
     /// </summary>
-    /// <inheritdoc />
     public class Term : ITerm
     {
-        private readonly IDateTimeProvider dateTimeProvider;
-        private readonly IOptions<TermOptions> termOptions;
-
-        public DateTime StartingDate { get; }
-        public DateTime EndingDate { get; }
-        public int ElapsedDays => (dateTimeProvider.Now.Date - StartingDate).Days;
-        public int RemainingDays => (EndingDate - dateTimeProvider.Now.Date).Days;
-        public int TotalDays => (EndingDate - StartingDate).Days;
+        public int ElapsedDays => (dateTimeWrapper.Now.Date - StartingDate).Days;
+        public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
         public double Progress => (double)ElapsedDays / TotalDays;
+        public int RemainingDays => (EndingDate - dateTimeWrapper.Now.Date).Days;
+        public DateTime StartingDate => termOptions.Value.StartingDateTime.Date;
+        public int TotalDays => (EndingDate - StartingDate).Days;
 
+        private readonly IDateTimeWrapper dateTimeWrapper;
+        private readonly IOptions<TermOptions> termOptions;
+        
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="dateTimeProvider">A <see cref="IDateTimeProvider"/> implementation.</param>
+        /// <param name="dateTimeWrapper">A <see cref="IDateTimeWrapper"/> implementation.</param>
         /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
-        public Term(IDateTimeProvider dateTimeProvider, IOptions<TermOptions> termOptions)
+        public Term(IDateTimeWrapper dateTimeWrapper, IOptions<TermOptions> termOptions)
         {
-            this.dateTimeProvider = dateTimeProvider;
+            this.dateTimeWrapper = dateTimeWrapper;
             this.termOptions = termOptions;
-            StartingDate = this.termOptions.Value.StartingDateTime.Date;
-            EndingDate = this.termOptions.Value.EndingDateTime.Date;
+        }
+
+        public override string ToString()
+        {
+            string progressBar = GetProgressBar();
+            string progressPercentage = GetProgressPercentage();
+            string daysCount = GetDaysCount();
+
+            return $"{progressBar} {progressPercentage}\n\n{daysCount}";
+        }
+
+        /// <summary>
+        /// Gets the progress bar <see cref="string"/>.
+        /// </summary>
+        /// <returns>The progress bar <see cref="string"/>.</returns>
+        public string GetProgressBar()
+        {
+            const int BlocksTotal = 15;
+            double daysPerBlock = (double) TotalDays / BlocksTotal;
+            StringBuilder progressBar = new StringBuilder(BlocksTotal);
+
+            for (int block = 1; block <= BlocksTotal; block++)
+            {
+                if ((block * daysPerBlock) <= ElapsedDays)
+                {
+                    progressBar.Append('▓');
+                }
+                else
+                {
+                    progressBar.Append('░');
+                }
+            }
+
+            return progressBar.ToString();
+        }
+
+        /// <summary>
+        /// Gets the progress bar percentage <see cref="string"/>.
+        /// </summary>
+        /// <returns>The progress bar percentage <see cref="string"/>.</returns>
+        public string GetProgressPercentage()
+        {
+            return string.Format("{0:P2}", Progress);
+        }
+
+        /// <summary>
+        /// Gets the days count <see cref="string"/>.
+        /// </summary>
+        /// <returns>The days count <see cref="string"/>.</returns>
+        public string GetDaysCount()
+        {
+            return $"{ElapsedDays}/{RemainingDays}/{TotalDays}";
         }
     }
 }
