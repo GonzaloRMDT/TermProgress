@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using TermProgress.Library.Authentications.ApiKey.Attributes;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Services;
 
@@ -12,7 +12,7 @@ namespace TermProgress.WebAPI.Controllers
     /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize]
+    [ApiKeyAuthentication]
     public class TermProgressController : ControllerBase
     {
         private readonly ILogger<TermProgressController> logger;
