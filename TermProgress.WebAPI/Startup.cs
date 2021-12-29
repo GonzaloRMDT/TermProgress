@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Options;
 using TermProgress.Library.Services;
@@ -33,8 +32,6 @@ namespace TermProgress.WebAPI
                 .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
                 .AddExceptionHandling()
                 .AddHttpErrorHandling()
-                .AddJsonWebToken(Configuration.GetSection(nameof(TokenOptions)))
-                .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddScoped<IPublishingService, PublishingService>()
                 .AddScoped<IClient<IMessage>, TwitterClient>()
                 .AddScoped<ITerm, Term>()
