@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TermProgress.Library.Authentications.JsonWebTokens.Extensions;
 using TermProgress.Library.Clients;
-using TermProgress.Library.Configurations;
-using TermProgress.Library.Providers;
+using TermProgress.Library.Options;
 using TermProgress.Library.Services;
 using TermProgress.Library.Terms;
+using TermProgress.WebAPI.Exceptions;
+using TermProgress.WebAPI.HttpErrors;
 
 namespace TermProgress.WebAPI
 {
@@ -35,25 +29,21 @@ namespace TermProgress.WebAPI
         {
             services.AddControllers();
             services
-                .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientConfiguration).Assembly)
-                .AddJsonWebToken(Configuration.GetSection(nameof(JsonWebTokenConfiguration)))
-                .AddScoped<IAuthenticationService, AuthenticationService>()
-                .AddSingleton<IClient, TwitterClient>()
-                .AddSingleton<IClientFactory, ClientFactory>()
-                .AddSingleton<IDateTimeProvider, DateTimeProvider>()
-                .AddSingleton<IStatusCreationService, StatusCreationService>()
-                .AddSingleton<ITerm, Term>()
-                .AddSingleton<ITermMessage, TermMessage>()
-                .AddSingleton<ITermProgressBar, TermProgressBar>()
-                .AddSingleton<ITermProgressBarBlockFactory, TermProgressBarBlockFactory>()
-                .Configure<ApplicationConfiguration>(Configuration.GetSection(nameof(ApplicationConfiguration)))
-                .Configure<TermConfiguration>(Configuration.GetSection(nameof(TermConfiguration)))
-                .Configure<TwitterClientConfiguration>(Configuration.GetSection(nameof(TwitterClientConfiguration)))
+                .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
+                .AddExceptionHandling()
+                .AddHttpErrorHandling()
+                .AddScoped<IPublishingService, PublishingService>()
+                .AddScoped<IClient<IMessage>, TwitterClient>()
+                .AddScoped<ITerm, Term>()
+                .AddSingleton<IDateTimeWrapper, DateTimeWrapper>()
+                .Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)))
+                .Configure<TermOptions>(Configuration.GetSection(nameof(TermOptions)))
+                .Configure<TwitterClientOptions>(Configuration.GetSection(nameof(TwitterClientOptions)))
                 .Configure<RequestLocalizationOptions>(options =>
                 {
                     var culture = Configuration
-                        .GetSection(nameof(ApplicationConfiguration))
-                        .Get<ApplicationConfiguration>()
+                        .GetSection(nameof(ApplicationOptions))
+                        .Get<ApplicationOptions>()
                         .Culture;
 
                     options.DefaultRequestCulture = new RequestCulture(culture);
@@ -72,7 +62,18 @@ namespace TermProgress.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            if (env.IsDevelopment())
+            {
+                app.UseExceptionHandling("/api/v1/exceptions/local-development-exception");
+            }
+            else if (env.IsStaging() || env.IsProduction())
+            {
+                app.UseExceptionHandling("/api/v1/exceptions/exception");
+            }
+
             app.UseRequestLocalization();
+
+            app.UseHttpErrorHandling("/api/v1/http-errors/{0}");
 
             app.UseHttpsRedirection();
 

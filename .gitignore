@@ -358,3 +358,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Azure publishing profiles
+**/Properties/PublishProfiles
+**/Properties/ServiceDependencies
+/TermProgress.Functions/local.settings.json

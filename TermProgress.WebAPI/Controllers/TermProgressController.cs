@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using TermProgress.Library.Authentications.ApiKey.Attributes;
 using TermProgress.Library.Clients;
 using TermProgress.Library.Services;
 
@@ -15,41 +12,33 @@ namespace TermProgress.WebAPI.Controllers
     /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize]
+    [ApiKeyAuthentication]
     public class TermProgressController : ControllerBase
     {
-        /// <summary>
-        /// Logger instance.
-        /// </summary>
-        private readonly ILogger<TermProgressController> _logger;
-
-        /// <summary>
-        /// Status creation service.
-        /// </summary>
-        private readonly IStatusCreationService _statusCreationService;
+        private readonly ILogger<TermProgressController> logger;
+        private readonly IPublishingService publishingService;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="logger">Logger instance.</param>
-        /// <param name="statusCreationService">Status creation service.</param>
-        public TermProgressController(ILogger<TermProgressController> logger, IStatusCreationService statusCreationService)
+        /// <param name="logger">A <see cref="ILogger{T}"/> implementation with a generic type argument of <see cref="TermProgressController"/>.</param>
+        /// <param name="publishingService">A <see cref="IPublishingService"/> implementation.</param>
+        public TermProgressController(ILogger<TermProgressController> logger, IPublishingService publishingService)
         {
-            _logger = logger;
-            _statusCreationService = statusCreationService;
+            this.logger = logger;
+            this.publishingService = publishingService;
         }
 
-        /// POST api/v1/TermProgress/{client}/[action]
-        /// 
         /// <summary>
-        /// Creates status asynchronously.
+        /// Publishes term progress on given social network asynchronously.
         /// </summary>
-        /// <param name="clientType">Client type.</param>
-        [HttpPost("{client}/[action]")]
-        public async Task<SocialNetworkStatus> CreateStatusAsync(ClientType clientType)
+        /// <param name="network">Name of social network to publish on.</param>
+        /// <returns>A <see cref="Task{TResult}"/> instance with a generic type argument of <see cref="IMessage"/>.</returns>
+        [HttpPost("{network}")]
+        public async Task<IMessage> PublishAsync(string network)
         {
-            _logger.LogInformation("User requested term status creation on Twitter.");
-            return await _statusCreationService.CreateStatusAsync(clientType);
+            logger.LogInformation("User requested term status creation.");
+            return await publishingService.PublishAsync(network);
         }
     }
 }

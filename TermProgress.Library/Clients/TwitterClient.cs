@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.Extensions.Options;
-using TermProgress.Library.Configurations;
-using Tweetinvi;
+using TermProgress.Library.Options;
 using Tweetinvi.Models;
 
 namespace TermProgress.Library.Clients
@@ -11,56 +9,115 @@ namespace TermProgress.Library.Clients
     /// <summary>
     /// Represents a Twitter client.
     /// </summary>
-    /// <inheritdoc />
-    public class TwitterClient : SocialNetworkClient<TwitterClientConfiguration>, IClient
+    /// <inheritdoc/>
+    public class TwitterClient : IClient<IMessage>
     {
-        #region << Private fields >>
-
-        /// <summary>
-        /// Client credentials.
-        /// </summary>
-        private ITwitterCredentials _credentials;
-
-        #endregion
-
-        #region << Constructors >>
+        private Tweetinvi.TwitterClient client;
+        private readonly IOptions<TwitterClientOptions> options;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="mapper">Mapper instance.</param>
-        /// <param name="twitterClientConfiguration">Twitter client configuration.</param>
-        public TwitterClient(IMapper mapper, IOptions<TwitterClientConfiguration> twitterClientConfiguration) : base(mapper, twitterClientConfiguration)
+        /// <param name="options">An <see cref="IOptions{TOptions}"/> implementation with a generic type argument of <see cref="TwitterClientOptions"/>.</param>
+        public TwitterClient(IOptions<TwitterClientOptions> options)
         {
-            SetCredentials();
+            this.options = options;
         }
 
-        #endregion
-
-        #region << Public methods >>
-
-        public async Task<SocialNetworkStatus> CreateStatusAsync(string message)
+        public async Task<IMessage> CreateMessageAsync(string text)
         {
-            var tweet = await Sync.ExecuteTaskAsync(() => Auth.ExecuteOperationWithCredentials(_credentials, () => Tweet.PublishTweet(message)));
-            return mapper.Map<SocialNetworkStatus>(tweet);
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot create message with missing client. Please set the client before calling this method.");
+            }
+
+            ITweet message = await client.Tweets.PublishTweetAsync(text);
+            return GetMessage(message.Id, message.Text, message.CreatedAt.DateTime);
         }
 
-        #endregion
-
-        #region << Private methods >>
-
-        /// <summary>
-        /// Sets user credentials.
-        /// </summary>
-        private void SetCredentials()
+        public async Task DeleteMessageAsync(long id)
         {
-            _credentials = Auth.SetUserCredentials(
-                clientConfiguration.ConsumerKey,
-                clientConfiguration.ConsumerSecret,
-                clientConfiguration.AccessToken,
-                clientConfiguration.AccessTokenSecret);
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot delete message with missing client. Please set the client before calling this method.");
+            }
+
+            await client.Tweets.DestroyTweetAsync(id);
         }
 
-        #endregion
+        public async Task FavoriteMessageAsync(long id)
+        {
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot favorite message with missing client. Please set the cliente before calling this method.");
+            }
+
+            await client.Tweets.FavoriteTweetAsync(id);
+        }
+
+        public async Task<IMessage> ReadMessageAsync(long id)
+        {
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot read message with missing client. Please set the client before calling this method.");
+            }
+
+            ITweet message = await client.Tweets.GetTweetAsync(id);
+            return GetMessage(message.Id, message.Text, message.CreatedAt.DateTime);
+        }
+
+        public void SetClient()
+        {
+            if (client is null)
+            {
+                client = new Tweetinvi.TwitterClient(
+                    options.Value.ConsumerKey,
+                    options.Value.ConsumerSecret,
+                    options.Value.AccessToken,
+                    options.Value.AccessTokenSecret);
+            }
+        }
+
+        public async Task<IMessage> ShareMessageAsync(long id)
+        {
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot share message with missing client. Please set the client before calling this method.");
+            }
+
+            ITweet message = await client.Tweets.PublishRetweetAsync(id);
+            return GetMessage(message.Id, message.Text, message.CreatedAt.DateTime);
+        }
+
+        public async Task UnshareMessageAsync(long id)
+        {
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot unshare message with missing client. Please set the client before calling this method.");
+            }
+
+            await client.Tweets.DestroyRetweetAsync(id);
+        }
+
+        public async Task UnfavoriteMessageAsync(long id)
+        {
+            if (client is null)
+            {
+                throw new InvalidOperationException("Cannot favorite message with missing client. Please set the cliente before calling this method.");
+            }
+
+            await client.Tweets.UnfavoriteTweetAsync(id);
+        }
+
+        private Message GetMessage(long id, string text, DateTime createdAt)
+        {
+            return new Message()
+            {
+                Id = id,
+                Text = text,
+                CreatedAt = createdAt,
+                Network = GetType().Name.Replace("Client", null, StringComparison.OrdinalIgnoreCase)
+            };
+        }
     }
 }
