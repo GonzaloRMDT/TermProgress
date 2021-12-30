@@ -13,27 +13,23 @@ It's designed as a web API that listens to incoming status creation requests, an
 ## How can I make my own Term Progress bot?
 1. Get a Twitter dev account on [https://developer.twitter.com/](https://developer.twitter.com/).
    
-2. Set the following variables on your Term Progress API production environment:
-   1. `ApplicationConfiguration:AdminUsername`: your API admin username.
-   2. `ApplicationConfiguration:AdminPassword`: your API admin password. 
-   3. `TwitterClientConfiguration:AccessToken`: your Twitter access token.
-   4. `TwitterClientConfiguration:AccessTokenSecret`: your Twitter access token secret.
-   5. `TwitterClientConfiguration:ConsumerKey`: your Twitter consumer key.
-   6. `TwitterClientConfiguration:ConsumerSecret`: your Twitter consumer secret.
-   7. `JsonWebTokenConfiguration:Audience`: a JSON Web Token authentication audience identity.
-   8. `JsonWebTokenConfiguration:Issuer`: a JSON Web Token authentication issuer identity.
-   9. `JsonWebTokenConfiguration:SecretKey`: a JSON Web Token authentication secret key.
+2. Set the following environment variables on your `TermProgress.WebAPI` production environment:
+   1. `ApplicationOptions:ApiKey`: the API key.
+   2. `TwitterClientConfiguration:AccessToken`: your Twitter access token.
+   3. `TwitterClientConfiguration:AccessTokenSecret`: your Twitter access token secret.
+   4. `TwitterClientConfiguration:ConsumerKey`: your Twitter consumer key.
+   5. `TwitterClientConfiguration:ConsumerSecret`: your Twitter consumer secret.
 
-3.  On `TermProgress.WebAPI/appsettings.json`, set the following key values:
+
+3.  Set the following values on `TermProgress.WebAPI/appsettings.json`:
     1.  `Culture`: Set the desired culture that will be used on tweet generation. By default, it is `es-AR`.
     2.  `StartingDateTime`: set a date and time corresponding to the first day of the term. For example, if the term you would like to track starts on January, 1st, 2021, you should set the value to `2021-01-01T00:00:00`.
-    3.  `DurationInYears`: set the number of years that the term should last.
-   
-4. Set the following variables on your Term Progress worker production environment:
-   1. `ApplicationConfiguration:ApplicationAdminUsername`: admin username; must be the same as the one you set on your Term Progress API `ApplicationConfiguration:AdminUsername` environment variable.
-   2. `ApplicationConfiguration:ApplicationAdminPassword`: admin password; must be the same as the one you set on your Term Progress API `ApplicationConfiguration:AdminPassword` environment variable.
-   3. `ApplicationConfiguration:ApplicationAuthenticationEndpointUrl`: your API authentication endpoint URL. By default, it is `yourdomain.com/api/v1/authentication`.
-   4. `ApplicationConfiguration:TwitterStatusCreationEndpointUrl`: your API Twitter status creation endpoint URL. By default, it is `yourdomain.com/api/v1/termprogress/twitter/createstatus`.
+    3.  `EndingDateTime`: set a date and time corresponding to the midnight after the last day of the term. For example, if the term you would like to track ends on December, 31st, 2021, you should set the value to `2022-01-01T00:00:00`.
+
+
+4. Set the following environment variables on your `TermProgress.Functions` production environment:
+   1. `ApplicationOptions:ApiKey`: the API key; must be the same as the one you set on your `TermProgress.WebApi` `ApplicationOptions:ApiKey` environment variable.
+   2. `ApplicationOptions:PublishingEndpointUrl`: your publishing endpoint URL. By default, it is `yourdomain.com/api/v1/termprogress/twitter`.
 
 **You should set your worker function as a timer triggered every midnight.**
 
