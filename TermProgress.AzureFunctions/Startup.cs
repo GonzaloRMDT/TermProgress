@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TermProgress.Functions.Clients;
@@ -11,15 +12,15 @@ namespace TermProgress.Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            builder.Services.AddHttpClient();
+
             builder.Services.AddOptions<ApplicationOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>
                 {
                     configuration.GetSection(nameof(ApplicationOptions)).Bind(settings);
                 });
 
-            builder.Services
-                .AddHttpClient()
-                .AddSingleton<ITermProgressWebApiClient, TermProgressWebApiClient>();
+            builder.Services.AddSingleton<ITermProgressWebApiClient, TermProgressWebApiClient>();
         }
     }
 }
