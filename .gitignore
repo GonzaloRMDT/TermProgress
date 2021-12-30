@@ -362,3 +362,4 @@ FodyWeavers.xsd
 # Azure publishing profiles
 **/Properties/PublishProfiles
 **/Properties/ServiceDependencies
+/TermProgress.Functions/local.settings.json
