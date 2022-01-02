@@ -15,10 +15,10 @@ It's designed as a web API that listens to incoming status creation requests, an
    
 2. Set the following environment variables on your `TermProgress.WebAPI` production environment:
    1. `ApplicationOptions:ApiKey`: the API key.
-   2. `TwitterClientConfiguration:AccessToken`: your Twitter access token.
-   3. `TwitterClientConfiguration:AccessTokenSecret`: your Twitter access token secret.
-   4. `TwitterClientConfiguration:ConsumerKey`: your Twitter consumer key.
-   5. `TwitterClientConfiguration:ConsumerSecret`: your Twitter consumer secret.
+   2. `TwitterClientOptions:AccessToken`: your Twitter access token.
+   3. `TwitterClientOptions:AccessTokenSecret`: your Twitter access token secret.
+   4. `TwitterClientOptions:ConsumerKey`: your Twitter consumer key.
+   5. `TwitterClientOptions:ConsumerSecret`: your Twitter consumer secret.
 
 
 3.  Set the following values on `TermProgress.WebAPI/appsettings.json`:
