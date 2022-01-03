@@ -14,7 +14,7 @@ namespace TermProgress.Functions
     public class PublishingTimerFunction
     {
         private readonly IOptions<ApplicationOptions> applicationOptions;
-        private ITermProgressWebApiClient termProgressWebApiClient;
+        private readonly ITermProgressWebApiClient termProgressWebApiClient;
 
         /// <summary>
         /// Class constructor.
@@ -37,7 +37,7 @@ namespace TermProgress.Functions
         [FunctionName("PublishingTimerFunction")]
         public async Task Run([TimerTrigger("0 0 0 * * *")] TimerInfo myTimer, ILogger logger)
         {
-            logger.LogInformation($"Requesting creation of new Twitter status as {DateTime.Now}.");
+            logger.LogInformation($"Requesting creation of new Twitter status at {DateTime.Now}.");
             await termProgressWebApiClient.RequestPublishingAsync(applicationOptions.Value.ApiKey);
         }
     }
