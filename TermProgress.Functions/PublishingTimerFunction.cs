@@ -35,7 +35,7 @@ namespace TermProgress.Functions
         /// <param name="logger">A <see cref="ILogger"/> implementation.</param>
         /// <returns>A <see cref="Task"/> instance.</returns>
         [FunctionName("PublishingTimerFunction")]
-        public async Task Run([TimerTrigger("0 0 0 * * *")] TimerInfo myTimer, ILogger logger)
+        public async Task Run([TimerTrigger("%PublishingTimerFunctionSchedule%")] TimerInfo myTimer, ILogger logger)
         {
             logger.LogInformation($"Requesting creation of new Twitter status at {DateTime.Now}.");
             await termProgressWebApiClient.RequestPublishingAsync(applicationOptions.Value.ApiKey);
