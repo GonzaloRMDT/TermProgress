@@ -363,3 +363,6 @@ FodyWeavers.xsd
 **/Properties/PublishProfiles
 **/Properties/ServiceDependencies
 /TermProgress.Functions/local.settings.json
+
+# Ctags
+tags
