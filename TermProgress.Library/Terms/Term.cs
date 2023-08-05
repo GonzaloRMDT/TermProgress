@@ -10,24 +10,21 @@ namespace TermProgress.Library.Terms
     /// </summary>
     public class Term : ITerm
     {
-        public int ElapsedDays => (dateTimeWrapper.Now.Date - StartingDate).Days;
+        public int ElapsedDays => (DateTime.Now.Date - StartingDate).Days;
         public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
         public double Progress => (double)ElapsedDays / TotalDays;
-        public int RemainingDays => (EndingDate - dateTimeWrapper.Now.Date).Days;
+        public int RemainingDays => (EndingDate - DateTime.Now.Date).Days;
         public DateTime StartingDate => termOptions.Value.StartingDateTime.Date;
         public int TotalDays => (EndingDate - StartingDate).Days;
 
-        private readonly IDateTimeWrapper dateTimeWrapper;
         private readonly IOptions<TermOptions> termOptions;
         
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="dateTimeWrapper">A <see cref="IDateTimeWrapper"/> implementation.</param>
         /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
-        public Term(IDateTimeWrapper dateTimeWrapper, IOptions<TermOptions> termOptions)
+        public Term(IOptions<TermOptions> termOptions)
         {
-            this.dateTimeWrapper = dateTimeWrapper;
             this.termOptions = termOptions;
         }
 
