@@ -1,5 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using TermProgress.Library.Options;
 using Tweetinvi.Models;
@@ -31,8 +35,23 @@ namespace TermProgress.Library.Clients
                 throw new InvalidOperationException("Cannot create message with missing client. Please set the client before calling this method.");
             }
 
-            ITweet message = await client.Tweets.PublishTweetAsync(text);
-            return GetMessage(message.Id, message.Text, message.CreatedAt.DateTime);
+            var response = await client.Execute.AdvanceRequestAsync(
+                (ITwitterRequest request) =>
+                {
+                    var jsonBody = client.Json.Serialize(new TweetV2PostRequest { Text = text });
+                    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    request.Query.Url = "https://api.twitter.com/2/tweets";
+                    request.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                    request.Query.HttpContent = content;
+                }
+            );
+
+            JObject responseBody = JObject.Parse(response.Response.Content);
+
+            return GetMessage(
+                responseBody["data"]["id"].ToObject<long>(),
+                responseBody["data"]["text"].ToObject<string>());
         }
 
         public async Task DeleteMessageAsync(long id)
@@ -63,6 +82,7 @@ namespace TermProgress.Library.Clients
             }
 
             ITweet message = await client.Tweets.GetTweetAsync(id);
+
             return GetMessage(message.Id, message.Text, message.CreatedAt.DateTime);
         }
 
@@ -86,6 +106,7 @@ namespace TermProgress.Library.Clients
             }
 
             ITweet message = await client.Tweets.PublishRetweetAsync(id);
+
             return GetMessage(message.Id, message.Text, message.CreatedAt.DateTime);
         }
 
@@ -109,15 +130,24 @@ namespace TermProgress.Library.Clients
             await client.Tweets.UnfavoriteTweetAsync(id);
         }
 
-        private Message GetMessage(long id, string text, DateTime createdAt)
+        private Message GetMessage(long id, string text, DateTime? createdAt = null)
         {
             return new Message()
             {
                 Id = id,
                 Text = text,
-                CreatedAt = createdAt,
+                CreatedAt = createdAt ?? DateTime.Now,
                 Network = GetType().Name.Replace("Client", null, StringComparison.OrdinalIgnoreCase)
             };
+        }
+
+        private class TweetV2PostRequest
+        {
+            /// <summary>
+            /// The text of the tweet to post.
+            /// </summary>
+            [JsonProperty("text")]
+            public string Text { get; set; } = string.Empty;
         }
     }
 }
