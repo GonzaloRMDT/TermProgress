@@ -11,6 +11,11 @@ namespace TermProgress.Library.Terms
     public interface ITerm
     {
         /// <summary>
+        /// Gets or sets the current date.
+        /// </summary>
+        DateTime CurrentDate { get; set; }
+
+        /// <summary>
         /// Gets the term elapsed days.
         /// </summary>
         int ElapsedDays { get; }

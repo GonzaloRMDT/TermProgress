@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using System;
-using System.Text;
 using TermProgress.Library.Options;
 
 namespace TermProgress.Library.Terms
@@ -21,13 +20,30 @@ namespace TermProgress.Library.Terms
             this.termOptions = termOptions;
         }
 
-        public int ElapsedDays => (DateTime.Now.Date - StartingDate).Days;
+        /// <inheritdoc/>
+        /// <remarks>
+        /// If this property has been set to a specific date, gets said specific date. Else, returns the actual date.
+        /// </remarks>
+        public DateTime CurrentDate
+        {
+            get
+            {
+                return currentDate ?? DateTime.Now.Date;
+            }
+            set
+            {
+                this.currentDate = value.Date;
+            }
+        }
+        private DateTime? currentDate;
+
+        public int ElapsedDays => (this.CurrentDate - StartingDate).Days;
         
         public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
         
         public double Progress => (double)ElapsedDays / TotalDays;
         
-        public int RemainingDays => (EndingDate - DateTime.Now.Date).Days;
+        public int RemainingDays => (EndingDate - CurrentDate).Days;
         
         public DateTime StartingDate => termOptions.Value.StartingDateTime.Date;
         
