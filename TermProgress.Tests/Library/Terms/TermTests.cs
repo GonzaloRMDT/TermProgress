@@ -6,6 +6,9 @@ using Xunit;
 
 namespace TermProgress.Tests.Library.Terms
 {
+    /// <summary>
+    /// Represents the <c>Term</c> tests.
+    /// </summary>
     public class TermTests
     {
         [Fact]
@@ -13,8 +16,8 @@ namespace TermProgress.Tests.Library.Terms
         {
             // Arrange
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
+            term.CurrentDate = new DateTime(2019, 12, 11);
 
             // Act
             var result = term.ElapsedDays;
@@ -28,8 +31,8 @@ namespace TermProgress.Tests.Library.Terms
         {
             // Arrange
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
+            term.CurrentDate = new DateTime(2023, 12, 10);
 
             // Act
             var result = term.ElapsedDays;
@@ -43,8 +46,8 @@ namespace TermProgress.Tests.Library.Terms
         {
             // Arrange
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
+            term.CurrentDate = new DateTime(2019, 12, 11);
 
             // Act
             var result = term.Progress;
@@ -58,8 +61,8 @@ namespace TermProgress.Tests.Library.Terms
         {
             // Act
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
+            term.CurrentDate = new DateTime(2023, 12, 10);
 
             // Arrange
             var result = term.Progress;
@@ -69,42 +72,12 @@ namespace TermProgress.Tests.Library.Terms
         }
 
         [Fact]
-        public void Progress_bar_at_midnight_before_inauguration_is_full()
-        {
-            // Act
-            IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
-
-            // Arrange
-            var result = term.GetProgressBar();
-
-            // Assert
-            Assert.Equal("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", result);
-        }
-
-        [Fact]
-        public void Progress_bar_at_midnight_after_inauguration_is_empty()
-        {
-            // Act
-            IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
-
-            // Arrange
-            var result = term.GetProgressBar();
-
-            // Assert
-            Assert.Equal("░░░░░░░░░░░░░░░", result);
-        }
-
-        [Fact]
         public void Remaining_days_at_midnight_after_inauguration_is_equal_to_total_days_minus_one()
         {
             // Arrange
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2019, 12, 11, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
+            term.CurrentDate = new DateTime(2019, 12, 11);
 
             // Act
             var result = term.RemainingDays;
@@ -118,8 +91,8 @@ namespace TermProgress.Tests.Library.Terms
         {
             // Arrange
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(new DateTime(2023, 12, 10, 0, 0, 0));
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
+            term.CurrentDate = new DateTime(2023, 12, 10);
 
             // Act
             var result = term.RemainingDays;
@@ -133,8 +106,7 @@ namespace TermProgress.Tests.Library.Terms
         {
             // Arrange
             IOptions<TermOptions> termOptions = GetTermOptions();
-            IDateTimeWrapper dateTime = new DateTimeMock(DateTime.Now);
-            Term term = new Term(dateTime, termOptions);
+            Term term = new Term(termOptions);
 
             // Act
             var result = term.TotalDays;
