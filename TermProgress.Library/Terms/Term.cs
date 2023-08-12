@@ -32,12 +32,12 @@ namespace TermProgress.Library.Terms
             }
             set
             {
-                this.currentDate = value.Date;
+                currentDate = value.Date;
             }
         }
         private DateTime? currentDate;
 
-        public int ElapsedDays => (this.CurrentDate - StartingDate).Days;
+        public int ElapsedDays => (CurrentDate - StartingDate).Days;
         
         public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
         
