@@ -26,7 +26,11 @@ namespace TermProgress.Library.Terms
             return $"{GetBar()} {percentage}\n\n{days}";
         }
 
-        private string GetBar()
+        /// <summary>
+        /// Gets the progress bar.
+        /// </summary>
+        /// <returns>The progress bar.</returns>
+        public string GetBar()
         {
             const int BlocksTotal = 15;
             double daysPerBlock = (double)term.TotalDays / BlocksTotal;
