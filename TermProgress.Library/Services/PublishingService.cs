@@ -30,7 +30,7 @@ namespace TermProgress.Library.Services
 
         public async Task<IMessage> PublishAsync(string network)
         {
-            string text = termMessage.ToString();
+            string? text = termMessage.ToString();
 
             IClient<IMessage> client = clients
                 .Where(client =>
@@ -41,7 +41,7 @@ namespace TermProgress.Library.Services
 
             client.SetClient();
 
-            return await client.CreateMessageAsync(text);
+            return await client.CreateMessageAsync(text!);
         }
     }
 }

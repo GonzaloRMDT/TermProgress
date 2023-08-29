@@ -24,7 +24,7 @@ namespace TermProgress.Library.Terms
         /// <remarks>
         /// If this property has been set to a specific date, gets said specific date. Else, returns the actual date.
         /// </remarks>
-        public DateTime CurrentDate
+        public DateTime? CurrentDate
         {
             get
             {
@@ -32,22 +32,21 @@ namespace TermProgress.Library.Terms
             }
             set
             {
-                currentDate = value.Date;
+                currentDate = value?.Date;
             }
         }
         private DateTime? currentDate;
 
-        public int ElapsedDays => (CurrentDate - StartingDate).Days;
+        public int? ElapsedDays => (CurrentDate - StartingDate)?.Days;
         
-        public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
+        public DateTime? EndingDate => termOptions.Value.EndingDateTime?.Date;
         
-        public double Progress => (double)ElapsedDays / TotalDays;
+        public double? Progress => (double)(ElapsedDays ?? 0) / TotalDays;
         
-        public int RemainingDays => (EndingDate - CurrentDate).Days;
+        public int? RemainingDays => (EndingDate - CurrentDate)?.Days;
         
-        public DateTime StartingDate => termOptions.Value.StartingDateTime.Date;
+        public DateTime? StartingDate => termOptions.Value.StartingDateTime?.Date;
         
-        public int TotalDays => (EndingDate - StartingDate).Days;
-
+        public int? TotalDays => (EndingDate - StartingDate)?.Days;
     }
 }

@@ -16,7 +16,7 @@ namespace TermProgress.Library.Clients
     /// <inheritdoc/>
     public class TwitterClient : IClient<IMessage>
     {
-        private Tweetinvi.TwitterClient client;
+        private Tweetinvi.TwitterClient? client;
         private readonly IOptions<TwitterClientOptions> options;
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace TermProgress.Library.Clients
                 throw new InvalidOperationException("Cannot create message with missing client. Please set the client before calling this method.");
             }
 
-            var response = await client.Execute.AdvanceRequestAsync(
+            var response = await client!.Execute.AdvanceRequestAsync(
                 (ITwitterRequest request) =>
                 {
                     var jsonBody = client.Json.Serialize(new TweetV2PostRequest { Text = text });

@@ -18,7 +18,7 @@ namespace TermProgress.Library.Terms
             this.term = term;
         }
 
-        public override string ToString()
+        public override string? ToString()
         {
             string days = $"{term.ElapsedDays}/{term.RemainingDays}/{term.TotalDays}";
             string percentage = string.Format("{0:P2}", term.Progress);
