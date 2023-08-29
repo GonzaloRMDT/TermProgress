@@ -39,13 +39,13 @@ namespace TermProgress.Library.Terms
 
         public int? ElapsedDays => (CurrentDate - StartingDate)?.Days;
         
-        public DateTime? EndingDate => termOptions.Value.EndingDateTime?.Date;
+        public DateTime? EndingDate => termOptions.Value.EndingDate.Date;
         
         public double? Progress => (double)(ElapsedDays ?? 0) / TotalDays;
         
         public int? RemainingDays => (EndingDate - CurrentDate)?.Days;
         
-        public DateTime? StartingDate => termOptions.Value.StartingDateTime?.Date;
+        public DateTime? StartingDate => termOptions.Value.StartingDate.Date;
         
         public int? TotalDays => (EndingDate - StartingDate)?.Days;
     }

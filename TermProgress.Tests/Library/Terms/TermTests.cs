@@ -119,8 +119,8 @@ namespace TermProgress.Tests.Library.Terms
         {
             return Options.Create(new TermOptions()
             {
-                StartingDateTime = new DateTime(2019, 12, 10, 10, 0, 0),
-                EndingDateTime = new DateTime(2023, 12, 10, 0, 0, 0)
+                StartingDate = new DateTime(2019, 12, 10, 10, 0, 0),
+                EndingDate = new DateTime(2023, 12, 10, 0, 0, 0)
             });
         }
     }
