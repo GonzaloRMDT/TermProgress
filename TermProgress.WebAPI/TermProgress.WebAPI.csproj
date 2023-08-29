@@ -8,6 +8,7 @@
 	<Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TermProgress.Infrastructure\TermProgress.Infrastructure.csproj" />
     <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

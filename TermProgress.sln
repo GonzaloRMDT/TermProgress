@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TermProgress.Tests", "TermP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TermProgress.Functions", "TermProgress.Functions\TermProgress.Functions.csproj", "{89CEFFFC-C3BD-47C5-809C-C19A802E413C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.Infrastructure", "TermProgress.Infrastructure\TermProgress.Infrastructure.csproj", "{560508E2-B7CE-4403-91DC-C85C09680069}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{89CEFFFC-C3BD-47C5-809C-C19A802E413C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89CEFFFC-C3BD-47C5-809C-C19A802E413C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89CEFFFC-C3BD-47C5-809C-C19A802E413C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{560508E2-B7CE-4403-91DC-C85C09680069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{560508E2-B7CE-4403-91DC-C85C09680069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{560508E2-B7CE-4403-91DC-C85C09680069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{560508E2-B7CE-4403-91DC-C85C09680069}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
