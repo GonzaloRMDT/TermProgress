@@ -10,11 +10,11 @@ namespace TermProgress.Library.Options
         /// <summary>
         /// Gets or sets the term starting <see cref="DateTime"/>.
         /// </summary>
-        public DateTime? StartingDateTime { get; set; }
+        public required DateTime StartingDate { get; init; }
 
         /// <summary>
         /// Gets or sets the term ending <see cref="DateTime"/>.
         /// </summary>
-        public DateTime? EndingDateTime { get; set; }
+        public required DateTime EndingDate { get; init; }
     }
 }
