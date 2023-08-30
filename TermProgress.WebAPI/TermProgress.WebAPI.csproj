@@ -5,8 +5,10 @@
     <UserSecretsId>8633960b-9ffe-41c8-a0ff-c190b406c2fc</UserSecretsId>
     <ReleaseVersion>2.0.1</ReleaseVersion>
     <OutputType>Exe</OutputType>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TermProgress.Infrastructure\TermProgress.Infrastructure.csproj" />
     <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

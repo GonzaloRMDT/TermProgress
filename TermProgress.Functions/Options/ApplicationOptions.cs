@@ -8,11 +8,11 @@
         /// <summary>
         /// Gets or sets the application API key.
         /// </summary>
-        public string ApiKey { get; set; }
+        public string? ApiKey { get; set; }
 
         /// <summary>
         /// Gets or sets the publishing endpoint URL.
         /// </summary>
-        public string PublishingEndpointUrl { get; set; }
+        public string? PublishingEndpointUrl { get; set; }
     }
 }

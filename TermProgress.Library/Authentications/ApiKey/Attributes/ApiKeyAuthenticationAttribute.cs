@@ -24,9 +24,9 @@ namespace TermProgress.Library.Authentications.ApiKey.Attributes
             }
 
             IConfiguration configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-            string apiKey = configuration.GetValue<string>(ApiKeyHeaderName);
+            string? apiKey = configuration.GetValue<string>(ApiKeyHeaderName);
 
-            if (!apiKey.Equals(apiKeyHeaderValue))
+            if (apiKey is not null && !apiKey.Equals(apiKeyHeaderValue))
             {
                 context.Result = new UnauthorizedResult();
                 return;

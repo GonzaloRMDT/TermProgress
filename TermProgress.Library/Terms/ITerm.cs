@@ -13,36 +13,36 @@ namespace TermProgress.Library.Terms
         /// <summary>
         /// Gets or sets the current date.
         /// </summary>
-        DateTime CurrentDate { get; set; }
+        DateTime? CurrentDate { get; set; }
 
         /// <summary>
         /// Gets the term elapsed days.
         /// </summary>
-        int ElapsedDays { get; }
+        int? ElapsedDays { get; }
 
         /// <summary>
         /// Gets the term ending <see cref="DateTime"/>.
         /// </summary>
-        DateTime EndingDate { get; }
+        DateTime? EndingDate { get; }
 
         /// <summary>
         /// Gets the term progress.
         /// </summary>
-        double Progress { get; }
+        double? Progress { get; }
 
         /// <summary>
         /// Gets the term remaining days.
         /// </summary>
-        int RemainingDays { get; }
+        int? RemainingDays { get; }
 
         /// <summary>
         /// Gets the term starting <see cref="DateTime"/>.
         /// </summary>
-        DateTime StartingDate { get; }
+        DateTime? StartingDate { get; }
 
         /// <summary>
         /// Gets the term total days.
         /// </summary>
-        int TotalDays { get; }
+        int? TotalDays { get; }
     }
 }
