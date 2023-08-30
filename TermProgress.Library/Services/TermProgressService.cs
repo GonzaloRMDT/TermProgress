@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TermProgress.Infrastructure.Apis.Commons.Exchanges;
@@ -31,11 +32,7 @@ namespace TermProgress.Library.Services
         public async Task<CreateMessageResponse?> CreateAsync(string network)
         {
             IApiClient apiClient = apiClients
-                .Where(apiClient =>
-                {
-                    return string.Equals(apiClient.GetType().Name, network + "ApiClient", System.StringComparison.OrdinalIgnoreCase);
-                })
-                .Single();
+                .Single(apiClient => apiClient.GetType().Name.Contains(network, StringComparison.OrdinalIgnoreCase));
 
             string message = termMessage.ToString()!;
 
