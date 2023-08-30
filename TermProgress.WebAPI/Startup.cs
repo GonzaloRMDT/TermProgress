@@ -29,7 +29,7 @@ namespace TermProgress.WebAPI
         {
             services.AddControllers();
             services
-                .AddAutoMapper(typeof(Program).Assembly, typeof(TwitterClientOptions).Assembly)
+                .AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationOptions).Assembly)
                 .AddExceptionHandling()
                 .AddHttpErrorHandling()
                 .AddScoped<ITermProgressService, TermProgressService>()
@@ -45,7 +45,6 @@ namespace TermProgress.WebAPI
                 )
                 .Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)))
                 .Configure<TermOptions>(Configuration.GetSection(nameof(TermOptions)))
-                .Configure<TwitterClientOptions>(Configuration.GetSection(nameof(TwitterClientOptions)))
                 .Configure<RequestLocalizationOptions>(options =>
                 {
                     string? culture = Configuration
