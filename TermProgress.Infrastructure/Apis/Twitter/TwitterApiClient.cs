@@ -10,7 +10,7 @@ namespace TermProgress.Infrastructure.Apis.Twitter
     /// <summary>
     /// Represents a Twitter API client.
     /// </summary>
-    public class TwitterApiClient : IApiClient, IDisposable
+    public class TwitterApiClient : IApiClient
     {
         private readonly RestClient apiClient;
 
@@ -40,9 +40,6 @@ namespace TermProgress.Infrastructure.Apis.Twitter
             apiClient = new RestClient(options);
         }
 
-        /// <summary>
-        /// Disposes the client.
-        /// </summary>
         public void Dispose()
         {
             apiClient.Dispose();
