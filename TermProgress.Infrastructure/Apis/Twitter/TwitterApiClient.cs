@@ -55,14 +55,21 @@ namespace TermProgress.Infrastructure.Apis.Twitter
             RestResponse response = await apiClient.ExecutePostAsync(request);
             if (response.IsSuccessful && response.Content is not null)
             {
-                using JsonDocument responseJsonBody = JsonDocument.Parse(response.Content);
-                JsonElement responseJsonBodyData = responseJsonBody.RootElement.GetProperty("data");
-
-                return new CreateMessageResponse()
+                try
                 {
-                    Id = responseJsonBodyData.GetProperty("id").GetString()!,
-                    Text = responseJsonBodyData.GetProperty("text").GetString()!
-                };
+                    using JsonDocument responseJsonBody = JsonDocument.Parse(response.Content);
+                    JsonElement responseJsonBodyData = responseJsonBody.RootElement.GetProperty("data");
+
+                    return new CreateMessageResponse()
+                    {
+                        Id = responseJsonBodyData.GetProperty("id").GetString()!,
+                        Text = responseJsonBodyData.GetProperty("text").GetString()!
+                    };
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
             else { return null; }
         }
