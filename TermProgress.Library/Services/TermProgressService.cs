@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Polly;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,11 +34,23 @@ namespace TermProgress.Library.Services
         public async Task<CreateMessageResponse?> CreateAsync(string network)
         {
             IApiClient apiClient = apiClients
-                .Single(apiClient => apiClient.GetType().Name.Contains(network, StringComparison.OrdinalIgnoreCase));
+                .Single(apiClient => apiClient.GetType().Name
+                .Contains(network, StringComparison.OrdinalIgnoreCase));
+
+            var retryPolicy = Policy
+                .HandleResult<CreateMessageResponse?>(result => result == null)
+                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            var circuitBreakerPolicy = Policy
+                .HandleResult<CreateMessageResponse?>(result => result == null)
+                .CircuitBreakerAsync(5, TimeSpan.FromMinutes(1));
 
             string message = termMessage.ToString()!;
+            PolicyResult<CreateMessageResponse?> response = await Policy
+                .WrapAsync(retryPolicy, circuitBreakerPolicy)
+                .ExecuteAndCaptureAsync(async () => await apiClient.CreateMessageAsync(message));
 
-            return await apiClient.CreateMessageAsync(message);
+            return response.Result;
         }
     }
 }
