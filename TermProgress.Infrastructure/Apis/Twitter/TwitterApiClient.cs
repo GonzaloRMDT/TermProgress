@@ -52,7 +52,7 @@ namespace TermProgress.Infrastructure.Apis.Twitter
         public async Task<CreateMessageResponse?> CreateMessageAsync(string text)
         {
             RestRequest request = new RestRequest("2/tweets").AddJsonBody(new { text });
-            RestResponse response = await apiClient.PostAsync(request);
+            RestResponse response = await apiClient.ExecutePostAsync(request);
             if (response.IsSuccessful && response.Content is not null)
             {
                 using JsonDocument responseJsonBody = JsonDocument.Parse(response.Content);
