@@ -32,16 +32,16 @@ namespace TermProgress.Library.Services
 
         public async Task<CreateMessageResponse?> CreateAsync(string network)
         {
-            IApiClient apiClient = apiClients
+            using IApiClient apiClient = apiClients
                 .Single(apiClient => apiClient.GetType().Name
                 .Contains(network, StringComparison.OrdinalIgnoreCase));
 
             var retryPolicy = Policy
-                .HandleResult<CreateMessageResponse?>(result => result == null)
+                .HandleResult<CreateMessageResponse?>(result => result is null)
                 .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             var circuitBreakerPolicy = Policy
-                .HandleResult<CreateMessageResponse?>(result => result == null)
+                .HandleResult<CreateMessageResponse?>(result => result is null)
                 .CircuitBreakerAsync(5, TimeSpan.FromMinutes(1));
 
             string message = termMessage.ToString()!;

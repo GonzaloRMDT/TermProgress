@@ -5,7 +5,7 @@ namespace TermProgress.Infrastructure.Apis.Commons.Interfaces
     /// <summary>
     /// Defines the common structure for API clients.
     /// </summary>
-    public interface IApiClient
+    public interface IApiClient : IDisposable
     {
         /// <summary>
         /// Creates a message asynchronously.
