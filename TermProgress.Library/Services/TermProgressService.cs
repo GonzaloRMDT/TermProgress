@@ -32,7 +32,7 @@ namespace TermProgress.Library.Services
 
         public async Task<CreateMessageResponse?> CreateAsync(string network)
         {
-            using IApiClient apiClient = apiClients
+            IApiClient apiClient = apiClients
                 .Single(apiClient => apiClient.GetType().Name
                 .Contains(network, StringComparison.OrdinalIgnoreCase));
 
