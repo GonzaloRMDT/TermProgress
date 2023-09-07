@@ -14,3 +14,4 @@ namespace TermProgress.Functions.Clients
         /// <returns>A <see cref="Task"/> instance.</returns>
         Task RequestMessageCreationAsync();
     }
+}
