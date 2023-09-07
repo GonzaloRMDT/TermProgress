@@ -13,18 +13,16 @@ namespace TermProgress.Functions
     /// </summary>
     public class PublishingTimerFunction
     {
-        private readonly IOptions<ApplicationOptions> applicationOptions;
-        private readonly ITermProgressWebApiClient termProgressWebApiClient;
+        private readonly ITermProgressApiClient termProgressApiClient;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="applicationOptions">A <see cref="IOptions{TOptions}"/> implementation with a generic type paramenter of <see cref="ApplicationOptions"/>.</param>
-        /// <param name="termProgressWebApiClient">A <see cref="ITermProgressWebApiClient"/> implementation.</param>
-        public PublishingTimerFunction(IOptions<ApplicationOptions> applicationOptions, ITermProgressWebApiClient termProgressWebApiClient)
+        /// <param name="termProgressApiClient">A <see cref="ITermProgressApiClient"/> implementation.</param>
+        ///
+        public PublishingTimerFunction(ITermProgressApiClient termProgressApiClient)
         {
-            this.applicationOptions = applicationOptions;
-            this.termProgressWebApiClient = termProgressWebApiClient;
+            this.termProgressApiClient = termProgressApiClient;
         }
 
         /// <summary>
@@ -38,7 +36,7 @@ namespace TermProgress.Functions
         public async Task Run([TimerTrigger("%PublishingTimerFunctionSchedule%")] TimerInfo myTimer, ILogger logger)
         {
             logger.LogInformation($"Requesting creation of new Twitter status at {DateTime.Now}.");
-            await termProgressWebApiClient.RequestPublishingAsync(applicationOptions.Value.ApiKey);
+            await termProgressApiClient.RequestMessageCreationAsync();
         }
     }
 }

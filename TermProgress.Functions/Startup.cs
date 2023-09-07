@@ -12,15 +12,15 @@ namespace TermProgress.Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddHttpClient();
-
             builder.Services.AddOptions<ApplicationOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>
                 {
                     configuration.GetSection(nameof(ApplicationOptions)).Bind(settings);
                 });
 
-            builder.Services.AddSingleton<ITermProgressWebApiClient, TermProgressWebApiClient>();
+            builder.Services
+                .AddHttpClient()
+                .AddSingleton<ITermProgressApiClient, TermProgressApiClient>();
         }
     }
 }

@@ -11,8 +11,8 @@
         public string? ApiKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the publishing endpoint URL.
+        /// Gets or sets the Term Progress API base URL.
         /// </summary>
-        public string? PublishingEndpointUrl { get; set; }
+        public string? TermProgressApiBaseUrl { get; set; }
     }
 }
