@@ -46,7 +46,7 @@ namespace TermProgress.Infrastructure.Apis.Twitter
             GC.SuppressFinalize(this);
         }
 
-        public async Task<CreateMessageResponse?> CreateMessageAsync(string text)
+        public async Task<StatusCreationResponse?> CreateStatusAsync(string text)
         {
             RestRequest request = new RestRequest("2/tweets").AddJsonBody(new { text });
             RestResponse response = await apiClient.ExecutePostAsync(request);
@@ -57,7 +57,7 @@ namespace TermProgress.Infrastructure.Apis.Twitter
                     using JsonDocument responseJsonBody = JsonDocument.Parse(response.Content);
                     JsonElement responseJsonBodyData = responseJsonBody.RootElement.GetProperty("data");
 
-                    return new CreateMessageResponse()
+                    return new StatusCreationResponse()
                     {
                         Id = responseJsonBodyData.GetProperty("id").GetString()!,
                         Text = responseJsonBodyData.GetProperty("text").GetString()!

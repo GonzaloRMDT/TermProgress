@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using TermProgress.Infrastructure.Apis.Commons.Exchanges;
 
 namespace TermProgress.Library.Services
@@ -9,12 +10,14 @@ namespace TermProgress.Library.Services
     public interface ITermProgressService
     {
         /// <summary>
-        /// Creates message on given social network asynchronously.
+        /// Creates term progress status on given social network asynchronously.
         /// </summary>
         /// <param name="network">Name of social network to publish on.</param>
+        /// <param name="startDate">The term start date.</param>
+        /// <param name="endDate">The term end date.</param>
         /// <returns>
-        /// A <see cref="Task{T}"/> instance with a generic type argument of <see cref="CreateMessageResponse"/>.
+        /// A <see cref="Task{T}"/> instance with a generic type argument of <see cref="StatusCreationResponse"/>.
         /// </returns>
-        Task<CreateMessageResponse?> CreateAsync(string network);
+        Task<StatusCreationResponse?> CreateStatusAsync(string network, DateTime startDate, DateTime endDate);
     }
 }

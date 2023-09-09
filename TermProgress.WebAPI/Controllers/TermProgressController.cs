@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TermProgress.Infrastructure.Apis.Commons.Exchanges;
 using TermProgress.Library.Authentications.ApiKey.Attributes;
 using TermProgress.Library.Services;
+using TermProgress.WebAPI.Exchanges.Requests;
 
 namespace TermProgress.WebAPI.Controllers
 {
@@ -33,13 +34,17 @@ namespace TermProgress.WebAPI.Controllers
         /// Creates term progress message on given social network asynchronously.
         /// </summary>
         /// <param name="network">Name of social network to publish on.</param>
-        /// <returns>A <see cref="Task{T}"/> with a generic type argument of <see cref="CreateMessageResponse?"/>.</returns>
+        /// <param name="request">The status creation request.</param>
+        /// <returns>A <see cref="Task{T}"/> with a generic type argument of <see cref="StatusCreationResponse?"/>.</returns>
         [HttpPost("{network}")]
-        public async Task<CreateMessageResponse?> CreateAsync(string network)
+        public async Task<StatusCreationResponse?> CreateStatusAsync(
+            string network,
+            [FromBody] TermProgressStatusCreationRequest request)
         {
-            logger.LogInformation("User requested term status creation.");
+            logger.LogInformation("User requested term status creation with "
+                + $"start date {request.StartDate.Date} and end date {request.EndDate.Date}.");
 
-            return await termProgressService.CreateAsync(network);
+            return await termProgressService.CreateStatusAsync(network, request.StartDate, request.EndDate);
         }
     }
 }

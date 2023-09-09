@@ -30,24 +30,29 @@ namespace TermProgress.Library.Services
             this.termMessage = termMessage;
         }
 
-        public async Task<CreateMessageResponse?> CreateAsync(string network)
+        public async Task<StatusCreationResponse?> CreateStatusAsync(string network, DateTime startDate, DateTime endDate)
         {
             IApiClient apiClient = apiClients
                 .Single(apiClient => apiClient.GetType().Name
                 .Contains(network, StringComparison.OrdinalIgnoreCase));
 
+            // Term progress message
+            termMessage.Term.StartingDate = startDate;
+            termMessage.Term.EndingDate = endDate;
+            string message = termMessage.ToString()!;
+
+            // Status creation
             var retryPolicy = Policy
-                .HandleResult<CreateMessageResponse?>(result => result is null)
+                .HandleResult<StatusCreationResponse?>(result => result is null)
                 .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             var circuitBreakerPolicy = Policy
-                .HandleResult<CreateMessageResponse?>(result => result is null)
+                .HandleResult<StatusCreationResponse?>(result => result is null)
                 .CircuitBreakerAsync(5, TimeSpan.FromMinutes(1));
 
-            string message = termMessage.ToString()!;
-            PolicyResult<CreateMessageResponse?> response = await Policy
+            PolicyResult<StatusCreationResponse?> response = await Policy
                 .WrapAsync(retryPolicy, circuitBreakerPolicy)
-                .ExecuteAndCaptureAsync(async () => await apiClient.CreateMessageAsync(message));
+                .ExecuteAndCaptureAsync(async () => await apiClient.CreateStatusAsync(message));
 
             return response.Result;
         }
