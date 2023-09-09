@@ -10,7 +10,7 @@ namespace TermProgress.Library.Terms
         public ITerm Term { get; }
 
         /// <summary>
-        /// Class constructor.
+        /// Initializes a new instance of the term message class.
         /// </summary>
         /// <param name="term">A <see cref="ITerm"/> implementation.</param>
         public TermMessage(ITerm term)
@@ -20,25 +20,22 @@ namespace TermProgress.Library.Terms
 
         public override string? ToString()
         {
-            string days = $"{Term.ElapsedDays}/{Term.RemainingDays}/{Term.TotalDays}";
-            string percentage = string.Format("{0:P2}", Term.Progress);
-
-            return $"{GetBar()} {percentage}\n\n{days}";
+            return $"{GetProgressBar()} {GetProgressPercentage()} {GetProgressDaySummary()}";
         }
 
-        /// <summary>
-        /// Gets the progress bar.
-        /// </summary>
-        /// <returns>The progress bar.</returns>
-        public string GetBar()
+        public string GetMessage()
+        {
+            return $"{GetProgressBar()} {GetProgressPercentage()}\n\n{GetProgressDaySummary()}";
+        }
+
+        public string GetProgressBar()
         {
             const int BlocksTotal = 15;
-            double daysPerBlock = (double)Term.TotalDays / BlocksTotal;
-            StringBuilder progressBar = new StringBuilder(BlocksTotal);
-
+            double daysPerBlock = (double)Term.GetDaysTotal() / BlocksTotal;
+            var progressBar = new StringBuilder(BlocksTotal);
             for (int block = 1; block <= BlocksTotal; block++)
             {
-                if ((block * daysPerBlock) <= Term.ElapsedDays)
+                if ((block * daysPerBlock) <= Term.GetDaysElapsed())
                 {
                     progressBar.Append('▓');
                 }
@@ -51,5 +48,14 @@ namespace TermProgress.Library.Terms
             return progressBar.ToString();
         }
 
+        public string GetProgressDaySummary()
+        {
+            return $"{Term.GetDaysElapsed()}/{Term.GetDaysRemaining()}/{Term.GetDaysTotal()}";
+        }
+
+        public string GetProgressPercentage()
+        {
+            return string.Format("{0:P2}", Term.GetProgressRatio());
+        }
     }
 }

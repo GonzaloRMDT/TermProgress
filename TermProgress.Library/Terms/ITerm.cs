@@ -5,44 +5,57 @@ namespace TermProgress.Library.Terms
     /// <summary>
     /// Defines the common structure for terms.
     /// </summary>
-    /// <summary>
-    /// Defines the common structure for terms.
-    /// </summary>
     public interface ITerm
     {
         /// <summary>
-        /// Gets or sets the current date.
+        /// Gets or initializes the current date.
         /// </summary>
-        DateTime? CurrentDate { get; set; }
+        DateTime CurrentDate { get; init; }
 
         /// <summary>
-        /// Gets the term elapsed days.
+        /// Gets the number of days elapsed.
         /// </summary>
-        int? ElapsedDays { get; }
+        int GetDaysElapsed();
 
         /// <summary>
-        /// Gets or sets the term ending <see cref="DateTime"/>.
+        /// Gets the number of days remaining.
         /// </summary>
-        DateTime? EndingDate { get; set; }
+        int GetDaysRemaining();
 
         /// <summary>
-        /// Gets the term progress.
+        /// Gets the total number of days.
         /// </summary>
-        double? Progress { get; }
+        int GetDaysTotal();
 
         /// <summary>
-        /// Gets the term remaining days.
+        /// Gets the end date.
         /// </summary>
-        int? RemainingDays { get; }
+        /// <exception cref="InvalidOperationException">Thrown when end date is not set.</exception>
+        DateTime GetEndDate();
 
         /// <summary>
-        /// Gets or sets the term starting <see cref="DateTime"/>.
+        /// Gets the progress ratio.
         /// </summary>
-        DateTime? StartingDate { get; set; }
+        double GetProgressRatio();
 
         /// <summary>
-        /// Gets the term total days.
+        /// Gets the start date.
         /// </summary>
-        int? TotalDays { get; }
+        /// <exception cref="InvalidOperationException">Thrown when start date is not set.</exception>
+        DateTime GetStartDate();
+
+        /// <summary>
+        /// Sets the end date.
+        /// </summary>
+        /// <param name="value">The end date.</param>
+        /// <exception cref="ArgumentException">Thrown when value is greater than start date.</exception>
+        void SetEndDate(DateTime value);
+
+        /// <summary>
+        /// Sets the start date.
+        /// </summary>
+        /// <param name="value">The start date.</param>
+        /// <exception cref="ArgumentException">Thrown when value is greater than end date.</exception>
+        void SetStartDate(DateTime value);
     }
 }
