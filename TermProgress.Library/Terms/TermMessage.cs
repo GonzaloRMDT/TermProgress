@@ -7,7 +7,7 @@ namespace TermProgress.Library.Terms
     /// </summary>
     public class TermMessage : ITermMessage
     {
-        private readonly ITerm term;
+        public ITerm Term { get; }
 
         /// <summary>
         /// Class constructor.
@@ -15,13 +15,13 @@ namespace TermProgress.Library.Terms
         /// <param name="term">A <see cref="ITerm"/> implementation.</param>
         public TermMessage(ITerm term)
         {
-            this.term = term;
+            Term = term;
         }
 
         public override string? ToString()
         {
-            string days = $"{term.ElapsedDays}/{term.RemainingDays}/{term.TotalDays}";
-            string percentage = string.Format("{0:P2}", term.Progress);
+            string days = $"{Term.ElapsedDays}/{Term.RemainingDays}/{Term.TotalDays}";
+            string percentage = string.Format("{0:P2}", Term.Progress);
 
             return $"{GetBar()} {percentage}\n\n{days}";
         }
@@ -33,12 +33,12 @@ namespace TermProgress.Library.Terms
         public string GetBar()
         {
             const int BlocksTotal = 15;
-            double daysPerBlock = (double)term.TotalDays / BlocksTotal;
+            double daysPerBlock = (double)Term.TotalDays / BlocksTotal;
             StringBuilder progressBar = new StringBuilder(BlocksTotal);
 
             for (int block = 1; block <= BlocksTotal; block++)
             {
-                if ((block * daysPerBlock) <= term.ElapsedDays)
+                if ((block * daysPerBlock) <= Term.ElapsedDays)
                 {
                     progressBar.Append('▓');
                 }

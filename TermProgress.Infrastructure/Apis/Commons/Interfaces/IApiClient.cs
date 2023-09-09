@@ -8,10 +8,10 @@ namespace TermProgress.Infrastructure.Apis.Commons.Interfaces
     public interface IApiClient : IDisposable
     {
         /// <summary>
-        /// Creates a message asynchronously.
+        /// Creates status asynchronously.
         /// </summary>
         /// <param name="text">The message text.</param>
         /// <returns>The message creation response.</returns>
-        Task<CreateMessageResponse?> CreateMessageAsync(string text);
+        Task<StatusCreationResponse?> CreateStatusAsync(string text);
     }
 }

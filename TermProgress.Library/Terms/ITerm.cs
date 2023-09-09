@@ -21,9 +21,9 @@ namespace TermProgress.Library.Terms
         int? ElapsedDays { get; }
 
         /// <summary>
-        /// Gets the term ending <see cref="DateTime"/>.
+        /// Gets or sets the term ending <see cref="DateTime"/>.
         /// </summary>
-        DateTime? EndingDate { get; }
+        DateTime? EndingDate { get; set; }
 
         /// <summary>
         /// Gets the term progress.
@@ -36,9 +36,9 @@ namespace TermProgress.Library.Terms
         int? RemainingDays { get; }
 
         /// <summary>
-        /// Gets the term starting <see cref="DateTime"/>.
+        /// Gets or sets the term starting <see cref="DateTime"/>.
         /// </summary>
-        DateTime? StartingDate { get; }
+        DateTime? StartingDate { get; set; }
 
         /// <summary>
         /// Gets the term total days.
