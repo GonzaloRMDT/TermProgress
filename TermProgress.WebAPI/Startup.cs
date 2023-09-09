@@ -44,7 +44,6 @@ namespace TermProgress.WebAPI
                     )
                 )
                 .Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)))
-                .Configure<TermOptions>(Configuration.GetSection(nameof(TermOptions)))
                 .Configure<RequestLocalizationOptions>(options =>
                 {
                     string? culture = Configuration
