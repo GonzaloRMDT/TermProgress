@@ -37,9 +37,9 @@ namespace TermProgress.Library.Services
                 .Contains(network, StringComparison.OrdinalIgnoreCase));
 
             // Term progress message
-            termMessage.Term.StartingDate = startDate;
-            termMessage.Term.EndingDate = endDate;
-            string message = termMessage.ToString()!;
+            termMessage.Term.SetStartDate(startDate);
+            termMessage.Term.SetEndDate(endDate);
+            string message = termMessage.GetMessage();
 
             // Status creation
             var retryPolicy = Policy

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using TermProgress.Library.Options;
+﻿using System;
 
 namespace TermProgress.Library.Terms
 {
@@ -9,44 +7,84 @@ namespace TermProgress.Library.Terms
     /// </summary>
     public class Term : ITerm
     {
-        private readonly IOptions<TermOptions> termOptions;
-        
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
-        /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
-        public Term(IOptions<TermOptions> termOptions)
+        private DateTime? currentDate;
+        private DateTime? endDate;
+        private DateTime? startDate;
+
+        public DateTime CurrentDate
         {
-            this.termOptions = termOptions;
+            get => currentDate ?? DateTime.Now.Date;
+            init => currentDate = value;  // for testing purposes only
+        }
+
+        public int GetDaysElapsed()
+        {
+            TimeSpan elapsedTime = CurrentDate - GetStartDate();
+
+            return elapsedTime.Days;
         }
 
         /// <inheritdoc/>
-        /// <remarks>
-        /// If this property has been set to a specific date, gets said specific date. Else, returns the actual date.
-        /// </remarks>
-        public DateTime? CurrentDate
+        public DateTime GetEndDate()
         {
-            get
+            if (endDate is null)
             {
-                return currentDate ?? DateTime.Now.Date;
+                throw new InvalidOperationException("End date is not set.");
             }
-            set
-            {
-                currentDate = value?.Date;
-            }
-        }
-        private DateTime? currentDate;
 
-        public int? ElapsedDays => (CurrentDate - StartingDate)?.Days;
-        
-        public DateTime? EndingDate { get; set; }
-        
-        public double? Progress => (double)(ElapsedDays ?? 0) / TotalDays;
-        
-        public int? RemainingDays => (EndingDate!.Value.AddDays(1) - CurrentDate)?.Days;
-        
-        public DateTime? StartingDate { get; set; }
-        
-        public int? TotalDays => (EndingDate!.Value.AddDays(1) - StartingDate)?.Days;
+            return endDate.Value;
+        }
+
+        public double GetProgressRatio()
+        {
+            var elapsedDays = (double)GetDaysElapsed();
+            var totalDays = (double)GetDaysTotal();
+
+            return elapsedDays / totalDays;
+        }
+
+        public int GetDaysRemaining()
+        {
+            TimeSpan remainingTime = GetEndDate().AddDays(1) - CurrentDate;
+
+            return remainingTime.Days;
+        }
+
+        public DateTime GetStartDate()
+        {
+            if (startDate is null)
+            {
+                throw new InvalidOperationException("Start date is not set.");
+            }
+
+            return startDate.Value;
+        }
+
+        public int GetDaysTotal()
+        {
+            TimeSpan totalTime = GetEndDate().AddDays(1) - GetStartDate();
+
+            return totalTime.Days;
+        }
+
+        public void SetEndDate(DateTime value)
+        {
+            if (startDate is not null && value < GetStartDate())  // only try to get start date when set
+            {
+                throw new ArgumentException("Value cannot be less than start date.");
+            }
+
+            endDate = value;
+        }
+
+        public void SetStartDate(DateTime value)
+        {
+            if (endDate is not null && value > GetEndDate())  // only try to get end date when set
+            {
+                throw new ArgumentException("Value cannot be greater than end date.");
+            }
+
+            startDate = value;
+        }
     }
 }
