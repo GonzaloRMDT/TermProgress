@@ -12,10 +12,10 @@ namespace TermProgress.Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddOptions<ApplicationOptions>()
+            builder.Services.AddOptions<FunctionOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>
                 {
-                    configuration.GetSection(nameof(ApplicationOptions)).Bind(settings);
+                    configuration.GetSection(nameof(FunctionOptions)).Bind(settings);
                 });
 
             builder.Services
