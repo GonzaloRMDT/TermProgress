@@ -7,23 +7,25 @@ using TermProgress.Functions.Options;
 namespace TermProgress.Functions.Clients
 {
     /// <summary>
-    /// Represents a term progress web API client.
+    /// Represents a term progress API client.
     /// </summary>
     /// <inheritdoc />
     public class TermProgressApiClient : ITermProgressApiClient
     {
         private readonly RestClient apiClient;
-        private readonly ApplicationOptions applicationOptions;
+        private readonly FunctionOptions functionOptions;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
-        /// <param name="applicationOptions">A <see cref="IOptions{TOptions}"/> implementation with a generic argument type of <see cref="ApplicationOptions"/>.</param>
-        ///
-        public TermProgressApiClient(IOptions<ApplicationOptions> applicationOptions)
+        /// <param name="functionOptions">
+        /// A <see cref="IOptions{TOptions}"/> implementation
+        /// with a generic argument type of <see cref="FunctionOptions"/>.
+        /// </param>
+        public TermProgressApiClient(IOptions<FunctionOptions> functionOptions)
         {
-            this.applicationOptions = applicationOptions.Value;
-            apiClient = new RestClient(this.applicationOptions.TermProgressApiBaseUrl!);
+            this.functionOptions = functionOptions.Value;
+            apiClient = new RestClient(this.functionOptions.TermProgressApiBaseUrl!);
         }
 
         public void Dispose()
@@ -32,10 +34,12 @@ namespace TermProgress.Functions.Clients
             GC.SuppressFinalize(this);
         }
 
-        public async Task RequestMessageCreationAsync()
+        public async Task RequestStatusCreationAsync(DateTime startDate, DateTime endDate)
         {
             RestRequest request = new RestRequest("api/v1/termprogress/twitter")
-                .AddHeader("ApiKey", applicationOptions.ApiKey!);
+                .AddHeader("ApiKey", functionOptions.ApiKey!)
+                .AddJsonBody(new { startDate, endDate });
+
             await apiClient.ExecutePostAsync(request);
         }
     }

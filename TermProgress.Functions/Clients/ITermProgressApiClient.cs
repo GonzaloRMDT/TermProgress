@@ -9,9 +9,11 @@ namespace TermProgress.Functions.Clients
     public interface ITermProgressApiClient : IDisposable
     {
         /// <summary>
-        /// Requests message creation asynchronously.
+        /// Requests status creation asynchronously.
         /// </summary>
+        /// <param name="startDate">The term start date.</param>
+        /// <param name="endDate">The term end date.</param>
         /// <returns>A <see cref="Task"/> instance.</returns>
-        Task RequestMessageCreationAsync();
+        Task RequestStatusCreationAsync(DateTime startDate, DateTime endDate);
     }
 }
