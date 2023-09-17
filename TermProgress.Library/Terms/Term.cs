@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermProgress.Library.Terms
+namespace TermProgress.Domain.Terms
 {
     /// <summary>
     /// Represents a term.

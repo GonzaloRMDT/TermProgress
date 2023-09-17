@@ -1,4 +1,4 @@
-﻿namespace TermProgress.Library.Services.Models.Enums
+﻿namespace TermProgress.Application.Publishers.Models.Enums
 {
     /// <summary>
     /// Enumerates the request results.

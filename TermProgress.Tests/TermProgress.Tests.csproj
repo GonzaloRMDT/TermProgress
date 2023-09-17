@@ -19,6 +19,6 @@
 </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj" />
+    <ProjectReference Include="..\TermProgress.Library\TermProgress.Domain.csproj" />
   </ItemGroup>
 </Project>

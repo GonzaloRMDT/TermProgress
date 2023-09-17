@@ -1,34 +1,28 @@
 ﻿using Polly;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using TermProgress.Infrastructure.Apis.Commons.Interfaces;
+using TermProgress.Application.Publishers.Models;
+using TermProgress.Application.Publishers.Models.Enums;
+using TermProgress.Domain.Terms;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
-using TermProgress.Library.Services.Models;
-using TermProgress.Library.Services.Models.Enums;
-using TermProgress.Library.Terms;
+using TermProgress.Infrastructure.Apis.Commons.Interfaces;
 
-namespace TermProgress.Library.Services
+namespace TermProgress.Application.Publishers
 {
     /// <summary>
-    /// Represents a term progress service.
+    /// Represents a term progress publishing service.
     /// </summary>
-    public class TermProgressService : ITermProgressService
+    public class TermProgressPublishingService : ITermProgressPublishingService
     {
         private readonly IEnumerable<IApiClient> apiClients;
         private readonly ITermMessage termMessage;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TermProgressService"/> class.
+        /// Initializes a new instance of the <see cref="TermProgressPublishingService"/> class.
         /// </summary>
-        /// <param name="apiClients">
-        /// An <see cref="IEnumerable{T}"/> with a generic type argument of <see cref="IApiClient"/>.
-        /// </param>
-        /// <param name="termMessage">A <see cref="ITermMessage"/> implementation.</param>
-        public TermProgressService(IEnumerable<IApiClient> apiClients, ITermMessage termMessage)
+        /// <param name="apiClients">The API clients.</param>
+        /// <param name="termMessage">A term message implementation.</param>
+        public TermProgressPublishingService(IEnumerable<IApiClient> apiClients, ITermMessage termMessage)
         {
             this.apiClients = apiClients;
             this.termMessage = termMessage;

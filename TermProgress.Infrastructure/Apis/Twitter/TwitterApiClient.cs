@@ -1,9 +1,8 @@
 ﻿using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Authenticators.OAuth;
-using System.Text.Json;
-using TermProgress.Infrastructure.Apis.Commons.Interfaces;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
+using TermProgress.Infrastructure.Apis.Commons.Interfaces;
 using TermProgress.Infrastructure.Apis.Twitter.Entities;
 
 namespace TermProgress.Infrastructure.Apis.Twitter

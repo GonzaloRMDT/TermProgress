@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermProgress.Library.Terms
+namespace TermProgress.Domain.Terms
 {
     /// <summary>
     /// Defines the common structure for terms.

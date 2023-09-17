@@ -1,4 +1,4 @@
-﻿namespace TermProgress.Library.Options
+﻿namespace TermProgress.Domain.Options
 {
     /// <summary>
     /// Represents the application options.

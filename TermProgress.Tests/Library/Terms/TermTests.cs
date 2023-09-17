@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using System;
-using TermProgress.Library.Options;
-using TermProgress.Library.Terms;
 using Xunit;
 
 namespace TermProgress.Tests.Library.Terms

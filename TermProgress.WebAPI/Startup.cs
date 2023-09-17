@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TermProgress.Application.Publishers;
+using TermProgress.Domain.Options;
+using TermProgress.Domain.Terms;
 using TermProgress.Infrastructure.Apis.Commons.Interfaces;
 using TermProgress.Infrastructure.Apis.Twitter;
-using TermProgress.Library.Options;
-using TermProgress.Library.Services;
-using TermProgress.Library.Terms;
 using TermProgress.WebAPI.Exceptions;
 using TermProgress.WebAPI.HttpErrors;
 
@@ -32,7 +32,7 @@ namespace TermProgress.WebAPI
                 .AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationOptions).Assembly)
                 .AddExceptionHandling()
                 .AddHttpErrorHandling()
-                .AddScoped<ITermProgressService, TermProgressService>()
+                .AddScoped<ITermProgressPublishingService, TermProgressPublishingService>()
                 .AddScoped<ITerm, Term>()
                 .AddScoped<ITermMessage, TermMessage>()
                 .AddSingleton<IApiClient>(

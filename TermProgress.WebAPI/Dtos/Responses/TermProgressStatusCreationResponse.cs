@@ -13,6 +13,6 @@
         /// <summary>
         /// Gets or initializes the created status text.
         /// </summary>
-        public required string Text {  get; init; }
+        public required string Text { get; init; }
     }
 }
