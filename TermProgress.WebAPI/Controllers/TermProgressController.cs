@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Net;
 using System.Threading.Tasks;
+using TermProgress.Application.Publishers;
+using TermProgress.Application.Publishers.Models;
+using TermProgress.Application.Publishers.Models.Enums;
+using TermProgress.Domain.Authentications.ApiKey.Attributes;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
-using TermProgress.Library.Authentications.ApiKey.Attributes;
-using TermProgress.Library.Services;
-using TermProgress.Library.Services.Models;
-using TermProgress.Library.Services.Models.Enums;
 using TermProgress.WebAPI.Dtos.Requests;
 using TermProgress.WebAPI.Dtos.Responses;
 
@@ -22,17 +21,17 @@ namespace TermProgress.WebAPI.Controllers
     public class TermProgressController : ControllerBase
     {
         private readonly ILogger<TermProgressController> logger;
-        private readonly ITermProgressService termProgressService;
+        private readonly ITermProgressPublishingService termProgressPublishingService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TermProgressController"/> class.
         /// </summary>
         /// <param name="logger">A logger implementation.</param>
-        /// <param name="termProgressService">A term progress service implementation.</param>
-        public TermProgressController(ILogger<TermProgressController> logger, ITermProgressService termProgressService)
+        /// <param name="termProgressPublishingService">A term progress publishing service implementation.</param>
+        public TermProgressController(ILogger<TermProgressController> logger, ITermProgressPublishingService termProgressPublishingService)
         {
             this.logger = logger;
-            this.termProgressService = termProgressService;
+            this.termProgressPublishingService = termProgressPublishingService;
         }
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace TermProgress.WebAPI.Controllers
             logger.LogInformation("User requested term status creation with "
                 + $"start date {request.StartDate.Date} and end date {request.EndDate.Date}.");
 
-            Response<Status> response = await termProgressService.CreateStatusAsync(
+            Response<Status> response = await termProgressPublishingService.CreateStatusAsync(
                 network,
                 request.StartDate,
                 request.EndDate);

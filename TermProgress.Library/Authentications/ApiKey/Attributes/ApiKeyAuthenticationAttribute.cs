@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace TermProgress.Library.Authentications.ApiKey.Attributes
+namespace TermProgress.Domain.Authentications.ApiKey.Attributes
 {
     /// <summary>
     /// Represents an API key authentication attribute.

@@ -8,15 +8,12 @@
 	<Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TermProgress.Infrastructure\TermProgress.Infrastructure.csproj" />
-    <ProjectReference Include="..\TermProgress.Library\TermProgress.Library.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="NLog" Version="5.2.3" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TermProgress.Services\TermProgress.Application.csproj" />
   </ItemGroup>
 </Project>

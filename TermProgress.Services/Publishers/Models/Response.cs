@@ -1,6 +1,6 @@
-﻿using TermProgress.Library.Services.Models.Enums;
+﻿using TermProgress.Application.Publishers.Models.Enums;
 
-namespace TermProgress.Library.Services.Models
+namespace TermProgress.Application.Publishers.Models
 {
     /// <summary>
     /// Represents a response.

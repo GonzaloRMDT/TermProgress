@@ -1,14 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using TermProgress.Application.Publishers.Models;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
-using TermProgress.Library.Services.Models;
 
-namespace TermProgress.Library.Services
+namespace TermProgress.Application.Publishers
 {
     /// <summary>
-    /// Defines the common structure for term progress services.
+    /// Defines the common structure for term progress publishing services.
     /// </summary>
-    public interface ITermProgressService
+    public interface ITermProgressPublishingService
     {
         /// <summary>
         /// Creates term progress status on given social network asynchronously.
