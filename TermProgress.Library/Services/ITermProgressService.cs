@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using TermProgress.Infrastructure.Apis.Commons.Exchanges;
+using TermProgress.Infrastructure.Apis.Commons.Entities;
+using TermProgress.Library.Services.Models;
 
 namespace TermProgress.Library.Services
 {
@@ -16,8 +17,8 @@ namespace TermProgress.Library.Services
         /// <param name="startDate">The term start date.</param>
         /// <param name="endDate">The term end date.</param>
         /// <returns>
-        /// A <see cref="Task{T}"/> instance with a generic type argument of <see cref="StatusCreationResponse"/>.
+        /// The response with the created status.
         /// </returns>
-        Task<StatusCreationResponse?> CreateStatusAsync(string network, DateTime startDate, DateTime endDate);
+        Task<Response<Status>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate);
     }
 }

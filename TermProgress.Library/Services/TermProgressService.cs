@@ -1,10 +1,14 @@
 ﻿using Polly;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
-using TermProgress.Infrastructure.Apis.Commons.Exchanges;
 using TermProgress.Infrastructure.Apis.Commons.Interfaces;
+using TermProgress.Infrastructure.Apis.Commons.Entities;
+using TermProgress.Library.Services.Models;
+using TermProgress.Library.Services.Models.Enums;
 using TermProgress.Library.Terms;
 
 namespace TermProgress.Library.Services
@@ -30,7 +34,7 @@ namespace TermProgress.Library.Services
             this.termMessage = termMessage;
         }
 
-        public async Task<StatusCreationResponse?> CreateStatusAsync(string network, DateTime startDate, DateTime endDate)
+        public async Task<Response<Status>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate)
         {
             IApiClient apiClient = apiClients
                 .Single(apiClient => apiClient.GetType().Name
@@ -42,19 +46,31 @@ namespace TermProgress.Library.Services
             string message = termMessage.GetMessage();
 
             // Status creation
-            var retryPolicy = Policy
-                .HandleResult<StatusCreationResponse?>(result => result is null)
+            HttpStatusCode[] httpStatusCodesWorthRetrying = {
+               HttpStatusCode.RequestTimeout,  // 408
+               HttpStatusCode.InternalServerError,  // 500
+               HttpStatusCode.BadGateway,  // 502
+               HttpStatusCode.ServiceUnavailable,  // 503
+               HttpStatusCode.GatewayTimeout  // 504
+            };
+
+            var retryPolicy = Policy<RestResponse<Status>>
+                .HandleResult(r => httpStatusCodesWorthRetrying.Contains(r.StatusCode))
                 .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-            var circuitBreakerPolicy = Policy
-                .HandleResult<StatusCreationResponse?>(result => result is null)
+            var circuitBreakerPolicy = Policy<RestResponse<Status>>
+                .HandleResult(r => !r.IsSuccessful)
                 .CircuitBreakerAsync(5, TimeSpan.FromMinutes(1));
 
-            PolicyResult<StatusCreationResponse?> response = await Policy
-                .WrapAsync(retryPolicy, circuitBreakerPolicy)
+            PolicyResult<RestResponse<Status>> response = await Policy
+                .WrapAsync(retryPolicy, circuitBreakerPolicy) // TODO: Check if order should be inverted
                 .ExecuteAndCaptureAsync(async () => await apiClient.CreateStatusAsync(message));
 
-            return response.Result;
+            return new Response<Status>
+            {
+                Result = response.Result.IsSuccessful ? RequestResult.Success : RequestResult.Error,
+                Data = response.Result.Data
+            };
         }
     }
 }

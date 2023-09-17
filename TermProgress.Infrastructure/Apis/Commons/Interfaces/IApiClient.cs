@@ -1,4 +1,5 @@
-﻿using TermProgress.Infrastructure.Apis.Commons.Exchanges;
+﻿using RestSharp;
+using TermProgress.Infrastructure.Apis.Commons.Entities;
 
 namespace TermProgress.Infrastructure.Apis.Commons.Interfaces
 {
@@ -11,7 +12,7 @@ namespace TermProgress.Infrastructure.Apis.Commons.Interfaces
         /// Creates status asynchronously.
         /// </summary>
         /// <param name="text">The message text.</param>
-        /// <returns>The message creation response.</returns>
-        Task<StatusCreationResponse?> CreateStatusAsync(string text);
+        /// <returns>The status creation response.</returns>
+        Task<RestResponse<Status>> CreateStatusAsync(string text);
     }
 }
