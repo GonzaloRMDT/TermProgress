@@ -2,8 +2,9 @@
 using RestSharp.Authenticators;
 using RestSharp.Authenticators.OAuth;
 using System.Text.Json;
-using TermProgress.Infrastructure.Apis.Commons.Exchanges;
 using TermProgress.Infrastructure.Apis.Commons.Interfaces;
+using TermProgress.Infrastructure.Apis.Commons.Entities;
+using TermProgress.Infrastructure.Apis.Twitter.Entities;
 
 namespace TermProgress.Infrastructure.Apis.Twitter
 {
@@ -46,29 +47,21 @@ namespace TermProgress.Infrastructure.Apis.Twitter
             GC.SuppressFinalize(this);
         }
 
-        public async Task<StatusCreationResponse?> CreateStatusAsync(string text)
+        public async Task<RestResponse<Status>> CreateStatusAsync(string text)
         {
-            RestRequest request = new RestRequest("2/tweets").AddJsonBody(new { text });
-            RestResponse response = await apiClient.ExecutePostAsync(request);
-            if (response.IsSuccessful && response.Content is not null)
+            var request = new RestRequest("2/tweets").AddJsonBody(new { text });
+            var response = await apiClient.ExecutePostAsync<TwitterObject<TwitterStatus>>(request);
+            var statusResponse = RestResponse<Status>.FromResponse(response);
+            if (response.IsSuccessful)
             {
-                try
+                statusResponse.Data = new Status
                 {
-                    using JsonDocument responseJsonBody = JsonDocument.Parse(response.Content);
-                    JsonElement responseJsonBodyData = responseJsonBody.RootElement.GetProperty("data");
-
-                    return new StatusCreationResponse()
-                    {
-                        Id = responseJsonBodyData.GetProperty("id").GetString()!,
-                        Text = responseJsonBodyData.GetProperty("text").GetString()!
-                    };
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
+                    Id = response.Data!.Data.Id,
+                    Text = response.Data!.Data.Text
+                };
             }
-            else { return null; }
+
+            return statusResponse;
         }
     }
 }

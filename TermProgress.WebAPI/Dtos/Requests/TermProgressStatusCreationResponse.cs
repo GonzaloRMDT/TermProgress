@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TermProgress.WebAPI.Exchanges.Requests
+namespace TermProgress.WebAPI.Dtos.Requests
 {
     /// <summary>
     /// Represents a term progress status creation request.
