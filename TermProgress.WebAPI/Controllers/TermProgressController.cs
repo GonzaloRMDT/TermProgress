@@ -53,16 +53,20 @@ namespace TermProgress.WebAPI.Controllers
             [FromBody] TermProgressStatusCreationRequest request)
         {
             logger.LogInformation("User requested term status creation with "
-                + $"start date {request.StartDate.Date} and end date {request.EndDate.Date}.");
+                + $"start date {request.StartDate!.Value.Date} and end date {request.EndDate!.Value.Date}.");
 
             Response<Status> response = await termProgressPublishingService.CreateStatusAsync(
                 network,
-                request.StartDate,
-                request.EndDate);
+                request.StartDate!.Value,
+                request.EndDate!.Value);
 
-            if (response.Result == RequestResult.Scheduled)
+            if (response.Result is RequestResult.Scheduled)
             {
                 return Accepted();
+            }
+            else if (response.Result is RequestResult.Error)
+            {
+                return StatusCode(StatusCodes.Status502BadGateway);
             }
 
             return StatusCode(

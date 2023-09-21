@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using TermProgress.WebAPI.Validations;
+using TermProgress.WebAPI.Validations.Enums;
 
 namespace TermProgress.WebAPI.Dtos.Requests
 {
@@ -10,11 +13,15 @@ namespace TermProgress.WebAPI.Dtos.Requests
         /// <summary>
         /// Gets or initializes the start date.
         /// </summary>
-        public required DateTime StartDate { get; init; }
+        [Required]
+        [Comparison(Relation.LessThan, "EndDate")]
+        public DateTime? StartDate { get; init; }
 
         /// <summary>
         /// Gets or initializes the end date.
         /// </summary>
-        public required DateTime EndDate { get; init; }
+        [Required]
+        [Comparison(Relation.GreaterThan, "StartDate")]
+        public DateTime? EndDate { get; init; }
     }
 }
