@@ -29,7 +29,7 @@ namespace TermProgress.WebAPI
         {
             services.AddControllers();
             services
-                .AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationOptions).Assembly)
+                .AddAutoMapper(typeof(Program).Assembly, typeof(TermProgressPublishingService).Assembly)
                 .AddExceptionHandling()
                 .AddHttpErrorHandling()
                 .AddScoped<ITermProgressPublishingService, TermProgressPublishingService>()

@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using TermProgress.Application.Publishers;
-using TermProgress.Application.Publishers.Models;
-using TermProgress.Application.Publishers.Models.Enums;
+using TermProgress.Application.Publishers.Dtos;
+using TermProgress.Application.Publishers.Dtos.Enums;
 using TermProgress.Domain.Authentications.ApiKey.Attributes;
-using TermProgress.Infrastructure.Apis.Commons.Entities;
 using TermProgress.WebAPI.Dtos.Requests;
 using TermProgress.WebAPI.Dtos.Responses;
 
@@ -55,7 +54,7 @@ namespace TermProgress.WebAPI.Controllers
             logger.LogInformation("User requested term status creation with "
                 + $"start date {request.StartDate!.Value.Date} and end date {request.EndDate!.Value.Date}.");
 
-            Response<Status> response = await termProgressPublishingService.CreateStatusAsync(
+            ResponseDto<StatusDto> response = await termProgressPublishingService.CreateStatusAsync(
                 network,
                 request.StartDate!.Value,
                 request.EndDate!.Value);
@@ -69,13 +68,7 @@ namespace TermProgress.WebAPI.Controllers
                 return StatusCode(StatusCodes.Status502BadGateway);
             }
 
-            return StatusCode(
-                StatusCodes.Status201Created,
-                new TermProgressStatusCreationResponse
-                {
-                    Id = response.Data!.Id,
-                    Text = response.Data!.Text
-                });
+            return StatusCode(StatusCodes.Status201Created, response.Data);
         }
     }
 }

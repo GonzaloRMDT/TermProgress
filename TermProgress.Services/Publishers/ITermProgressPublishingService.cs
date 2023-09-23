@@ -1,5 +1,4 @@
-﻿using TermProgress.Application.Publishers.Models;
-using TermProgress.Infrastructure.Apis.Commons.Entities;
+﻿using TermProgress.Application.Publishers.Dtos;
 
 namespace TermProgress.Application.Publishers
 {
@@ -14,9 +13,7 @@ namespace TermProgress.Application.Publishers
         /// <param name="network">Name of social network to publish on.</param>
         /// <param name="startDate">The term start date.</param>
         /// <param name="endDate">The term end date.</param>
-        /// <returns>
-        /// The response with the created status.
-        /// </returns>
-        Task<Response<Status>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate);
+        /// <returns>The response data transfer object with the created status.</returns>
+        Task<ResponseDto<StatusDto>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate);
     }
 }
