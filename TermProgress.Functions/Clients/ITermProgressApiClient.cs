@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Threading.Tasks;
 
 namespace TermProgress.Functions.Clients
@@ -13,7 +14,7 @@ namespace TermProgress.Functions.Clients
         /// </summary>
         /// <param name="startDate">The term start date.</param>
         /// <param name="endDate">The term end date.</param>
-        /// <returns>A <see cref="Task"/> instance.</returns>
-        Task RequestStatusCreationAsync(DateTime startDate, DateTime endDate);
+        /// <returns>The status creation response.</returns>
+        Task<RestResponse> RequestStatusCreationAsync(DateTime startDate, DateTime endDate);
     }
 }

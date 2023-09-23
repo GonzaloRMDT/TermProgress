@@ -16,12 +16,9 @@ namespace TermProgress.Functions.Clients
         private readonly FunctionOptions functionOptions;
 
         /// <summary>
-        /// Class constructor.
+        /// Initializes a new instance of the <see cref="TermProgressApiClient"/> class.
         /// </summary>
-        /// <param name="functionOptions">
-        /// A <see cref="IOptions{TOptions}"/> implementation
-        /// with a generic argument type of <see cref="FunctionOptions"/>.
-        /// </param>
+        /// <param name="functionOptions">The function options.</param>
         public TermProgressApiClient(IOptions<FunctionOptions> functionOptions)
         {
             this.functionOptions = functionOptions.Value;
@@ -34,13 +31,13 @@ namespace TermProgress.Functions.Clients
             GC.SuppressFinalize(this);
         }
 
-        public async Task RequestStatusCreationAsync(DateTime startDate, DateTime endDate)
+        public async Task<RestResponse> RequestStatusCreationAsync(DateTime startDate, DateTime endDate)
         {
             RestRequest request = new RestRequest("api/v1/termprogress/twitter")
                 .AddHeader("ApiKey", functionOptions.ApiKey!)
                 .AddJsonBody(new { startDate, endDate });
 
-            await apiClient.ExecutePostAsync(request);
+            return await apiClient.ExecutePostAsync(request);
         }
     }
 }
