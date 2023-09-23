@@ -1,8 +1,8 @@
-﻿using Polly;
+﻿using AutoMapper;
+using Polly;
 using RestSharp;
 using System.Net;
-using TermProgress.Application.Publishers.Models;
-using TermProgress.Application.Publishers.Models.Enums;
+using TermProgress.Application.Publishers.Dtos;
 using TermProgress.Domain.Terms;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
 using TermProgress.Infrastructure.Apis.Commons.Interfaces;
@@ -15,20 +15,26 @@ namespace TermProgress.Application.Publishers
     public class TermProgressPublishingService : ITermProgressPublishingService
     {
         private readonly IEnumerable<IApiClient> apiClients;
+        private readonly IMapper mapper;
         private readonly ITermMessage termMessage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TermProgressPublishingService"/> class.
         /// </summary>
         /// <param name="apiClients">The API clients.</param>
+        /// <param name="mapper">A mapper implementation.</param>
         /// <param name="termMessage">A term message implementation.</param>
-        public TermProgressPublishingService(IEnumerable<IApiClient> apiClients, ITermMessage termMessage)
+        public TermProgressPublishingService(
+            IEnumerable<IApiClient> apiClients,
+            IMapper mapper,
+            ITermMessage termMessage)
         {
             this.apiClients = apiClients;
+            this.mapper = mapper;
             this.termMessage = termMessage;
         }
 
-        public async Task<Response<Status>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate)
+        public async Task<ResponseDto<StatusDto>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate)
         {
             IApiClient apiClient = apiClients
                 .Single(apiClient => apiClient.GetType().Name
@@ -60,11 +66,7 @@ namespace TermProgress.Application.Publishers
                 .WrapAsync(retryPolicy, circuitBreakerPolicy) // TODO: Check if order should be inverted
                 .ExecuteAndCaptureAsync(async () => await apiClient.CreateStatusAsync(message));
 
-            return new Response<Status>
-            {
-                Result = response.Result.IsSuccessful ? RequestResult.Success : RequestResult.Error,
-                Data = response.Result.Data
-            };
+            return mapper.Map<ResponseDto<StatusDto>>(response.Result);
         }
     }
 }
