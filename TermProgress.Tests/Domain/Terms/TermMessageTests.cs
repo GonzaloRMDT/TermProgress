@@ -36,7 +36,7 @@ namespace TermProgress.Tests.Domain.Terms
             // Act
             Term term = new()
             {
-                CurrentDate = new DateTime(2023,12, 10)
+                CurrentDate = new DateTime(2023, 12, 10)
             };
 
             term.SetStartDate(GetStartDate());
@@ -52,6 +52,7 @@ namespace TermProgress.Tests.Domain.Terms
         }
 
         private static DateTime GetStartDate() => new DateTime(2019, 12, 10);
+
         private static DateTime GetEndDate() => new DateTime(2023, 12, 9);
     }
 }
