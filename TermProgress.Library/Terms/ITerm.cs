@@ -1,43 +1,61 @@
 ﻿using System;
 
-namespace TermProgress.Library.Terms
+namespace TermProgress.Domain.Terms
 {
-    /// <summary>
-    /// Defines the common structure for terms.
-    /// </summary>
     /// <summary>
     /// Defines the common structure for terms.
     /// </summary>
     public interface ITerm
     {
         /// <summary>
-        /// Gets the term elapsed days.
+        /// Gets or initializes the current date.
         /// </summary>
-        int ElapsedDays { get; }
+        DateTime CurrentDate { get; init; }
 
         /// <summary>
-        /// Gets the term ending <see cref="DateTime"/>.
+        /// Gets the number of days elapsed.
         /// </summary>
-        DateTime EndingDate { get; }
+        int GetDaysElapsed();
 
         /// <summary>
-        /// Gets the term progress.
+        /// Gets the number of days remaining.
         /// </summary>
-        double Progress { get; }
+        int GetDaysRemaining();
 
         /// <summary>
-        /// Gets the term remaining days.
+        /// Gets the total number of days.
         /// </summary>
-        int RemainingDays { get; }
+        int GetDaysTotal();
 
         /// <summary>
-        /// Gets the term starting <see cref="DateTime"/>.
+        /// Gets the end date.
         /// </summary>
-        DateTime StartingDate { get; }
+        /// <exception cref="InvalidOperationException">Thrown when end date is not set.</exception>
+        DateTime GetEndDate();
 
         /// <summary>
-        /// Gets the term total days.
+        /// Gets the progress ratio.
         /// </summary>
-        int TotalDays { get; }
+        double GetProgressRatio();
+
+        /// <summary>
+        /// Gets the start date.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown when start date is not set.</exception>
+        DateTime GetStartDate();
+
+        /// <summary>
+        /// Sets the end date.
+        /// </summary>
+        /// <param name="value">The end date.</param>
+        /// <exception cref="ArgumentException">Thrown when value is greater than start date.</exception>
+        void SetEndDate(DateTime value);
+
+        /// <summary>
+        /// Sets the start date.
+        /// </summary>
+        /// <param name="value">The start date.</param>
+        /// <exception cref="ArgumentException">Thrown when value is greater than end date.</exception>
+        void SetStartDate(DateTime value);
     }
 }

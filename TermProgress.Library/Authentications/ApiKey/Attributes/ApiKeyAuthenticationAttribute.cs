@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace TermProgress.Library.Authentications.ApiKey.Attributes
+namespace TermProgress.Domain.Authentications.ApiKey.Attributes
 {
     /// <summary>
     /// Represents an API key authentication attribute.
@@ -24,9 +24,9 @@ namespace TermProgress.Library.Authentications.ApiKey.Attributes
             }
 
             IConfiguration configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-            string apiKey = configuration.GetValue<string>(ApiKeyHeaderName);
+            string? apiKey = configuration.GetValue<string>(ApiKeyHeaderName);
 
-            if (!apiKey.Equals(apiKeyHeaderValue))
+            if (apiKey is not null && !apiKey.Equals(apiKeyHeaderValue))
             {
                 context.Result = new UnauthorizedResult();
                 return;

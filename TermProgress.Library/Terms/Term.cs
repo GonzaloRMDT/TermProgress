@@ -1,86 +1,90 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Text;
-using TermProgress.Library.Options;
+﻿using System;
 
-namespace TermProgress.Library.Terms
+namespace TermProgress.Domain.Terms
 {
     /// <summary>
     /// Represents a term.
     /// </summary>
     public class Term : ITerm
     {
-        public int ElapsedDays => (dateTimeWrapper.Now.Date - StartingDate).Days;
-        public DateTime EndingDate => termOptions.Value.EndingDateTime.Date;
-        public double Progress => (double)ElapsedDays / TotalDays;
-        public int RemainingDays => (EndingDate - dateTimeWrapper.Now.Date).Days;
-        public DateTime StartingDate => termOptions.Value.StartingDateTime.Date;
-        public int TotalDays => (EndingDate - StartingDate).Days;
+        private DateTime? currentDate;
+        private DateTime? endDate;
+        private DateTime? startDate;
 
-        private readonly IDateTimeWrapper dateTimeWrapper;
-        private readonly IOptions<TermOptions> termOptions;
-        
-        /// <summary>
-        /// Class constructor.
-        /// </summary>
-        /// <param name="dateTimeWrapper">A <see cref="IDateTimeWrapper"/> implementation.</param>
-        /// <param name="termOptions">A <see cref="IOptions{T}"/> implementation with a generic type argument of <see cref="TermOptions"/>.</param>
-        public Term(IDateTimeWrapper dateTimeWrapper, IOptions<TermOptions> termOptions)
+        public DateTime CurrentDate
         {
-            this.dateTimeWrapper = dateTimeWrapper;
-            this.termOptions = termOptions;
+            get => currentDate ?? DateTime.Now.Date;
+            init => currentDate = value;  // for testing purposes only
         }
 
-        public override string ToString()
+        public int GetDaysElapsed()
         {
-            string progressBar = GetProgressBar();
-            string progressPercentage = GetProgressPercentage();
-            string daysCount = GetDaysCount();
+            TimeSpan elapsedTime = CurrentDate - GetStartDate();
 
-            return $"{progressBar} {progressPercentage}\n\n{daysCount}";
+            return elapsedTime.Days;
         }
 
-        /// <summary>
-        /// Gets the progress bar <see cref="string"/>.
-        /// </summary>
-        /// <returns>The progress bar <see cref="string"/>.</returns>
-        public string GetProgressBar()
+        /// <inheritdoc/>
+        public DateTime GetEndDate()
         {
-            const int BlocksTotal = 15;
-            double daysPerBlock = (double) TotalDays / BlocksTotal;
-            StringBuilder progressBar = new StringBuilder(BlocksTotal);
-
-            for (int block = 1; block <= BlocksTotal; block++)
+            if (endDate is null)
             {
-                if ((block * daysPerBlock) <= ElapsedDays)
-                {
-                    progressBar.Append('▓');
-                }
-                else
-                {
-                    progressBar.Append('░');
-                }
+                throw new InvalidOperationException("End date is not set.");
             }
 
-            return progressBar.ToString();
+            return endDate.Value;
         }
 
-        /// <summary>
-        /// Gets the progress bar percentage <see cref="string"/>.
-        /// </summary>
-        /// <returns>The progress bar percentage <see cref="string"/>.</returns>
-        public string GetProgressPercentage()
+        public double GetProgressRatio()
         {
-            return string.Format("{0:P2}", Progress);
+            var elapsedDays = (double)GetDaysElapsed();
+            var totalDays = (double)GetDaysTotal();
+
+            return elapsedDays / totalDays;
         }
 
-        /// <summary>
-        /// Gets the days count <see cref="string"/>.
-        /// </summary>
-        /// <returns>The days count <see cref="string"/>.</returns>
-        public string GetDaysCount()
+        public int GetDaysRemaining()
         {
-            return $"{ElapsedDays}/{RemainingDays}/{TotalDays}";
+            TimeSpan remainingTime = GetEndDate().AddDays(1) - CurrentDate;
+
+            return remainingTime.Days;
+        }
+
+        public DateTime GetStartDate()
+        {
+            if (startDate is null)
+            {
+                throw new InvalidOperationException("Start date is not set.");
+            }
+
+            return startDate.Value;
+        }
+
+        public int GetDaysTotal()
+        {
+            TimeSpan totalTime = GetEndDate().AddDays(1) - GetStartDate();
+
+            return totalTime.Days;
+        }
+
+        public void SetEndDate(DateTime value)
+        {
+            if (startDate is not null && value < GetStartDate())  // only try to get start date when set
+            {
+                throw new ArgumentException("Value cannot be less than start date.");
+            }
+
+            endDate = value;
+        }
+
+        public void SetStartDate(DateTime value)
+        {
+            if (endDate is not null && value > GetEndDate())  // only try to get end date when set
+            {
+                throw new ArgumentException("Value cannot be greater than end date.");
+            }
+
+            startDate = value;
         }
     }
 }

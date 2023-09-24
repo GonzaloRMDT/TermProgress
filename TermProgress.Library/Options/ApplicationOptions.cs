@@ -1,4 +1,4 @@
-﻿namespace TermProgress.Library.Options
+﻿namespace TermProgress.Domain.Options
 {
     /// <summary>
     /// Represents the application options.
@@ -8,11 +8,11 @@
         /// <summary>
         /// Gets or sets the application culture.
         /// </summary>
-        public string Culture { get; set; }
+        public string? Culture { get; set; }
 
         /// <summary>
         /// Gets or sets the application version.
         /// </summary>
-        public string Version { get; set; }
+        public string? Version { get; set; }
     }
 }
