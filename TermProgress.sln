@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TermProgress.Functions", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TermProgress.Infrastructure", "TermProgress.Infrastructure\TermProgress.Infrastructure.csproj", "{560508E2-B7CE-4403-91DC-C85C09680069}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermProgress.Application", "TermProgress.Services\TermProgress.Application.csproj", "{80382012-5D9B-4739-A460-A5963F2A2D21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TermProgress.Application", "TermProgress.Services\TermProgress.Application.csproj", "{80382012-5D9B-4739-A460-A5963F2A2D21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

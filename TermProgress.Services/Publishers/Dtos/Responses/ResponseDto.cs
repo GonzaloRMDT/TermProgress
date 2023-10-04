@@ -1,13 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 using TermProgress.Application.Publishers.Dtos.Enums;
 
-namespace TermProgress.Application.Publishers.Dtos
+namespace TermProgress.Application.Publishers.Dtos.Responses
 {
     /// <summary>
     /// Represents a response data transfer object.
     /// </summary>
     /// <typeparam name="T">The type of the data associated with this response.</typeparam>
-    public record ResponseDto<T> where T : class
+    public abstract record class ResponseDto<T> where T : class
     {
         /// <summary>
         /// Gets or initializes the request result.

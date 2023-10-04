@@ -1,7 +1,10 @@
-﻿using TermProgress.Application.Publishers.Dtos;
+﻿using TermProgress.Application.Publishers.Dtos.Requests;
+using TermProgress.Application.Publishers.Dtos.Responses;
 
 namespace TermProgress.Application.Publishers
 {
+    // TODO: Simplify interface name.
+
     /// <summary>
     /// Defines the common structure for term progress publishing services.
     /// </summary>
@@ -10,10 +13,8 @@ namespace TermProgress.Application.Publishers
         /// <summary>
         /// Creates term progress status on given social network asynchronously.
         /// </summary>
-        /// <param name="network">Name of social network to publish on.</param>
-        /// <param name="startDate">The term start date.</param>
-        /// <param name="endDate">The term end date.</param>
-        /// <returns>The response data transfer object with the created status.</returns>
-        Task<ResponseDto<StatusDto>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate);
+        /// <param name="request">The status creation request.</param>
+        /// <returns>The status creation response..</returns>
+        Task<CreateStatusResponseDto> CreateStatusAsync(CreateStatusRequestDto request);
     }
 }

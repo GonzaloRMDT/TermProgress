@@ -1,9 +1,9 @@
-﻿namespace TermProgress.Application.Publishers.Dtos
+﻿namespace TermProgress.Application.Publishers.Dtos.Responses
 {
     /// <summary>
     /// Represents a status data transfer object.
     /// </summary>
-    public class StatusDto
+    public record class StatusDto
     {
         /// <summary>
         /// Gets or initializes the status ID.
