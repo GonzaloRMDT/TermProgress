@@ -58,8 +58,10 @@ namespace TermProgress.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> CreateStatusAsync(string network, [FromBody] CreateStatusRequest request)
         {
-            logger.LogInformation("User requested term status creation with "
-                + $"start date {request.StartDate!.Value.Date} and end date {request.EndDate!.Value.Date}.");
+            logger.LogInformation(
+                "User requested term status creation with start date {StartDate} and end date {EndDate}.",
+                request.StartDate!.Value.Date.ToString("s"),
+                request.EndDate!.Value.Date.ToString("s"));
 
             CreateStatusRequestDto requestDto = mapper.Map<CreateStatusRequestDto>(request);
             CreateStatusResponseDto responseDto = await publishingService.CreateStatusAsync(requestDto);
