@@ -23,21 +23,21 @@ namespace TermProgress.WebAPI.Controllers
     {
         private readonly ILogger<TermProgressController> logger;
         private readonly IMapper mapper;
-        private readonly ITermProgressPublishingService termProgressPublishingService;
+        private readonly IPublishingService publishingService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TermProgressController"/> class.
         /// </summary>
         /// <param name="logger">A logger implementation.</param>
-        /// <param name="termProgressPublishingService">A term progress publishing service implementation.</param>
+        /// <param name="publishingService">A publishing service implementation.</param>
         public TermProgressController(
             ILogger<TermProgressController> logger,
             IMapper mapper,
-            ITermProgressPublishingService termProgressPublishingService)
+            IPublishingService publishingService)
         {
             this.logger = logger;
             this.mapper = mapper;
-            this.termProgressPublishingService = termProgressPublishingService;
+            this.publishingService = publishingService;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace TermProgress.WebAPI.Controllers
                 + $"start date {request.StartDate!.Value.Date} and end date {request.EndDate!.Value.Date}.");
 
             CreateStatusRequestDto requestDto = mapper.Map<CreateStatusRequestDto>(request);
-            CreateStatusResponseDto responseDto = await termProgressPublishingService.CreateStatusAsync(requestDto);
+            CreateStatusResponseDto responseDto = await publishingService.CreateStatusAsync(requestDto);
 
             if (responseDto.Result is RequestResult.Scheduled)
             {

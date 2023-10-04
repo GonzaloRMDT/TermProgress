@@ -10,27 +10,22 @@ using TermProgress.Infrastructure.Apis.Commons.Interfaces;
 
 namespace TermProgress.Application.Publishers
 {
-    // TODO: Simplify class name.
-
     /// <summary>
-    /// Represents a term progress publishing service.
+    /// Represents a publishing service.
     /// </summary>
-    public class TermProgressPublishingService : ITermProgressPublishingService
+    public class PublishingService : IPublishingService
     {
         private readonly IEnumerable<IApiClient> apiClients;
         private readonly IMapper mapper;
         private readonly ITermMessage termMessage;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TermProgressPublishingService"/> class.
+        /// Initializes a new instance of the <see cref="PublishingService"/> class.
         /// </summary>
         /// <param name="apiClients">The API clients.</param>
         /// <param name="mapper">A mapper implementation.</param>
         /// <param name="termMessage">A term message implementation.</param>
-        public TermProgressPublishingService(
-            IEnumerable<IApiClient> apiClients,
-            IMapper mapper,
-            ITermMessage termMessage)
+        public PublishingService(IEnumerable<IApiClient> apiClients, IMapper mapper, ITermMessage termMessage)
         {
             this.apiClients = apiClients;
             this.mapper = mapper;
