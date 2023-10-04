@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <UserSecretsId>8633960b-9ffe-41c8-a0ff-c190b406c2fc</UserSecretsId>
-    <ReleaseVersion>2.0.1</ReleaseVersion>
+    <ReleaseVersion>2.1.1</ReleaseVersion>
     <OutputType>Exe</OutputType>
 	<Nullable>enable</Nullable>
   </PropertyGroup>
