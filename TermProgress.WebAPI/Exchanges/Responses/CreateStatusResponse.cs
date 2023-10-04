@@ -1,9 +1,9 @@
-﻿namespace TermProgress.WebAPI.Dtos.Responses
+﻿namespace TermProgress.WebAPI.Exchanges.Responses
 {
     /// <summary>
     /// Represents a term progress status creation response.
     /// </summary>
-    public record class TermProgressStatusCreationResponse
+    public record class CreateStatusResponse
     {
         /// <summary>
         /// Gets or initializes the created status ID.

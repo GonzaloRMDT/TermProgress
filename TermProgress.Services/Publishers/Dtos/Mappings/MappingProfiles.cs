@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RestSharp;
 using TermProgress.Application.Publishers.Dtos.Enums;
+using TermProgress.Application.Publishers.Dtos.Responses;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
 
 namespace TermProgress.Application.Publishers.Dtos.Mappings
@@ -15,7 +16,7 @@ namespace TermProgress.Application.Publishers.Dtos.Mappings
         /// </summary>
         public MappingProfiles()
         {
-            CreateMap<RestResponse<Status>, ResponseDto<StatusDto>>()
+            CreateMap<RestResponse<Status>, CreateStatusResponseDto>()
                 .ForMember(
                     dest => dest.Result,
                     opt => opt.MapFrom(src => src.IsSuccessful ? RequestResult.Success : RequestResult.Error));
