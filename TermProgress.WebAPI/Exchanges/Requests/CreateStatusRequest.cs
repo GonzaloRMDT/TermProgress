@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 using TermProgress.WebAPI.Validations;
 using TermProgress.WebAPI.Validations.Enums;
 
-namespace TermProgress.WebAPI.Dtos.Requests
+namespace TermProgress.WebAPI.Exchanges.Requests
 {
     /// <summary>
-    /// Represents a term progress status creation request.
+    /// Represents a status creation request.
     /// </summary>
-    public record class TermProgressStatusCreationRequest
+    public record class CreateStatusRequest
     {
         /// <summary>
         /// Gets or initializes the start date.

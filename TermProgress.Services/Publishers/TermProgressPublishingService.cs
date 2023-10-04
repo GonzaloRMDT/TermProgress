@@ -2,13 +2,16 @@
 using Polly;
 using RestSharp;
 using System.Net;
-using TermProgress.Application.Publishers.Dtos;
+using TermProgress.Application.Publishers.Dtos.Requests;
+using TermProgress.Application.Publishers.Dtos.Responses;
 using TermProgress.Domain.Terms;
 using TermProgress.Infrastructure.Apis.Commons.Entities;
 using TermProgress.Infrastructure.Apis.Commons.Interfaces;
 
 namespace TermProgress.Application.Publishers
 {
+    // TODO: Simplify class name.
+
     /// <summary>
     /// Represents a term progress publishing service.
     /// </summary>
@@ -34,15 +37,16 @@ namespace TermProgress.Application.Publishers
             this.termMessage = termMessage;
         }
 
-        public async Task<ResponseDto<StatusDto>> CreateStatusAsync(string network, DateTime startDate, DateTime endDate)
+        public async Task<CreateStatusResponseDto> CreateStatusAsync(CreateStatusRequestDto request)
         {
             IApiClient apiClient = apiClients
                 .Single(apiClient => apiClient.GetType().Name
-                .Contains(network, StringComparison.OrdinalIgnoreCase));
+                .Contains("twitter", StringComparison.OrdinalIgnoreCase)); // TODO: Get network property
+                                                                           //.Contains(network, StringComparison.OrdinalIgnoreCase));
 
             // Term progress message
-            termMessage.Term.SetStartDate(startDate);
-            termMessage.Term.SetEndDate(endDate);
+            termMessage.Term.SetStartDate(request.StartDate);
+            termMessage.Term.SetEndDate(request.EndDate);
             string message = termMessage.GetMessage();
 
             // Status creation
@@ -66,7 +70,7 @@ namespace TermProgress.Application.Publishers
                 .WrapAsync(retryPolicy, circuitBreakerPolicy) // TODO: Check if order should be inverted
                 .ExecuteAndCaptureAsync(async () => await apiClient.CreateStatusAsync(message));
 
-            return mapper.Map<ResponseDto<StatusDto>>(response.Result);
+            return mapper.Map<CreateStatusResponseDto>(response.Result);
         }
     }
 }
