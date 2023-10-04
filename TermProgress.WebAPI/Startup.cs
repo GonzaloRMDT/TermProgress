@@ -29,10 +29,10 @@ namespace TermProgress.WebAPI
         {
             services.AddControllers();
             services
-                .AddAutoMapper(typeof(Program).Assembly, typeof(TermProgressPublishingService).Assembly)
+                .AddAutoMapper(typeof(Program).Assembly, typeof(PublishingService).Assembly)
                 .AddExceptionHandling()
                 .AddHttpErrorHandling()
-                .AddScoped<ITermProgressPublishingService, TermProgressPublishingService>()
+                .AddScoped<IPublishingService, PublishingService>()
                 .AddScoped<ITerm, Term>()
                 .AddScoped<ITermMessage, TermMessage>()
                 .AddSingleton<IApiClient>(

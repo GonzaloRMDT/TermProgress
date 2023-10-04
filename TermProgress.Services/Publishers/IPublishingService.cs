@@ -3,12 +3,10 @@ using TermProgress.Application.Publishers.Dtos.Responses;
 
 namespace TermProgress.Application.Publishers
 {
-    // TODO: Simplify interface name.
-
     /// <summary>
-    /// Defines the common structure for term progress publishing services.
+    /// Defines the common structure for publishing services.
     /// </summary>
-    public interface ITermProgressPublishingService
+    public interface IPublishingService
     {
         /// <summary>
         /// Creates term progress status on given social network asynchronously.
